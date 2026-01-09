@@ -1,0 +1,45 @@
+/* Avatar Row Styles */
+.avatar-row {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  align-items: center;
+  z-index: 20;
+  pointer-events: auto;
+  animation: fadeIn 1.5s ease-out;
+  perspective: 1000px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) translateY(0);
+  }
+}
+
+/* Avatar Selection & Animation */
+.avatar-row.has-selection {
+  gap: 0;
+  pointer-events: none;
+  width: 100%;
+}
+
+/* Projects Mode: Override flex centering to allow left positioning */
+.avatar-row.projects-mode {
+  justify-content: flex-start;
+  padding-left: 5%;
+}
+
+/* Adjust existing hover effects to not interfere when selected */
+.avatar-row.has-selection .avatar-image-wrapper:not(.selected) {
+  transform: none;
+}
+

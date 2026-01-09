@@ -1,0 +1,60 @@
+/* Navigation Buttons (Bottom Left) */
+.navigation-buttons-container {
+  position: fixed;
+  bottom: 3rem;
+  left: 3rem;
+  display: flex;
+  gap: 1.5rem;
+  z-index: 1000;
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.nav-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  padding: 0.8rem 1.5rem;
+  border-radius: 30px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nav-btn:hover {
+  background: rgba(183, 148, 246, 0.2);
+  border-color: #B794F6;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(183, 148, 246, 0.2);
+}
+
+.nav-arrow {
+  font-size: 1.2rem;
+  line-height: 1;
+  transition: transform 0.3s ease;
+}
+
+.prev-btn:hover .nav-arrow {
+  transform: translateX(-3px);
+}
+
+.next-btn:hover .nav-arrow {
+  transform: translateX(3px);
+}
+

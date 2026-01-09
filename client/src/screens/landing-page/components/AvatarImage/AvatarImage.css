@@ -1,0 +1,125 @@
+/* Avatar Image Wrapper */
+.avatar-image-wrapper {
+  position: relative;
+  width: 320px;
+  height: 420px;
+  cursor: pointer;
+  overflow: visible;
+  transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), width 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), left 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+  background: transparent;
+  transform-style: preserve-3d;
+}
+
+.avatar-image-wrapper:hover {
+  transform: translateY(-10px);
+}
+
+/* Left avatar - 3D rotate on Y axis */
+.avatar-row .avatar-image-wrapper:first-child {
+  transform: rotateY(-25deg);
+}
+
+.avatar-row .avatar-image-wrapper:first-child:hover {
+  transform: rotateY(-25deg) translateY(-10px);
+}
+
+/* Right avatar - 3D rotate on Y axis */
+.avatar-row .avatar-image-wrapper:last-child {
+  transform: rotateY(25deg);
+}
+
+.avatar-row .avatar-image-wrapper:last-child:hover {
+  transform: rotateY(25deg) translateY(-10px);
+}
+
+/* Middle avatar slightly larger */
+.avatar-row .avatar-image-wrapper:nth-child(2) {
+  width: 350px;
+  height: 460px;
+  z-index: 10;
+}
+
+/* When an avatar is selected */
+.avatar-image-wrapper.selected {
+  transform: scale(1.5) rotateY(0deg) !important;
+  z-index: 100;
+  pointer-events: auto;
+  cursor: zoom-out;
+  margin: 0 2rem;
+  width: 350px !important;
+  position: relative;
+}
+
+/* Projects View: Move Avatar to Left */
+.avatar-image-wrapper.selected.projects-view {
+  transform: scale(1.2) rotateY(15deg) !important;
+  margin-right: auto;
+  margin-left: 10%;
+  cursor: default;
+}
+
+/* When another avatar is selected */
+.avatar-image-wrapper.hidden {
+  width: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  opacity: 0;
+  transform: scale(0);
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* Avatar Image */
+.avatar-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    filter 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  filter: drop-shadow(0 0 0px transparent);
+}
+
+.avatar-image-wrapper:hover .avatar-image {
+  transform: scale(1.1);
+  filter: drop-shadow(0 15px 30px rgba(184, 148, 246, 0.4)) drop-shadow(0 0 25px rgba(232, 121, 249, 0.3));
+}
+
+/* Avatar Labels */
+.avatar-label {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  opacity: 0.7;
+  transition: all 0.5s ease;
+  white-space: nowrap;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+  pointer-events: none;
+  z-index: 20;
+}
+
+.avatar-image-wrapper:hover .avatar-label {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-5px);
+  color: #B794F6;
+  text-shadow: 0 0 15px rgba(183, 148, 246, 0.6);
+}
+
+.avatar-image-wrapper.selected .avatar-label {
+  opacity: 1;
+  bottom: -40px;
+  font-size: 1.5rem;
+  color: #B794F6;
+  text-shadow: 0 0 20px rgba(183, 148, 246, 0.5);
+}
+
+.avatar-image-wrapper.hidden .avatar-label {
+  opacity: 0;
+}
+

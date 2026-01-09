@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+:root {
+  --background-color: #0A0A0A;
+  --primary-text-color: #EAEAEA;
+  --ml-color: #00FFE0;
+  --flutter-color: #1E90FF;
+  --backend-color: #FFA500;
+  --gamedev-color: #9B59B6;
+  --professional-color: #FFFFFF;
+  --glow-purple: #B794F6;
+  --glow-magenta: #E879F9;
+  --dark-purple: #1a0b2e;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', 'Poppins', sans-serif;
+  background-color: var(--background-color);
+  color: var(--primary-text-color);
+  overflow-x: hidden;
+}

@@ -1,0 +1,42 @@
+/* Info Card Styles */
+.info-card {
+  background: rgba(20, 20, 20, 0.6);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1.5rem;
+  border-radius: 16px;
+  color: #fff;
+  width: 300px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  transition: border-color 0.3s ease;
+  pointer-events: auto;
+  cursor: grab;
+}
+
+.info-card:active {
+  cursor: grabbing;
+}
+
+.info-card:hover {
+  border-color: rgba(183, 148, 246, 0.5);
+  background: rgba(30, 30, 30, 0.8);
+}
+
+.info-card-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(90deg, #E879F9, #B794F6);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.info-card-content {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: #d1d1d1;
+}
+

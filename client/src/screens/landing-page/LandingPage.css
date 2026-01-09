@@ -1,0 +1,1554 @@
+.landing-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background: #000000;
+  overflow: hidden;
+}
+
+.landing-container::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60%;
+  height: 60%;
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.3) 0%, transparent 70%);
+  filter: blur(40px);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Navbar Styles */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem 4rem;
+  z-index: 1000;
+  background: linear-gradient(180deg, rgba(10, 10, 10, 0.9) 0%, rgba(10, 10, 10, 0) 100%);
+  backdrop-filter: blur(10px);
+}
+
+.navbar-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-weight: 900;
+  font-size: 1.1rem;
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+  color: #FFFFFF;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.navbar-logo:hover {
+  opacity: 0.8;
+}
+
+.logo-text {
+  text-transform: uppercase;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 3rem;
+  align-items: center;
+}
+
+.nav-link {
+  color: #C0C0C0;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  position: relative;
+}
+
+.nav-link:hover {
+  color: #FFFFFF;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #E879F9, #B794F6);
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+.dropdown-icon {
+  font-size: 0.7rem;
+  opacity: 0.6;
+  transition: transform 0.3s ease;
+}
+
+.nav-link:hover .dropdown-icon {
+  opacity: 1;
+  transform: translateY(2px);
+}
+
+/* Starfield Background */
+.starfield {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  animation: twinkle 3s infinite;
+  box-shadow: 0 0 3px rgba(255, 255, 255, 0.5);
+}
+
+@keyframes twinkle {
+
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.9;
+    transform: scale(1.3);
+  }
+}
+
+/* Loader */
+.loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 999;
+}
+
+.loader-spinner {
+  width: 50px;
+  height: 50px;
+  border: 3px solid rgba(184, 148, 246, 0.2);
+  border-top-color: #B794F6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 3D Canvas Container */
+.canvas-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+}
+
+/* Content Overlay */
+.content-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.hero-text {
+  text-align: center;
+  padding: 2rem;
+  animation: fadeIn 1.5s ease-out;
+  margin-top: -15rem;
+}
+
+/* .title-stack {
+  position: relative;
+  display: inline-block;
+  padding-top: 0;
+} */
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.subtitle {
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  color: #EAEAEA;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  opacity: 0.85;
+  text-shadow: 0 0 20px rgba(184, 148, 246, 0.3);
+  animation: fadeIn 1.5s ease-out 0.2s both;
+}
+
+.main-title {
+  font-size: 10.5rem;
+  font-weight: 600;
+  line-height: 0.9;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  font-family: 'Bebas Neue', 'Poppins', sans-serif;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  animation: fadeIn 1.5s ease-out 0.4s both;
+  position: relative;
+  z-index: 0;
+}
+
+.title-word {
+  display: block;
+  background: linear-gradient(180deg, #F3E8FF 0%, #E879F9 25%, #B794F6 60%, #9B7FE8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: white;
+  background-clip: text;
+  filter: drop-shadow(0 0 8px rgba(232, 121, 249, 0.5)) drop-shadow(0 0 8px rgba(184, 148, 246, 0.6)) drop-shadow(0 0 8px rgba(155, 127, 232, 0.4)) drop-shadow(0 0 8px rgba(107, 70, 255, 0.3));
+  /* animation: glow 4s ease-in-out infinite; */
+  position: relative;
+}
+
+.title-word::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: -1;
+  filter: blur(20px);
+  opacity: 0.5;
+}
+
+@keyframes glow {
+
+  0%,
+  100% {
+    filter: drop-shadow(0 0 40px rgba(232, 121, 249, 0.8)) drop-shadow(0 0 80px rgba(184, 148, 246, 0.6)) drop-shadow(0 0 120px rgba(155, 127, 232, 0.4)) drop-shadow(0 0 160px rgba(107, 70, 255, 0.3));
+  }
+
+  50% {
+    filter: drop-shadow(0 0 50px rgba(232, 121, 249, 1)) drop-shadow(0 0 100px rgba(184, 148, 246, 0.8)) drop-shadow(0 0 150px rgba(155, 127, 232, 0.6)) drop-shadow(0 0 200px rgba(107, 70, 255, 0.4));
+  }
+}
+
+.description {
+  margin-top: 3rem;
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: #D1D1D1;
+  line-height: 1.7;
+  opacity: 0.85;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+  animation: fadeIn 1.5s ease-out 0.6s both;
+}
+
+/* Responsive Design */
+@media (max-width: 1400px) {
+  .main-title {
+    font-size: 6rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  .main-title {
+    font-size: 5rem;
+  }
+
+  .navbar {
+    padding: 1.5rem 2rem;
+  }
+
+  .navbar-links {
+    gap: 1.5rem;
+    font-size: 0.9rem;
+  }
+
+  .navbar-logo {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-title {
+    font-size: 3.5rem;
+  }
+
+  .subtitle {
+    font-size: 0.8rem;
+  }
+
+  .description {
+    font-size: 1rem;
+  }
+
+  .navbar-links {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-title {
+    font-size: 2.5rem;
+  }
+
+  .navbar {
+    padding: 1rem;
+  }
+}
+
+.avatar-row {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  align-items: center;
+  z-index: 20;
+  pointer-events: auto;
+  animation: fadeIn 1.5s ease-out;
+  perspective: 1000px;
+}
+
+.avatar-image-wrapper {
+  position: relative;
+  width: 320px;
+  height: 420px;
+  cursor: pointer;
+  overflow: visible;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  background: transparent;
+  transform-style: preserve-3d;
+}
+
+.avatar-image-wrapper:hover {
+  transform: translateY(-10px);
+}
+
+/* Left avatar - 3D rotate on Y axis */
+.avatar-row .avatar-image-wrapper:first-child {
+  transform: rotateY(-25deg);
+}
+
+.avatar-row .avatar-image-wrapper:first-child:hover {
+  transform: rotateY(-25deg) translateY(-10px);
+}
+
+/* Right avatar - 3D rotate on Y axis */
+.avatar-row .avatar-image-wrapper:last-child {
+  transform: rotateY(25deg);
+}
+
+.avatar-row .avatar-image-wrapper:last-child:hover {
+  transform: rotateY(25deg) translateY(-10px);
+}
+
+.avatar-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    filter 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  filter: drop-shadow(0 0 0px transparent);
+}
+
+.avatar-image-wrapper:hover .avatar-image {
+  transform: scale(1.1);
+  filter: drop-shadow(0 15px 30px rgba(184, 148, 246, 0.4)) drop-shadow(0 0 25px rgba(232, 121, 249, 0.3));
+}
+
+/* Middle avatar slightly larger */
+.avatar-row .avatar-image-wrapper:nth-child(2) {
+  width: 350px;
+  height: 460px;
+  z-index: 10;
+}
+
+/* Avatar Selection & Animation */
+.avatar-row.has-selection {
+  gap: 0;
+  pointer-events: none;
+  width: 100%;
+  /* Ensure row takes full width to allow centering calculations if needed, but auto width with flex center is fine too. */
+}
+
+.avatar-image-wrapper {
+  /* Existing styles... */
+  transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), width 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), left 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* When an avatar is selected */
+.avatar-image-wrapper.selected {
+  /* No position absolute! Let flexbox center it. */
+  transform: scale(1.5) rotateY(0deg) !important;
+  z-index: 100;
+  pointer-events: auto;
+  cursor: zoom-out;
+  margin: 0 2rem;
+  /* Add some margin to push cards away? No, cards are absolute overlay. */
+  /* Ensure it keeps its size or grows */
+  width: 350px !important;
+  position: relative;
+  /* Ensure it's relative for buttons to be absolute inside? No, buttons are outside. */
+}
+
+/* Projects View: Move Avatar to Left */
+.avatar-image-wrapper.selected.projects-view {
+  transform: scale(1.2) rotateY(15deg) !important;
+  /* Slightly smaller and rotated */
+  margin-right: auto;
+  /* Push to left? Flexbox centering might fight this. */
+  margin-left: 10%;
+  /* Manual offset */
+  cursor: default;
+}
+
+/* When another avatar is selected */
+.avatar-image-wrapper.hidden {
+  width: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  opacity: 0;
+  transform: scale(0);
+  pointer-events: none;
+  overflow: hidden;
+  /* Ensure content doesn't spill when width is 0 */
+}
+
+/* Action Buttons Container */
+.action-buttons-container {
+  position: absolute;
+  bottom: -80px;
+  /* Below the avatar */
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 1.5rem;
+  z-index: 200;
+  width: max-content;
+  pointer-events: auto;
+  animation: fadeIn 0.5s ease-out 0.5s both;
+}
+
+.outline-button {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #fff;
+  padding: 0.8rem 2rem;
+  border-radius: 30px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.outline-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.outline-button.primary {
+  border-color: #B794F6;
+  color: #B794F6;
+}
+
+.outline-button.primary:hover {
+  background: rgba(183, 148, 246, 0.1);
+  box-shadow: 0 5px 15px rgba(183, 148, 246, 0.2);
+}
+
+/* Info Cards Container */
+.info-cards-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 50;
+  display: flex;
+  justify-content: center;
+  /* Center the content */
+  align-items: center;
+  gap: 450px;
+  /* Gap to clear the zoomed avatar (350px * 1.5 = 525px? maybe less visual width) */
+}
+
+/* Mobile Cards Container */
+.mobile-cards-container {
+  position: absolute;
+  top: 0;
+  right: 10%;
+  width: 50%;
+  height: 100%;
+  z-index: 50;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: auto;
+}
+
+.mobile-cards-wrapper {
+  display: flex;
+  flex-direction: row;
+  /* Explicitly set horizontal layout */
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  width: 100%;
+  position: relative;
+}
+
+.mobile-card {
+  width: 280px;
+  height: 560px;
+  /* Reduced from 1000px for better layout */
+  perspective: 1000px;
+  cursor: pointer;
+  /* Animation handled by classes */
+}
+
+/* Carousel Animations */
+.slide-in-right {
+  animation: slideInRight 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.slide-out-left {
+  animation: slideOutLeft 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.slide-in-left {
+  animation: slideInLeft 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.slide-out-right {
+  animation: slideOutRight 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.delay-0 {
+  animation-delay: 0s;
+}
+
+.delay-1 {
+  animation-delay: 0.1s;
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOutLeft {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOutRight {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+}
+
+/* Carousel Arrows */
+.carousel-arrow {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+  z-index: 60;
+}
+
+.carousel-arrow:hover {
+  background: rgba(183, 148, 246, 0.3);
+  border-color: #B794F6;
+  transform: scale(1.1);
+}
+
+.carousel-arrow.left {
+  margin-right: 1rem;
+}
+
+.carousel-arrow.right {
+  margin-left: 1rem;
+}
+
+/* Mobile Card Inner Styles */
+.mobile-card-inner {
+  width: 100%;
+  height: 100%;
+  background: #1a1a1a;
+  border-radius: 30px;
+  border: 4px solid #333;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  transition: transform 0.4s ease;
+}
+
+.mobile-card:hover .mobile-card-inner {
+  transform: translateY(-10px);
+  border-color: #B794F6;
+}
+
+.mobile-card-screen {
+  width: 100%;
+  height: 100%;
+  background: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  text-align: center;
+}
+
+.placeholder-text {
+  color: #555;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  letter-spacing: 2px;
+  transition: color 0.3s;
+}
+
+.mobile-card:hover .placeholder-text {
+  color: #B794F6;
+}
+
+.mobile-card-notch {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40%;
+  height: 25px;
+  background: #333;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  z-index: 10;
+}
+
+.mobile-card-title {
+  text-align: center;
+  margin-top: 1.5rem;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  opacity: 0.8;
+}
+
+.back-to-home-btn {
+  position: absolute;
+  bottom: 2rem;
+  right: 2rem;
+  background: transparent;
+  border: none;
+  color: #888;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.back-to-home-btn:hover {
+  color: #fff;
+}
+
+/* Project Popup */
+.project-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(15px);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.project-popup-content {
+  width: 900px;
+  height: 80vh;
+  background: rgba(15, 15, 20, 0.85);
+  /* Darker, more transparent background */
+  border: 1px solid rgba(183, 148, 246, 0.3);
+  /* Purple tint border */
+  border-radius: 20px;
+  overflow-y: auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0 50px rgba(183, 148, 246, 0.15), inset 0 0 20px rgba(183, 148, 246, 0.05);
+  /* Outer and inner glow */
+  animation: scaleIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  backdrop-filter: blur(20px);
+  /* Stronger blur */
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
+}
+
+.project-popup-content::-webkit-scrollbar {
+  display: none;
+  /* Chrome, Safari, Opera */
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.popup-close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1.5rem;
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 2rem;
+  cursor: pointer;
+  z-index: 10;
+  transition: color 0.3s;
+}
+
+.popup-close-btn:hover {
+  color: #B794F6;
+}
+
+.popup-image-slider {
+  width: 100%;
+  height: 400px;
+  background: #000;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.popup-placeholder-image {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #333;
+  font-size: 3rem;
+  font-weight: 900;
+  letter-spacing: 5px;
+  background: radial-gradient(circle at center, #222 0%, #000 100%);
+}
+
+.popup-details {
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.popup-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 3rem;
+  color: #fff;
+  margin: 0;
+  letter-spacing: 1px;
+}
+
+.popup-description {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.1rem;
+  color: #ccc;
+  line-height: 1.6;
+}
+
+.popup-meta {
+  display: flex;
+  gap: 3rem;
+  margin-top: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.meta-label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  color: #888;
+  letter-spacing: 1px;
+}
+
+.meta-value {
+  font-size: 1rem;
+  color: #fff;
+  font-weight: 600;
+}
+
+.popup-review {
+  background: rgba(183, 148, 246, 0.1);
+  padding: 1.5rem;
+  border-radius: 10px;
+  border-left: 4px solid #B794F6;
+}
+
+.review-label {
+  display: block;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  color: #B794F6;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+.review-text {
+  font-style: italic;
+  color: #ddd;
+  font-size: 1rem;
+}
+
+.popup-cta-btn {
+  align-self: flex-start;
+  margin-top: 1rem;
+  background: #fff;
+  color: #000;
+  padding: 1rem 2.5rem;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+}
+
+/* Leave Message Button Container */
+.leave-message-container {
+  position: absolute;
+  bottom: -80px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 200;
+  animation: fadeIn 0.5s ease-out 0.5s both;
+  pointer-events: auto;
+}
+
+/* Reuse outline-button styles */
+
+/* Message Popup Content - Same size as mobile card popup? User said "same size as open when click on mobile card" which is 900px x 80vh */
+.mobile-card-popup-content {
+  width: 900px;
+  height: 80vh;
+  background: #111;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7);
+  animation: scaleIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  padding: 4rem;
+}
+
+.message-title {
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+.message-form {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+}
+
+.message-input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  padding: 1.5rem;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 1.1rem;
+  resize: none;
+  transition: all 0.3s ease;
+}
+
+.message-input:focus {
+  outline: none;
+  border-color: #B794F6;
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 20px rgba(183, 148, 246, 0.1);
+}
+
+.send-btn {
+  width: 100%;
+  text-align: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  padding: 1.2rem;
+}
+
+.show-more-btn {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  padding: 0.5rem 1.5rem;
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #aaa;
+}
+
+.show-more-btn:hover {
+  border-color: #fff;
+  color: #fff;
+}
+
+.social-buttons-container {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+  animation: slideInUp 0.3s ease-out;
+}
+
+.social-btn {
+  padding: 0.8rem 1.5rem;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  transition: all 0.3s ease;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.social-btn:hover {
+  transform: translateY(-3px);
+}
+
+.social-btn.upwork:hover {
+  background: #6fda44;
+  border-color: #6fda44;
+}
+
+.social-btn.whatsapp:hover {
+  background: #25D366;
+  border-color: #25D366;
+}
+
+.social-btn.linkedin:hover {
+  background: #0077b5;
+  border-color: #0077b5;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.info-cards-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 50;
+  /* Removed flex display to allow absolute positioning of children */
+}
+
+/* Removed info-cards-left and info-cards-right as they are no longer used */
+
+.info-card {
+  background: rgba(20, 20, 20, 0.6);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1.5rem;
+  border-radius: 16px;
+  color: #fff;
+  width: 300px;
+  /* Fixed width for cards */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  transition: border-color 0.3s ease;
+  pointer-events: auto;
+  cursor: grab;
+}
+
+.info-card:active {
+  cursor: grabbing;
+}
+
+.info-card:hover {
+  border-color: rgba(183, 148, 246, 0.5);
+  background: rgba(30, 30, 30, 0.8);
+}
+
+.info-card-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(90deg, #E879F9, #B794F6);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.info-card-content {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: #d1d1d1;
+}
+
+/* Removed stagger animations as framer-motion handles entry animations now */
+
+/* Adjust existing hover effects to not interfere when selected */
+.avatar-row.has-selection .avatar-image-wrapper:not(.selected) {
+  transform: none;
+}
+
+/* Projects Mode: Override flex centering to allow left positioning */
+.avatar-row.projects-mode {
+  justify-content: flex-start;
+  /* Move content to start (left) */
+  padding-left: 5%;
+  /* Add some padding */
+}
+
+/* Avatar Labels */
+.avatar-label {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  opacity: 0.7;
+  transition: all 0.5s ease;
+  white-space: nowrap;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+  pointer-events: none;
+  z-index: 20;
+}
+
+.avatar-image-wrapper:hover .avatar-label {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-5px);
+  color: #B794F6;
+  text-shadow: 0 0 15px rgba(183, 148, 246, 0.6);
+}
+
+.avatar-image-wrapper.selected .avatar-label {
+  opacity: 1;
+  bottom: -40px;
+  font-size: 1.5rem;
+  color: #B794F6;
+  text-shadow: 0 0 20px rgba(183, 148, 246, 0.5);
+}
+
+.avatar-image-wrapper.hidden .avatar-label {
+  opacity: 0;
+}
+
+/* Navigation Buttons (Bottom Left) */
+.navigation-buttons-container {
+  position: fixed;
+  bottom: 3rem;
+  left: 3rem;
+  display: flex;
+  gap: 1.5rem;
+  z-index: 1000;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.nav-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  padding: 0.8rem 1.5rem;
+  border-radius: 30px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nav-btn:hover {
+  background: rgba(183, 148, 246, 0.2);
+  border-color: #B794F6;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(183, 148, 246, 0.2);
+}
+
+.nav-arrow {
+  font-size: 1.2rem;
+  line-height: 1;
+  transition: transform 0.3s ease;
+}
+
+.prev-btn:hover .nav-arrow {
+  transform: translateX(-3px);
+}
+
+.next-btn:hover .nav-arrow {
+  transform: translateX(3px);
+}
+
+/* Project Cards Styles */
+.project-card-wrapper {
+  width: 300px;
+  height: 400px;
+  perspective: 1000px;
+  cursor: grab;
+  pointer-events: auto;
+}
+
+/* Taller, slightly narrower wrapper for mobile phone cards */
+.mobile-card-wrapper {
+  width: 260px;
+  height: 480px;
+}
+
+.project-card-wrapper.wide {
+  width: 500px;
+  /* Increased width for Web and Desktop */
+}
+
+.project-pagination-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  cursor: pointer;
+  z-index: 100;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+  pointer-events: auto;
+}
+
+.project-pagination-arrow:hover {
+  background: rgba(183, 148, 246, 0.3);
+  border-color: #B794F6;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.project-pagination-arrow.left {
+  left: 45%;
+  /* Start of the right half area */
+}
+
+.project-pagination-arrow.right {
+  right: 2rem;
+}
+
+.project-card-wrapper:active {
+  cursor: grabbing;
+}
+
+.project-card-inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  transition: all 0.3s ease;
+  position: relative;
+  background: #1a1a1a;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.project-card-wrapper:hover .project-card-inner {
+  box-shadow: 0 30px 60px rgba(183, 148, 246, 0.2);
+  border-color: rgba(183, 148, 246, 0.5);
+}
+
+.project-preview {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+}
+
+.project-title-preview {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem;
+  color: rgba(255, 255, 255, 0.1);
+  letter-spacing: 2px;
+  text-align: center;
+  padding: 1rem;
+}
+
+/* Phone Card Style */
+.phone-card {
+  border-radius: 40px;
+  border: 8px solid #333;
+  background: #000;
+}
+
+.phone-notch {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40%;
+  height: 25px;
+  background: #333;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  z-index: 10;
+}
+
+.phone-screen {
+  width: 100%;
+  height: 100%;
+  background: #111;
+  padding-top: 25px;
+}
+
+.phone-home-bar {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40%;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+}
+
+/* Browser Card Style */
+.browser-card {
+  border-radius: 10px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+.browser-header {
+  height: 40px;
+  background: #e0e0e0;
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  gap: 1rem;
+  border-bottom: 1px solid #ccc;
+}
+
+.browser-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.dot.red {
+  background: #ff5f56;
+}
+
+.dot.yellow {
+  background: #ffbd2e;
+}
+
+.dot.green {
+  background: #27c93f;
+}
+
+.browser-address-bar {
+  flex: 1;
+  height: 24px;
+  background: #fff;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  padding: 0 0.5rem;
+  font-size: 0.7rem;
+  color: #666;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.browser-content {
+  flex: 1;
+  background: #1a1a1a;
+  position: relative;
+}
+
+/* Desktop Card Style */
+.desktop-card {
+  border-radius: 8px;
+  background: #2d2d2d;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #444;
+}
+
+.desktop-title-bar {
+  height: 30px;
+  background: #333;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
+  border-bottom: 1px solid #444;
+}
+
+.desktop-app-title {
+  font-size: 0.8rem;
+  color: #ccc;
+  font-family: 'Inter', sans-serif;
+}
+
+.desktop-controls {
+  display: flex;
+  gap: 10px;
+  color: #888;
+  font-size: 0.8rem;
+}
+
+.desktop-content {
+  flex: 1;
+  display: flex;
+  background: #1e1e1e;
+}
+
+.project-sidebar {
+  width: 60px;
+  background: #252525;
+  border-right: 1px solid #333;
+}
+
+.project-main-area {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Desktop project image should fully fit inside the card */
+.project-image-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* Default Card Style */
+.default-card {
+  border-radius: 20px;
+  background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+}
+
+.default-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Tooltip */
+.project-info-tooltip {
+  position: absolute;
+  bottom: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(5px);
+  padding: 0.8rem 1.5rem;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: center;
+  opacity: 0;
+  transition: all 0.3s ease;
+  pointer-events: none;
+  width: max-content;
+}
+
+.project-card-wrapper:hover .project-info-tooltip {
+  opacity: 1;
+  bottom: -70px;
+}
+
+.project-info-tooltip h4 {
+  margin: 0;
+  color: #fff;
+  font-size: 1rem;
+  margin-bottom: 0.2rem;
+}
+
+.project-info-tooltip p {
+  margin: 0;
+  color: #888;
+  font-size: 0.8rem;
+}
+
+/* Mobile Card Tilt Variants */
+.tilt-left .mobile-card-inner {
+  transform: rotate(-5deg);
+}
+
+.tilt-right .mobile-card-inner {
+  transform: rotate(5deg);
+}
+
+.tilt-left:hover .mobile-card-inner {
+  transform: rotate(-5deg) translateY(-10px);
+}
+
+.tilt-right:hover .mobile-card-inner {
+  transform: rotate(5deg) translateY(-10px);
+}

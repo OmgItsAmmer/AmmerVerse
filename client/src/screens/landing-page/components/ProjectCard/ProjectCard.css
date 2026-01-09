@@ -1,0 +1,284 @@
+/* Project Card Wrapper Styles */
+.project-card-wrapper {
+  width: 300px;
+  height: 400px;
+  perspective: 1000px;
+  cursor: grab;
+  pointer-events: auto;
+}
+
+/* Taller, slightly narrower wrapper for mobile phone cards */
+.mobile-card-wrapper {
+  width: 260px;
+  height: 480px;
+}
+
+.project-card-wrapper.wide {
+  width: 500px;
+  /* Increased width for Web and Desktop */
+}
+
+.project-card-wrapper:active {
+  cursor: grabbing;
+}
+
+.project-card-inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  transition: all 0.3s ease;
+  position: relative;
+  background: #1a1a1a;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.project-card-wrapper:hover .project-card-inner {
+  box-shadow: 0 30px 60px rgba(183, 148, 246, 0.2);
+  border-color: rgba(183, 148, 246, 0.5);
+}
+
+.project-preview {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+}
+
+.project-title-preview {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem;
+  color: rgba(255, 255, 255, 0.1);
+  letter-spacing: 2px;
+  text-align: center;
+  padding: 1rem;
+}
+
+/* Phone Card Style */
+.phone-card {
+  border-radius: 40px;
+  border: 8px solid #333;
+  background: #000;
+}
+
+.phone-notch {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40%;
+  height: 25px;
+  background: #333;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  z-index: 10;
+}
+
+.phone-screen {
+  width: 100%;
+  height: 100%;
+  background: #111;
+  padding-top: 25px;
+}
+
+.phone-home-bar {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40%;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+}
+
+/* Browser Card Style */
+.browser-card {
+  border-radius: 10px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+.browser-header {
+  height: 40px;
+  background: #e0e0e0;
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  gap: 1rem;
+  border-bottom: 1px solid #ccc;
+}
+
+.browser-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.dot.red {
+  background: #ff5f56;
+}
+
+.dot.yellow {
+  background: #ffbd2e;
+}
+
+.dot.green {
+  background: #27c93f;
+}
+
+.browser-address-bar {
+  flex: 1;
+  height: 24px;
+  background: #fff;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  padding: 0 0.5rem;
+  font-size: 0.7rem;
+  color: #666;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.browser-content {
+  flex: 1;
+  background: #1a1a1a;
+  position: relative;
+}
+
+/* Desktop Card Style */
+.desktop-card {
+  border-radius: 8px;
+  background: #2d2d2d;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #444;
+}
+
+.desktop-title-bar {
+  height: 30px;
+  background: #333;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
+  border-bottom: 1px solid #444;
+}
+
+.desktop-app-title {
+  font-size: 0.8rem;
+  color: #ccc;
+  font-family: 'Inter', sans-serif;
+}
+
+.desktop-controls {
+  display: flex;
+  gap: 10px;
+  color: #888;
+  font-size: 0.8rem;
+}
+
+.desktop-content {
+  flex: 1;
+  display: flex;
+  background: #1e1e1e;
+}
+
+.project-sidebar {
+  width: 60px;
+  background: #252525;
+  border-right: 1px solid #333;
+}
+
+.project-main-area {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Desktop project image should fully fit inside the card */
+.project-image-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* Default Card Style */
+.default-card {
+  border-radius: 20px;
+  background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+}
+
+.default-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Tooltip */
+.project-info-tooltip {
+  position: absolute;
+  bottom: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(5px);
+  padding: 0.8rem 1.5rem;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: center;
+  opacity: 0;
+  transition: all 0.3s ease;
+  pointer-events: none;
+  width: max-content;
+}
+
+.project-card-wrapper:hover .project-info-tooltip {
+  opacity: 1;
+  bottom: -70px;
+}
+
+.project-info-tooltip h4 {
+  margin: 0;
+  color: #fff;
+  font-size: 1rem;
+  margin-bottom: 0.2rem;
+}
+
+.project-info-tooltip p {
+  margin: 0;
+  color: #888;
+  font-size: 0.8rem;
+}
+
+/* Mobile Card Tilt Variants */
+.tilt-left .mobile-card-inner {
+  transform: rotate(-5deg);
+}
+
+.tilt-right .mobile-card-inner {
+  transform: rotate(5deg);
+}
+
+.tilt-left:hover .mobile-card-inner {
+  transform: rotate(-5deg) translateY(-10px);
+}
+
+.tilt-right:hover .mobile-card-inner {
+  transform: rotate(5deg) translateY(-10px);
+}
+
