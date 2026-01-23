@@ -6,9 +6,34 @@ import avatar2Hover from '../../../assets/images/avatar/hovered/2_hover.png';
 import avatar3Normal from '../../../assets/images/avatar/normal/3_normal.png';
 import avatar3Hover from '../../../assets/images/avatar/hovered/3_hover.png';
 
-// Desktop project images (first desktop app)
-import omgPosDashboard from '../../../assets/images/mobile_dev/projects/OMGx POS/dashboard.png';
-import omgPosSales from '../../../assets/images/mobile_dev/projects/OMGx POS/Sales.png';
+// Desktop project images
+import omgxPosDesktop1 from '../../../assets/images/desktop_dev/projects/OMGx POS/1.png';
+import omgxPosDesktop2 from '../../../assets/images/desktop_dev/projects/OMGx POS/2.png';
+
+// Mobile project images
+import kksOnline1 from '../../../assets/images/mobile_dev/projects/kks_online/1.jpg';
+import kksOnline2 from '../../../assets/images/mobile_dev/projects/kks_online/2.jpg';
+import omgxPosMobile1 from '../../../assets/images/mobile_dev/projects/OMGx POS/1.png';
+import omgxPosMobile2 from '../../../assets/images/mobile_dev/projects/OMGx POS/2.png';
+import omgxPosMobile3 from '../../../assets/images/mobile_dev/projects/OMGx POS/3.png';
+
+// Web project images
+import fashionOracle1 from '../../../assets/images/web_dev/projects/fashion_oracle/1.png';
+import fashionOracle2 from '../../../assets/images/web_dev/projects/fashion_oracle/2.png';
+import fashionOracle3 from '../../../assets/images/web_dev/projects/fashion_oracle/3.png';
+import fashionOracle4 from '../../../assets/images/web_dev/projects/fashion_oracle/4.png';
+import epiGraph1 from '../../../assets/images/web_dev/projects/EpiGraph/1.png';
+import epiGraph2 from '../../../assets/images/web_dev/projects/EpiGraph/2.png';
+import videoStreamer1 from '../../../assets/images/web_dev/projects/video_streamer/1.png';
+import videoStreamer2 from '../../../assets/images/web_dev/projects/video_streamer/2.png';
+import sportivex1 from '../../../assets/images/web_dev/projects/sportivex/1.png';
+import sportivex2 from '../../../assets/images/web_dev/projects/sportivex/2.png';
+import sportivex3 from '../../../assets/images/web_dev/projects/sportivex/3.png';
+import sportivex4 from '../../../assets/images/web_dev/projects/sportivex/4.png';
+import sportivex5 from '../../../assets/images/web_dev/projects/sportivex/5.png';
+import sportivex6 from '../../../assets/images/web_dev/projects/sportivex/6.png';
+import sportivex7 from '../../../assets/images/web_dev/projects/sportivex/7.png';
+import sportivex8 from '../../../assets/images/web_dev/projects/sportivex/8.png';
 
 /**
  * Project Model Class
@@ -59,56 +84,43 @@ export const PROJECTS = [
     // Mobile Projects
     new ProjectModel({
         id: 1,
-        name: "Crypto Wallet",
+        name: "KKs Online",
         category: "mobile",
-        description: "A secure mobile wallet for managing digital assets on the go. Features include multi-currency support, biometric authentication, real-time price tracking, and seamless transaction management.",
+        thumbnail: kksOnline1,
+        images: [kksOnline1, kksOnline2],
+        description: "Developed full-stack e-commerce application with mobile app and admin dashboard. Integrated Google OAuth for secure authentication. Built order tracking system with FCM notifications and integrated POS for stock concurrency. Implemented product management, reporting, and analytics dashboard.",
         clientReviews: [
-            "Smooth animations and rock-solid security. Best mobile experience.",
-            "The biometric authentication is seamless and the UI is incredibly intuitive."
+            "The admin dashboard is incredibly powerful and the mobile app is lightning fast.",
+            "Stock management and order tracking work flawlessly. The FCM notifications are perfect."
         ],
         techStack: {
-            frontend: "React Native, TypeScript",
-            backend: "Node.js, Express",
-            database: "MongoDB, Redis",
-            architecture: "Microservices with Web3.js integration"
+            frontend: "Flutter Mobile & Desktop",
+            backend: "Rust, Supabase Edge Functions",
+            database: "Supabase",
+            architecture: "Full-stack with Google OAuth integration"
         },
-        duration: "3 Months"
-    }),
-
-    new ProjectModel({
-        id: 4,
-        name: "Social Connect",
-        category: "mobile",
-        description: "Cross-platform mobile app for connecting with local communities. Features real-time messaging, event discovery, location-based networking, and community forums.",
-        clientReviews: [
-            "Beautiful UI and seamless performance on both iOS and Android.",
-            "The location-based features work flawlessly. Great community engagement."
-        ],
-        techStack: {
-            frontend: "Flutter, Dart",
-            backend: "Firebase Cloud Functions",
-            database: "Firebase Firestore",
-            architecture: "Serverless with real-time sync"
-        },
-        duration: "4 Months"
+        duration: "July 2024 – June 2025"
+        
     }),
 
     new ProjectModel({
         id: 7,
-        name: "Fitness Tracker",
+        name: "OMGx POS",
         category: "mobile",
-        description: "AI-powered fitness tracking app with personalized workout plans. Includes activity tracking, nutrition logging, progress analytics, and social challenges.",
+        thumbnail: omgxPosMobile1,
+        images: [omgxPosMobile1, omgxPosMobile2, omgxPosMobile3],
+        description: "Mobile POS application for daily and installment-based sales. Implemented customer, vendor, and salesman management modules. Built comprehensive reporting system and order tracking with installment state logging. Developed fully customizable store settings and complete authentication system.",
         clientReviews: [
-            "The AI recommendations are spot on. Great user retention.",
-            "Love the social features and the workout plans adapt perfectly to my goals."
+            "The mobile POS app is intuitive and handles installments perfectly.",
+            "Reporting features are comprehensive and the UI is user-friendly."
         ],
         techStack: {
-            frontend: "Swift, SwiftUI",
-            backend: "Python, FastAPI",
-            database: "PostgreSQL, InfluxDB",
-            architecture: "Native iOS with CoreML and HealthKit integration"
+            frontend: "Flutter Mobile",
+            backend: "Dart",
+            database: "Supabase",
+            architecture: "Mobile-first POS with Supabase integration"
         },
-        duration: "3 Months"
+        duration: "March – August 2024"
     }),
 
     // Web Projects
@@ -116,111 +128,103 @@ export const PROJECTS = [
         id: 2,
         name: "Sportivex",
         category: "web",
-        description: "Comprehensive analytics dashboard for online retailers. Features real-time sales tracking, inventory management, customer insights, and predictive analytics powered by machine learning.",
+        thumbnail: sportivex1,
+        images: [sportivex1, sportivex2, sportivex3, sportivex4, sportivex5, sportivex6, sportivex7, sportivex8],
+        description: "Developed a comprehensive sports management system for NUST University. Implemented features for swimming, gym, horse riding, and badminton facilities. Built membership management, renewal system, and real-time QR code attendance tracking. Integrated Stripe payment processing for seamless transactions.",
         clientReviews: [
-            "The data visualization is incredible. Helps us make better decisions.",
-            "Real-time updates and the predictive analytics have transformed our business."
+            "The QR code attendance system has streamlined our operations significantly.",
+            "Stripe integration works perfectly and the membership management is intuitive."
         ],
         techStack: {
-            frontend: "React, D3.js, Material-UI",
-            backend: "Node.js, Express, GraphQL",
-            database: "PostgreSQL, Redis",
-            architecture: "Microservices with event-driven architecture"
+            frontend: "React",
+            backend: "Express",
+            database: "Supabase",
+            architecture: "Monolithic with Stripe integration"
         },
-        duration: "4 Months"
+        duration: "September – December 2024"
+    }),
+
+    new ProjectModel({
+        id: 3,
+        name: "Video Streaming Platform",
+        category: "web",
+        thumbnail: videoStreamer1,
+        images: [videoStreamer1, videoStreamer2],
+        description: "Built a cloud-native video streaming platform using microservices architecture deployed on Google Kubernetes Engine (GKE). Implemented 6 independent microservices with Docker containerization and Kubernetes orchestration. Leveraged Google Cloud Storage for video file storage with storage quota management (50MB per user) and daily bandwidth monitoring (100MB per day). Implemented JWT-based authentication, comprehensive logging system, and auto-scaling capabilities. Utilized ClusterIP and LoadBalancer services for secure internal communication and external access.",
+        clientReviews: [
+            "The Kubernetes deployment on GKE provides excellent scalability and fault tolerance.",
+            "Microservices architecture with Google Cloud integration delivers robust performance and reliability."
+        ],
+        techStack: {
+            frontend: "React",
+            backend: "Flask (Python)",
+            database: "MongoDB",
+            architecture: "Microservices on Google Kubernetes Engine (GKE) with Google Cloud Storage"
+        },
+        duration: "November – December 2024",
+        github: "https://github.com/OmgItsAmmer/video_streaming_webapp"
+    }),
+
+    new ProjectModel({
+        id: 4,
+        name: "Fashion Oracle",
+        category: "web",
+        thumbnail: fashionOracle1,
+        images: [fashionOracle1, fashionOracle2, fashionOracle3, fashionOracle4],
+        description: "Built an algorithm-rich search engine inspired by Google's early architecture. Implemented tokenization, lemmatization, forward/inverted indexing, and barrel splitting. Processed and indexed 50,000+ fashion images from a 25GB dataset.",
+        clientReviews: [
+            "The search algorithm is incredibly fast and accurate. Impressive indexing system.",
+            "Processing 50,000+ images with such precision is remarkable. Great architecture."
+        ],
+        techStack: {
+            frontend: "HTML, CSS",
+            backend: "Flask",
+            database: "File System Indexing",
+            architecture: "Search engine with inverted indexing"
+        },
+        duration: "October – December 2023"
     }),
 
     new ProjectModel({
         id: 5,
-        name: "3D Portfolio",
+        name: "EpiGraph",
         category: "web",
-        description: "Immersive 3D web experience showcasing creative work. Features interactive 3D models, smooth animations, particle effects, and responsive design that adapts to any screen size.",
+        thumbnail: epiGraph1,
+        images: [epiGraph1, epiGraph2],
+        description: "Developed simulation algorithm for disease spread modeling with adjustable parameters. Implemented synthetic network generation using Barabási–Albert, Watts–Strogatz, Erdős–Rényi, and community-based models.",
         clientReviews: [
-            "Stunning visuals that really capture the user's attention.",
-            "The 3D interactions are smooth and the performance is excellent even on mobile."
+            "The simulation models are sophisticated and the visualizations are excellent.",
+            "Network generation algorithms work perfectly for our research needs."
         ],
         techStack: {
-            frontend: "React Three Fiber, Three.js, GSAP",
-            backend: "Next.js API Routes",
-            database: "Sanity.io CMS",
-            architecture: "JAMstack with SSG and ISR"
+            frontend: "React, JavaScript",
+            backend: "JavaScript",
+            database: "Local Database",
+            architecture: "Simulation with graph algorithms"
         },
-        duration: "2 Months"
-    }),
-
-    new ProjectModel({
-        id: 8,
-        name: "Travel Blog",
-        category: "web",
-        description: "Interactive travel blog with map integration. Features location-based stories, photo galleries, trip planning tools, and community recommendations with real-time updates.",
-        clientReviews: [
-            "Visually stunning and very easy to update content.",
-            "The map integration is seamless and the CMS is incredibly user-friendly."
-        ],
-        techStack: {
-            frontend: "Next.js, Mapbox GL, Tailwind CSS",
-            backend: "Next.js API Routes, Sanity.io",
-            database: "Sanity.io, Cloudinary",
-            architecture: "JAMstack with SSR and API routes"
-        },
-        duration: "2 Months"
+        duration: "March – April 2024",
+        link: "https://v0-epi-graph-disease-spread-simulator.vercel.app/"
     }),
 
     // Desktop Projects
     new ProjectModel({
-        id: 3,
-        thumbnail: omgPosSales,
-        images: [omgPosSales, omgPosDashboard],
-        name: "OMGx POS NEXUS",
-        category: "desktop",
-        description: "Desktop utility for optimizing system performance and resource usage. Features include memory management, startup optimization, disk cleanup, and real-time performance monitoring.",
-        clientReviews: [
-            "Blazing fast and very low resource footprint. A must-have tool.",
-            "System performance improved dramatically. The interface is clean and intuitive."
-        ],
-        techStack: {
-            frontend: "FLutter Desktop",
-            backend: "Dart,Rust",
-            database: "Supabase",
-            architecture: "Monolithic,MVC"
-        },
-        duration: "5 Months"
-    }),
-
-    new ProjectModel({
         id: 6,
-        name: "Game Engine Tool",
+        name: "OMGx POS",
         category: "desktop",
-        description: "Asset management tool for game developers. Features include asset pipeline automation, version control integration, batch processing, and real-time preview capabilities.",
+        thumbnail: omgxPosDesktop1,
+        images: [omgxPosDesktop1, omgxPosDesktop2],
+        description: "Designed industry-standard POS software for daily and installment-based sales. Implemented customer, vendor, and salesman management modules. Built comprehensive reporting system and order tracking with installment state logging. Developed fully customizable store settings and complete authentication system.",
         clientReviews: [
-            "Streamlined our workflow significantly. Very robust.",
-            "The batch processing saves us hours every day. Excellent performance with large files."
+            "The installment tracking system is exactly what we needed. Very robust.",
+            "Reporting and order management features are comprehensive. Great authentication system."
         ],
         techStack: {
-            frontend: "Qt, C++",
-            backend: "Python, C++",
-            database: "SQLite, File System",
-            architecture: "Multi-threaded with plugin system"
+            frontend: "Flutter Desktop",
+            backend: "Dart",
+            database: "Supabase",
+            architecture: "Supabase Edge Functions"
         },
-        duration: "6 Months"
-    }),
-
-    new ProjectModel({
-        id: 9,
-        name: "File Encryptor",
-        category: "desktop",
-        description: "Secure file encryption tool for enterprise use. Features military-grade encryption, batch processing, secure key management, and audit logging for compliance.",
-        clientReviews: [
-            "Simple to use but extremely secure. Exactly what we needed.",
-            "The enterprise features and audit logs are perfect for our compliance requirements."
-        ],
-        techStack: {
-            frontend: "C#, WPF",
-            backend: ".NET Core, C#",
-            database: "SQL Server, Encrypted Storage",
-            architecture: "Native Windows with AES-256 encryption"
-        },
-        duration: "4 Months"
+        duration: "March – August 2024"
     })
 ];
 
@@ -247,27 +251,27 @@ export const DEVELOPERS = [
         },
         infoCards: [
             {
-                heading: "Mobile Development",
-                description: "Crafting native and cross-platform mobile applications that deliver seamless user experiences on iOS and Android. Specializing in Flutter, React Native, and Swift for building high-performance mobile solutions.",
+                heading: "Tech Stack",
+                description: "Flutter\nRust",
                 position: { align: "left", top: "20%", left: "15%", rotate: "-6deg" }
             },
             {
-                heading: "Advantages",
-                description: "Cross-platform development reduces time-to-market. Hot reload enables rapid iteration. Access to native device features. Strong community support and extensive libraries. Cost-effective for startups and MVPs.",
+                heading: "What I Build",
+                description: "E-commerce apps\nChat applications\nPocket POS systems",
                 position: { align: "left", top: "55%", left: "20%", rotate: "4deg" }
             },
             {
-                heading: "Challenges",
-                description: "Platform-specific optimizations may be needed. App size can be larger than pure native apps. Performance considerations for complex animations. Keeping up with OS updates and deprecations.",
+                heading: "Engineering Approach",
+                description: "Clean architecture\nRESTful API integration\nState management\nReusable UI components\nPerformance tuning\nError handling & validation",
                 position: { align: "right", top: "25%", left: "65%", rotate: "5deg" }
             },
             {
-                heading: "Future Outlook",
-                description: "Growing demand for mobile-first experiences. Expansion into wearables and IoT devices. Progressive Web Apps bridging mobile and web. AI and ML integration becoming standard in mobile apps.",
+                heading: "Proof of Work",
+                description: "GitHub repositories\nLive demos\nApp features shipped\nAPI integrations",
                 position: { align: "right", top: "60%", left: "60%", rotate: "-3deg" }
             }
         ],
-        projectIds: [1, 4, 7]
+        projectIds: [1, 7]
     },
 
     // Web Developer
@@ -281,27 +285,27 @@ export const DEVELOPERS = [
         },
         infoCards: [
             {
-                heading: "Web Development",
-                description: "Building modern, responsive web applications with cutting-edge technologies. Expertise in React, Next.js, and Three.js for creating immersive digital experiences that work seamlessly across all devices.",
+                heading: "Tech Stack",
+                description: "MERN Stack (MongoDB, Express, React, Node)\nNext.js",
                 position: { align: "left", top: "20%", left: "15%", rotate: "-6deg" }
             },
             {
-                heading: "Advantages",
-                description: "Universal accessibility across devices. No installation required. Easy updates and deployment. SEO-friendly with proper implementation. Rich ecosystem of frameworks and tools. Cost-effective scaling.",
+                heading: "What I Build",
+                description: "Investment-based POS software\nE-commerce platforms\nKiosk systems\nAuthentication systems",
                 position: { align: "left", top: "55%", left: "20%", rotate: "4deg" }
             },
             {
-                heading: "Challenges",
-                description: "Browser compatibility considerations. Performance optimization for complex UIs. Security vulnerabilities require constant vigilance. Offline functionality limitations. Managing state in large applications.",
+                heading: "Engineering Approach",
+                description: "Clean architecture\nRESTful API design\nState management\nComponent reusability\nPerformance optimization\nError handling & validation",
                 position: { align: "right", top: "25%", left: "65%", rotate: "5deg" }
             },
             {
-                heading: "Future Outlook",
-                description: "WebAssembly enabling near-native performance. Progressive Web Apps blurring lines with native. AI-powered development tools. Web3 and decentralized applications. Immersive 3D experiences becoming mainstream.",
+                heading: "Proof of Work",
+                description: "GitHub repositories\nLive demos\nActive code commits\nFeatures implemented",
                 position: { align: "right", top: "60%", left: "60%", rotate: "-3deg" }
             }
         ],
-        projectIds: [2, 5, 8]
+        projectIds: [2, 3, 4, 5]
     },
 
     // Desktop Developer
@@ -315,27 +319,27 @@ export const DEVELOPERS = [
         },
         infoCards: [
             {
-                heading: "Desktop Development",
-                description: "Creating powerful desktop applications with native performance and system-level access. Specializing in Electron, Qt, and native frameworks for building professional-grade tools and utilities.",
+                heading: "Tech Stack",
+                description: "C#\nFlutter Desktop\nRust",
                 position: { align: "left", top: "20%", left: "15%", rotate: "-6deg" }
             },
             {
-                heading: "Advantages",
-                description: "Full system access and native performance. Offline-first capabilities. Better resource management. Advanced file system operations. Integration with OS-level features. Professional tooling support.",
+                heading: "What I Build",
+                description: "Business tools\nPOS systems\nCross-platform desktop apps",
                 position: { align: "left", top: "55%", left: "20%", rotate: "4deg" }
             },
             {
-                heading: "Challenges",
-                description: "Platform-specific builds and testing. Distribution and update management. Larger installation footprint. OS compatibility maintenance. Code signing and security certificates required.",
+                heading: "Engineering Approach",
+                description: "Clean architecture\nModular system design\nState management\nComponent reusability\nPerformance optimization\nError handling & validation",
                 position: { align: "right", top: "25%", left: "65%", rotate: "5deg" }
             },
             {
-                heading: "Future Outlook",
-                description: "Cross-platform frameworks maturing rapidly. Cloud-desktop hybrid applications emerging. AI-powered development assistants. WebAssembly enabling web-to-desktop transitions. Growing demand for specialized tools.",
+                heading: "Proof of Work",
+                description: "GitHub repositories\nLive desktop builds\nCore features implemented\nOngoing development activity",
                 position: { align: "right", top: "60%", left: "60%", rotate: "-3deg" }
             }
         ],
-        projectIds: [3, 6, 9]
+        projectIds: [6]
     }
 ];
 

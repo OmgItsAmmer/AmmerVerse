@@ -37,24 +37,28 @@
   gap: 0.5rem;
 }
 
-.nav-btn:hover {
-  background: rgba(183, 148, 246, 0.2);
-  border-color: #B794F6;
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(183, 148, 246, 0.2);
-}
-
 .nav-arrow {
   font-size: 1.2rem;
   line-height: 1;
   transition: transform 0.3s ease;
 }
 
-.prev-btn:hover .nav-arrow {
-  transform: translateX(-3px);
-}
+/* Mobile Navigation Buttons */
+@media (max-width: 768px) {
+  .navigation-buttons-container {
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    gap: 1rem;
+    justify-content: center;
+  }
 
-.next-btn:hover .nav-arrow {
-  transform: translateX(3px);
-}
+  .nav-btn {
+    padding: 0.7rem 1.2rem;
+    font-size: 0.85rem;
+  }
 
+  .nav-arrow {
+    font-size: 1rem;
+  }
+}

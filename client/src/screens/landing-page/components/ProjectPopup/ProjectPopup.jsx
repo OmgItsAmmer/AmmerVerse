@@ -1,4 +1,4 @@
-import { useState } from 'react';
+    import { useState } from 'react';
 import './ProjectPopup.css';
 
 // Project Popup Component
@@ -81,7 +81,10 @@ export default function ProjectPopup({ project, onClose }) {
                             )}
                             <div 
                                 className="slider-container"
-                                style={{ transform: `translateX(-${currentImageIndex * 100}%)` }}
+                                style={{ 
+                                    width: `${allImages.length * 100}%`,
+                                    transform: `translateX(-${(currentImageIndex * 100) / allImages.length}%)`
+                                }}
                             >
                                 {allImages.map((image, index) => (
                                     <div

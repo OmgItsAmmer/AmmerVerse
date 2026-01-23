@@ -49,9 +49,6 @@
   transition: opacity 0.3s ease;
 }
 
-.navbar-logo:hover {
-  opacity: 0.8;
-}
 
 .logo-text {
   text-transform: uppercase;
@@ -75,10 +72,6 @@
   position: relative;
 }
 
-.nav-link:hover {
-  color: #FFFFFF;
-}
-
 .nav-link::after {
   content: '';
   position: absolute;
@@ -90,19 +83,10 @@
   transition: width 0.3s ease;
 }
 
-.nav-link:hover::after {
-  width: 100%;
-}
-
 .dropdown-icon {
   font-size: 0.7rem;
   opacity: 0.6;
   transition: transform 0.3s ease;
-}
-
-.nav-link:hover .dropdown-icon {
-  opacity: 1;
-  transform: translateY(2px);
 }
 
 /* Starfield Background */
@@ -343,9 +327,48 @@
   }
 }
 
+
+/* Additional Mobile Responsiveness */
+@media (max-width: 768px) {
+  /* Ensure proper stacking context on mobile */
+  .landing-container {
+    touch-action: pan-y;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Adjust navbar for mobile */
+  .navbar {
+    padding: 1rem 1.5rem;
+  }
+
+  .navbar-logo {
+    font-size: 0.9rem;
+  }
+
+  /* Hide avatar row in projects mode on mobile */
+  .avatar-row.projects-mode {
+    display: none;
+  }
+
+  /* Ensure cards are properly centered on mobile */
+  .info-cards-container,
+  .project-cards-container {
+    padding: 0 10px;
+  }
+
+  /* Prevent overlap between avatar and info cards in selected mode */
+  .mobile-avatar-selected {
+    z-index: 30;
+  }
+
+  .mobile-info-cards {
+    z-index: 40;
+  }
+}
+
 .avatar-row {
   position: absolute;
-  top: 50%;
+  top: 60%;
   left: 50%;
   transform: translate(-50%, -50%);
   display: flex;
@@ -369,26 +392,14 @@
   transform-style: preserve-3d;
 }
 
-.avatar-image-wrapper:hover {
-  transform: translateY(-10px);
-}
-
 /* Left avatar - 3D rotate on Y axis */
 .avatar-row .avatar-image-wrapper:first-child {
   transform: rotateY(-25deg);
 }
 
-.avatar-row .avatar-image-wrapper:first-child:hover {
-  transform: rotateY(-25deg) translateY(-10px);
-}
-
 /* Right avatar - 3D rotate on Y axis */
 .avatar-row .avatar-image-wrapper:last-child {
   transform: rotateY(25deg);
-}
-
-.avatar-row .avatar-image-wrapper:last-child:hover {
-  transform: rotateY(25deg) translateY(-10px);
 }
 
 .avatar-image {
@@ -400,10 +411,6 @@
   filter: drop-shadow(0 0 0px transparent);
 }
 
-.avatar-image-wrapper:hover .avatar-image {
-  transform: scale(1.1);
-  filter: drop-shadow(0 15px 30px rgba(184, 148, 246, 0.4)) drop-shadow(0 0 25px rgba(232, 121, 249, 0.3));
-}
 
 /* Middle avatar slightly larger */
 .avatar-row .avatar-image-wrapper:nth-child(2) {
@@ -494,21 +501,9 @@
   letter-spacing: 1px;
 }
 
-.outline-button:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: #fff;
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-}
-
 .outline-button.primary {
   border-color: #B794F6;
   color: #B794F6;
-}
-
-.outline-button.primary:hover {
-  background: rgba(183, 148, 246, 0.1);
-  box-shadow: 0 5px 15px rgba(183, 148, 246, 0.2);
 }
 
 /* Info Cards Container */
@@ -653,11 +648,6 @@
   z-index: 60;
 }
 
-.carousel-arrow:hover {
-  background: rgba(183, 148, 246, 0.3);
-  border-color: #B794F6;
-  transform: scale(1.1);
-}
 
 .carousel-arrow.left {
   margin-right: 1rem;
@@ -680,10 +670,6 @@
   transition: transform 0.4s ease;
 }
 
-.mobile-card:hover .mobile-card-inner {
-  transform: translateY(-10px);
-  border-color: #B794F6;
-}
 
 .mobile-card-screen {
   width: 100%;
@@ -705,9 +691,6 @@
   transition: color 0.3s;
 }
 
-.mobile-card:hover .placeholder-text {
-  color: #B794F6;
-}
 
 .mobile-card-notch {
   position: absolute;
@@ -743,9 +726,6 @@
   transition: color 0.3s ease;
 }
 
-.back-to-home-btn:hover {
-  color: #fff;
-}
 
 /* Project Popup */
 .project-popup-overlay {
@@ -816,9 +796,6 @@
   transition: color 0.3s;
 }
 
-.popup-close-btn:hover {
-  color: #B794F6;
-}
 
 .popup-image-slider {
   width: 100%;
@@ -1006,10 +983,6 @@
   color: #aaa;
 }
 
-.show-more-btn:hover {
-  border-color: #fff;
-  color: #fff;
-}
 
 .social-buttons-container {
   display: flex;
@@ -1030,24 +1003,6 @@
   background: rgba(255, 255, 255, 0.05);
 }
 
-.social-btn:hover {
-  transform: translateY(-3px);
-}
-
-.social-btn.upwork:hover {
-  background: #6fda44;
-  border-color: #6fda44;
-}
-
-.social-btn.whatsapp:hover {
-  background: #25D366;
-  border-color: #25D366;
-}
-
-.social-btn.linkedin:hover {
-  background: #0077b5;
-  border-color: #0077b5;
-}
 
 @keyframes slideInUp {
   from {
@@ -1105,10 +1060,6 @@
   cursor: grabbing;
 }
 
-.info-card:hover {
-  border-color: rgba(183, 148, 246, 0.5);
-  background: rgba(30, 30, 30, 0.8);
-}
 
 .info-card-title {
   font-family: 'Inter', sans-serif;
@@ -1163,12 +1114,6 @@
   z-index: 20;
 }
 
-.avatar-image-wrapper:hover .avatar-label {
-  opacity: 1;
-  transform: translateX(-50%) translateY(-5px);
-  color: #B794F6;
-  text-shadow: 0 0 15px rgba(183, 148, 246, 0.6);
-}
 
 .avatar-image-wrapper.selected .avatar-label {
   opacity: 1;
@@ -1212,25 +1157,10 @@
   gap: 0.5rem;
 }
 
-.nav-btn:hover {
-  background: rgba(183, 148, 246, 0.2);
-  border-color: #B794F6;
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(183, 148, 246, 0.2);
-}
-
 .nav-arrow {
   font-size: 1.2rem;
   line-height: 1;
   transition: transform 0.3s ease;
-}
-
-.prev-btn:hover .nav-arrow {
-  transform: translateX(-3px);
-}
-
-.next-btn:hover .nav-arrow {
-  transform: translateX(3px);
 }
 
 /* Project Cards Styles */
@@ -1274,11 +1204,6 @@
   pointer-events: auto;
 }
 
-.project-pagination-arrow:hover {
-  background: rgba(183, 148, 246, 0.3);
-  border-color: #B794F6;
-  transform: translateY(-50%) scale(1.1);
-}
 
 .project-pagination-arrow.left {
   left: 45%;
@@ -1305,10 +1230,6 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.project-card-wrapper:hover .project-card-inner {
-  box-shadow: 0 30px 60px rgba(183, 148, 246, 0.2);
-  border-color: rgba(183, 148, 246, 0.5);
-}
 
 .project-preview {
   width: 100%;
@@ -1518,10 +1439,6 @@
   width: max-content;
 }
 
-.project-card-wrapper:hover .project-info-tooltip {
-  opacity: 1;
-  bottom: -70px;
-}
 
 .project-info-tooltip h4 {
   margin: 0;
@@ -1543,12 +1460,4 @@
 
 .tilt-right .mobile-card-inner {
   transform: rotate(5deg);
-}
-
-.tilt-left:hover .mobile-card-inner {
-  transform: rotate(-5deg) translateY(-10px);
-}
-
-.tilt-right:hover .mobile-card-inner {
-  transform: rotate(5deg) translateY(-10px);
 }

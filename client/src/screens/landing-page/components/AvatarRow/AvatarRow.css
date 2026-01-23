@@ -1,7 +1,7 @@
 /* Avatar Row Styles */
 .avatar-row {
   position: absolute;
-  top: 50%;
+  top: 55%;
   left: 50%;
   transform: translate(-50%, -50%);
   display: flex;
@@ -43,3 +43,73 @@
   transform: none;
 }
 
+/* Mobile Avatar Row Styles */
+.mobile-avatar-row {
+  width: 90%;
+  max-width: 400px;
+  justify-content: space-between;
+  gap: 1rem;
+  top: 45%;
+  animation: fadeIn 1.5s ease-out;
+}
+
+.mobile-avatar-wrapper {
+  flex: 0 0 auto;
+  width: 200px;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobile-avatar-arrow {
+  flex-shrink: 0;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  font-size: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+  pointer-events: auto;
+  z-index: 30;
+}
+
+
+.mobile-avatar-arrow:active {
+  transform: scale(0.95);
+}
+
+/* Mobile Selected Avatar */
+.mobile-avatar-selected {
+  top: 10%;
+  width: 80%;
+  max-width: 250px;
+  z-index: 30;
+}
+
+/* Mobile Avatar Image Adjustments */
+@media (max-width: 768px) {
+  .avatar-row:not(.mobile-avatar-row):not(.mobile-avatar-selected) {
+    display: none;
+  }
+
+  .mobile-avatar-row .avatar-image-wrapper,
+  .mobile-avatar-selected .avatar-image-wrapper {
+    width: 200px !important;
+    height: 280px !important;
+    transform: none !important;
+  }
+
+
+  .mobile-avatar-selected .avatar-image-wrapper {
+    width: 180px !important;
+    height: 240px !important;
+  }
+}

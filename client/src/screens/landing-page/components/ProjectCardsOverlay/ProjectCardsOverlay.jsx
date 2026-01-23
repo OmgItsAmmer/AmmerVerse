@@ -1,13 +1,16 @@
 import { useRef, useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import ProjectCard from '../ProjectCard';
-import { PROJECTS } from '../constants.js';
-import { AnimatePresence } from 'framer-motion';
+import { PROJECTS } from '../../data/developerModels.js';
+import { useIsMobile } from '../../../../hooks/useMediaQuery';
 import './ProjectCardsOverlay.css';
 
 // Project Cards Overlay Component
 export default function ProjectCardsOverlay({ viewMode, onProjectClick, selectedAvatar }) {
     const containerRef = useRef(null);
     const [currentPage, setCurrentPage] = useState(0);
+    const [direction, setDirection] = useState(0);
+    const isMobile = useIsMobile();
 
     if (viewMode !== 'projects') return null;
 
@@ -23,16 +26,119 @@ export default function ProjectCardsOverlay({ viewMode, onProjectClick, selected
     const totalPages = filteredProjects.length;
 
     const handleNext = () => {
+        setDirection(1);
         setCurrentPage((prev) => (prev + 1) % totalPages);
     };
 
     const handlePrev = () => {
+        setDirection(-1);
         setCurrentPage((prev) => (prev - 1 + totalPages) % totalPages);
     };
 
     // Get the current project (1 project per page)
     const currentProject = filteredProjects[currentPage];
 
+    // Mobile View: Full Screen Single Card
+    if (isMobile) {
+        return (
+            <div className="project-cards-container mobile-project-cards" ref={containerRef}>
+                {/* Pagination Arrows */}
+                {totalPages > 1 && (
+                    <>
+                        <button type="button" className="mobile-project-arrow left" onClick={handlePrev}>
+                            ‹
+                        </button>
+                        <button type="button" className="mobile-project-arrow right" onClick={handleNext}>
+                            ›
+                        </button>
+                    </>
+                )}
+
+                {/* Single Project Card with Animation */}
+                <AnimatePresence mode='wait' initial={false} custom={direction}>
+                    {currentProject && (
+                        <motion.div
+                            key={currentProject.id}
+                            custom={direction}
+                            variants={{
+                                enter: (direction) => ({
+                                    x: direction > 0 ? 300 : -300,
+                                    opacity: 0,
+                                    scale: 0.8,
+                                }),
+                                center: {
+                                    zIndex: 1,
+                                    x: 0,
+                                    opacity: 1,
+                                    scale: 1,
+                                },
+                                exit: (direction) => ({
+                                    zIndex: 0,
+                                    x: direction < 0 ? 300 : -300,
+                                    opacity: 0,
+                                    scale: 0.8,
+                                }),
+                            }}
+                            initial="enter"
+                            animate="center"
+                            exit="exit"
+                            transition={{
+                                x: { type: 'spring', stiffness: 300, damping: 30 },
+                                opacity: { duration: 0.2 },
+                                scale: { duration: 0.3 },
+                            }}
+                            className="mobile-project-wrapper"
+                            drag="x"
+                            dragConstraints={{ left: 0, right: 0 }}
+                            dragElastic={1}
+                            onDragEnd={(e, { offset, velocity }) => {
+                                const swipe = Math.abs(offset.x) * velocity.x;
+                                if (swipe < -500) {
+                                    handleNext();
+                                } else if (swipe > 500) {
+                                    handlePrev();
+                                }
+                            }}
+                        >
+                            <ProjectCard
+                                project={currentProject}
+                                category={category}
+                                onClick={onProjectClick}
+                                containerRef={containerRef}
+                                top="50%"
+                                left="50%"
+                                rotate="0deg"
+                            />
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+
+                {/* Project Indicators */}
+                {totalPages > 1 && (
+                    <div className="project-indicators">
+                        {filteredProjects.map((_, index) => (
+                            <button
+                                key={index}
+                                className={`project-indicator ${index === currentPage ? 'active' : ''}`}
+                                onClick={() => {
+                                    setDirection(index > currentPage ? 1 : -1);
+                                    setCurrentPage(index);
+                                }}
+                            />
+                        ))}
+                    </div>
+                )}
+
+                {filteredProjects.length === 0 && (
+                    <div className="no-projects-message">
+                        <h3>No projects found for this category.</h3>
+                    </div>
+                )}
+            </div>
+        );
+    }
+
+    // Desktop View: Original behavior with 2 cards
     // Define positions for 2 screens based on category
     const getPositions = (category) => {
         if (category === 'mobile') {

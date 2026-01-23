@@ -10,6 +10,7 @@ import ProjectCardsOverlay from './components/ProjectCardsOverlay';
 import ProjectPopup from './components/ProjectPopup';
 import MessagePopup from './components/MessagePopup';
 import NavigationButtons from './components/NavigationButtons';
+import WelcomeText from './components/WelcomeText';
 // import MobileCardsCarousel from './components/MobileCardsCarousel';
 
 // Main landing page component
@@ -18,6 +19,8 @@ export default function LandingPage() {
   const [viewMode, setViewMode] = useState('default'); // 'default', 'selected', 'projects'
   const [selectedProject, setSelectedProject] = useState(null);
   const [isMessagePopupOpen, setIsMessagePopupOpen] = useState(false);
+  // Initialize mobile avatar to 1 (avatar #2) by default
+  const [currentMobileAvatar, setCurrentMobileAvatar] = useState(1);
 
   //This is the function which uses two reactive variables to determine the state of the application
   const handleAvatarClick = (index) => {
@@ -76,6 +79,9 @@ export default function LandingPage() {
       {/* Starfield background */}
       <Starfield />
 
+      {/* Welcome Text */}
+      <WelcomeText viewMode={viewMode} />
+
       {/* Avatar Images Row */}
       <AvatarRow
         selectedAvatar={selectedAvatar}
@@ -84,6 +90,8 @@ export default function LandingPage() {
         onGoBack={handleGoBack}
         onShowProjects={handleShowProjects}
         onMessageClick={() => setIsMessagePopupOpen(true)}
+        currentMobileAvatar={currentMobileAvatar}
+        onMobileAvatarChange={setCurrentMobileAvatar}
       />
 
       {/* Info Cards Overlay (Only in Selected Mode) */}

@@ -34,10 +34,6 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.project-card-wrapper:hover .project-card-inner {
-  box-shadow: 0 30px 60px rgba(183, 148, 246, 0.2);
-  border-color: rgba(183, 148, 246, 0.5);
-}
 
 .project-preview {
   width: 100%;
@@ -46,6 +42,17 @@
   justify-content: center;
   align-items: center;
   background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+  overflow: hidden;
+}
+
+/* Remove background when image is present */
+.project-preview:has(.project-image-preview) {
+  background: #000;
+}
+
+/* Ensure phone card preview takes full height minus notch and home bar */
+.phone-card .project-preview {
+  height: calc(100% - 30px);
 }
 
 .project-title-preview {
@@ -82,6 +89,9 @@
   height: 100%;
   background: #111;
   padding-top: 25px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .phone-home-bar {
@@ -207,12 +217,43 @@
   align-items: center;
 }
 
-/* Desktop project image should fully fit inside the card */
+/* Project image preview - base styles */
 .project-image-preview {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
+
+/* Phone card specific image styling */
+.phone-card .project-image-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0;
+  min-height: 200px;
+  background: #0a0a0a;
+}
+
+/* Browser card specific image styling */
+.browser-card .project-image-preview {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  display: block;
+  border-radius: 0;
+  padding: 1rem;
+}
+
+/* Desktop card specific image styling */
+.desktop-card .project-image-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #1a1a1a;
+  padding: 1rem;
+  min-height: 200px;
 }
 
 /* Default Card Style */
@@ -247,10 +288,6 @@
   width: max-content;
 }
 
-.project-card-wrapper:hover .project-info-tooltip {
-  opacity: 1;
-  bottom: -70px;
-}
 
 .project-info-tooltip h4 {
   margin: 0;
@@ -274,11 +311,4 @@
   transform: rotate(5deg);
 }
 
-.tilt-left:hover .mobile-card-inner {
-  transform: rotate(-5deg) translateY(-10px);
-}
-
-.tilt-right:hover .mobile-card-inner {
-  transform: rotate(5deg) translateY(-10px);
-}
 

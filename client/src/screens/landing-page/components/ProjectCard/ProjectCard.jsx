@@ -4,17 +4,30 @@ import { motion } from 'framer-motion';
 import './ProjectCard.css';
 
 // Sub-components for different card types
-const PhoneCard = ({ project }) => (
-    <div className="project-card-inner phone-card">
-        <div className="phone-notch"></div>
-        <div className="phone-screen">
-            <div className="project-preview">
-                <span className="project-title-preview">{project.name}</span>
+const PhoneCard = ({ project }) => {
+    console.log('PhoneCard:', project.name, 'has thumbnail:', !!project.thumbnail, project.thumbnail);
+    return (
+        <div className="project-card-inner phone-card">
+            <div className="phone-notch"></div>
+            <div className="phone-screen">
+                <div className="project-preview">
+                    {project.thumbnail ? (
+                        <img
+                            src={project.thumbnail}
+                            alt={project.name}
+                            className="project-image-preview"
+                            onLoad={() => console.log('PhoneCard image loaded:', project.name)}
+                            onError={(e) => console.error('PhoneCard image failed to load:', project.name, e)}
+                        />
+                    ) : (
+                        <span className="project-title-preview">{project.name}</span>
+                    )}
+                </div>
             </div>
+            <div className="phone-home-bar"></div>
         </div>
-        <div className="phone-home-bar"></div>
-    </div>
-);
+    );
+};
 
 const BrowserCard = ({ project }) => (
     <div className="project-card-inner browser-card">
@@ -30,28 +43,9 @@ const BrowserCard = ({ project }) => (
         </div>
         <div className="browser-content">
             <div className="project-preview">
-                <span className="project-title-preview">{project.name}</span>
-            </div>
-        </div>
-    </div>
-);
-
-const DesktopCard = ({ project }) => (
-    <div className="project-card-inner desktop-card">
-        <div className="desktop-title-bar">
-            <span className="desktop-app-title">{project.name}</span>
-            <div className="desktop-controls">
-                <span>_</span>
-                <span>□</span>
-                <span>×</span>
-            </div>
-        </div>
-        <div className="desktop-content">
-            
-            <div className="project-main-area">
-                {project.images && project.images.length > 0 ? (
+                {project.thumbnail ? (
                     <img
-                        src={project.images[0]}
+                        src={project.thumbnail}
                         alt={project.name}
                         className="project-image-preview"
                     />
@@ -62,6 +56,38 @@ const DesktopCard = ({ project }) => (
         </div>
     </div>
 );
+
+const DesktopCard = ({ project }) => {
+    console.log('DesktopCard:', project.name, 'has thumbnail:', !!project.thumbnail, project.thumbnail);
+    return (
+        <div className="project-card-inner desktop-card">
+            <div className="desktop-title-bar">
+                <span className="desktop-app-title">{project.name}</span>
+                <div className="desktop-controls">
+                    <span>_</span>
+                    <span>□</span>
+                    <span>×</span>
+                </div>
+            </div>
+            <div className="desktop-content">
+                
+                <div className="project-main-area">
+                    {project.thumbnail ? (
+                        <img
+                            src={project.thumbnail}
+                            alt={project.name}
+                            className="project-image-preview"
+                            onLoad={() => console.log('DesktopCard image loaded:', project.name)}
+                            onError={(e) => console.error('DesktopCard image failed to load:', project.name, e)}
+                        />
+                    ) : (
+                        <span className="project-title-preview">{project.name}</span>
+                    )}
+                </div>
+            </div>
+        </div>
+    );
+};
 
 const DefaultCard = ({ project }) => (
     <div className="project-card-inner default-card">
@@ -116,36 +142,38 @@ export default function ProjectCard({ project, onClick, top, left, rotate, categ
             ? 'desktop-card-wrapper'
             : '';
 
+    // Check if this is within a mobile wrapper (simplified check)
+    const isMobileView = top === '50%' && left === '50%' && rotate === '0deg';
+
     return (
         <motion.div
             className={`project-card-wrapper ${isWide ? 'wide' : ''} ${categoryClass}`}
             style={{
-                top,
-                left,
-                rotate,
+                top: isMobileView ? undefined : top,
+                left: isMobileView ? undefined : left,
+                rotate: isMobileView ? undefined : rotate,
                 zIndex,
-                position: 'absolute'
+                position: isMobileView ? 'relative' : 'absolute'
             }}
-            onMouseDown={updateZIndex}
+            onMouseDown={isMobileView ? undefined : updateZIndex}
             onClick={() => onClick(project)}
-            whileHover={{ scale: 1.05, cursor: 'pointer' }}
             initial={{ opacity: 0, scale: 0.8, y: 0 }}
             animate={{
                 opacity: 1,
                 scale: 1,
-                y: [0, -10, 0],
-                x: [0, 5, 0]
+                y: isMobileView ? 0 : [0, -10, 0],
+                x: isMobileView ? 0 : [0, 5, 0]
             }}
             transition={{
                 duration: 0.5, // Entry animation
-                y: {
+                y: isMobileView ? undefined : {
                     duration: 3 + Math.random() * 2,
                     repeat: Infinity,
                     repeatType: "reverse",
                     ease: "easeInOut",
                     delay: Math.random() * 2
                 },
-                x: {
+                x: isMobileView ? undefined : {
                     duration: 4 + Math.random() * 2, // Slightly different duration for organic feel
                     repeat: Infinity,
                     repeatType: "reverse",

@@ -2,17 +2,18 @@
 .mobile-card-popup-content {
   width: 900px;
   height: 80vh;
-  background: #111;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(15, 15, 20, 0.85);
+  border: 1px solid rgba(183, 148, 246, 0.3);
   border-radius: 20px;
   position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7);
+  box-shadow: 0 0 50px rgba(183, 148, 246, 0.15), inset 0 0 20px rgba(183, 148, 246, 0.05);
   animation: scaleIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   padding: 4rem;
+  backdrop-filter: blur(20px);
 }
 
 @keyframes scaleIn {
@@ -57,7 +58,94 @@
   outline: none;
   border-color: #B794F6;
   background: rgba(255, 255, 255, 0.08);
-  box-shadow: 0 0 20px rgba(183, 148, 246, 0.1);
+  box-shadow: 0 0 20px rgba(183, 148, 246, 0.2);
+}
+
+/* Contact Back Field */
+.contact-back-field {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.contact-back-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  color: #EAEAEA;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.contact-type-toggle {
+  display: flex;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 0.3rem;
+  position: relative;
+}
+
+.toggle-option {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.5rem;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.6);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.toggle-option svg {
+  width: 18px;
+  height: 18px;
+  transition: all 0.3s ease;
+}
+
+.toggle-option.active {
+  background: rgba(183, 148, 246, 0.2);
+  color: #B794F6;
+  box-shadow: 0 0 15px rgba(183, 148, 246, 0.2);
+}
+
+.toggle-option.active svg {
+  color: #B794F6;
+}
+
+
+.contact-input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  padding: 1.5rem;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+}
+
+.contact-input:focus {
+  outline: none;
+  border-color: #B794F6;
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 20px rgba(183, 148, 246, 0.2);
+}
+
+.contact-input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
 }
 
 .send-btn {
@@ -66,48 +154,24 @@
   justify-content: center;
   font-size: 1.2rem;
   padding: 1.2rem;
-}
-
-.show-more-btn {
-  margin-top: 1rem;
-  font-size: 0.9rem;
-  padding: 0.5rem 1.5rem;
-  border-color: rgba(255, 255, 255, 0.3);
-  color: #aaa;
-}
-
-.show-more-btn:hover {
-  border-color: #fff;
-  color: #fff;
-}
-
-.outline-button {
-  background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  color: #fff;
-  padding: 0.8rem 2rem;
-  border-radius: 30px;
-  font-family: 'Inter', sans-serif;
-  font-size: 0.9rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(5px);
+  background: #fff;
+  color: #000;
+  border: none;
+  border-radius: 50px;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1px;
+  transition: all 0.3s ease;
+  cursor: pointer;
 }
 
-.outline-button:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: #fff;
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-}
 
 .social-buttons-container {
   display: flex;
   gap: 1.5rem;
-  margin-top: 1.5rem;
+  margin-top: 1rem;
+  width: 100%;
+  justify-content: center;
   animation: slideInUp 0.3s ease-out;
 }
 
@@ -123,33 +187,24 @@
 }
 
 .social-btn {
-  padding: 0.8rem 1.5rem;
-  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
   text-decoration: none;
-  font-weight: 600;
-  font-family: 'Inter', sans-serif;
   transition: all 0.3s ease;
   color: #fff;
   border: 1px solid rgba(255, 255, 255, 0.1);
   background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(5px);
 }
 
-.social-btn:hover {
-  transform: translateY(-3px);
+.social-btn svg {
+  width: 24px;
+  height: 24px;
+  transition: all 0.3s ease;
 }
 
-.social-btn.upwork:hover {
-  background: #6fda44;
-  border-color: #6fda44;
-}
-
-.social-btn.whatsapp:hover {
-  background: #25D366;
-  border-color: #25D366;
-}
-
-.social-btn.linkedin:hover {
-  background: #0077b5;
-  border-color: #0077b5;
-}
 

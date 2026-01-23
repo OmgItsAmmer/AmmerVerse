@@ -23,22 +23,24 @@ export default function InfoCard({ title, content, align, containerRef, top, lef
         setZIndex(maxZIndex + 1);
     };
 
+    // Check if this is a mobile card (className includes 'mobile-info-card')
+    const isMobileCard = className && className.includes('mobile-info-card');
+
     return (
         <motion.div
             className={`info-card ${align} ${className || ''}`}
             style={{
-                top,
-                left,
-                rotate,
+                top: isMobileCard ? undefined : top,
+                left: isMobileCard ? undefined : left,
+                rotate: isMobileCard ? undefined : rotate,
                 zIndex,
-                position: 'absolute'
+                position: isMobileCard ? 'relative' : 'absolute'
             }}
-            drag
-            dragConstraints={containerRef}
-            dragElastic={0.65}
-            onMouseDown={updateZIndex}
-            whileHover={{ scale: 1.05, cursor: 'grab' }}
-            whileDrag={{ scale: 1.1, cursor: 'grabbing' }}
+            drag={!isMobileCard}
+            dragConstraints={isMobileCard ? undefined : containerRef}
+            dragElastic={isMobileCard ? undefined : 0.65}
+            onMouseDown={isMobileCard ? undefined : updateZIndex}
+            whileDrag={isMobileCard ? undefined : { scale: 1.1, cursor: 'grabbing' }}
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5 }}

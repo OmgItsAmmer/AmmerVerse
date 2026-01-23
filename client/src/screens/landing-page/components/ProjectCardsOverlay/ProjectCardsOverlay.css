@@ -31,11 +31,6 @@
   pointer-events: auto;
 }
 
-.project-pagination-arrow:hover {
-  background: rgba(183, 148, 246, 0.3);
-  border-color: #B794F6;
-  transform: translateY(-50%) scale(1.1);
-}
 
 .project-pagination-arrow.left {
   left: 45%;
@@ -61,3 +56,107 @@
   color: #888;
 }
 
+/* Mobile Project Cards */
+.mobile-project-cards {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: auto;
+}
+
+.mobile-project-wrapper {
+  position: relative;
+  width: 90%;
+  max-width: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: auto;
+}
+
+.mobile-project-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  font-size: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+  pointer-events: auto;
+  z-index: 150;
+}
+
+.mobile-project-arrow.left {
+  left: 10px;
+}
+
+.mobile-project-arrow.right {
+  right: 10px;
+}
+
+
+.mobile-project-arrow:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+/* Project Indicators */
+.project-indicators {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  z-index: 150;
+  pointer-events: auto;
+}
+
+.project-indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+}
+
+.project-indicator.active {
+  background: #B794F6;
+  border-color: #B794F6;
+  transform: scale(1.3);
+}
+
+
+/* Mobile Project Card Size Adjustments */
+@media (max-width: 768px) {
+  .mobile-project-wrapper .project-card-wrapper {
+    position: relative !important;
+    transform: none !important;
+    left: auto !important;
+    top: auto !important;
+    margin: 0 auto;
+  }
+
+  /* Adjust card sizes for mobile */
+  .mobile-project-wrapper .mobile-card-wrapper {
+    width: 220px !important;
+    height: 400px !important;
+  }
+
+  .mobile-project-wrapper .project-card-wrapper.wide {
+    width: 100% !important;
+    max-width: 350px !important;
+    height: 450px !important;
+  }
+}
