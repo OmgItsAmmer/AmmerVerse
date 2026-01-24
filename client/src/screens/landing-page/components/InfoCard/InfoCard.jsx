@@ -40,6 +40,7 @@ export default function InfoCard({ title, content, align, containerRef, top, lef
             dragConstraints={isMobileCard ? undefined : containerRef}
             dragElastic={isMobileCard ? undefined : 0.65}
             onMouseDown={isMobileCard ? undefined : updateZIndex}
+            whileHover={isMobileCard ? undefined : { scale: 1.05, cursor: 'grab' }}
             whileDrag={isMobileCard ? undefined : { scale: 1.1, cursor: 'grabbing' }}
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}

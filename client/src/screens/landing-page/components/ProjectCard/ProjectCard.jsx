@@ -157,6 +157,7 @@ export default function ProjectCard({ project, onClick, top, left, rotate, categ
             }}
             onMouseDown={isMobileView ? undefined : updateZIndex}
             onClick={() => onClick(project)}
+            whileHover={{ scale: 1.05, cursor: 'pointer' }}
             initial={{ opacity: 0, scale: 0.8, y: 0 }}
             animate={{
                 opacity: 1,

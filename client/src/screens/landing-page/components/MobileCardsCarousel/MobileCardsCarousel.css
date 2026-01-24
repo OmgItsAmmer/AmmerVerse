@@ -120,6 +120,11 @@
   z-index: 60;
 }
 
+.carousel-arrow:hover {
+  background: rgba(183, 148, 246, 0.3);
+  border-color: #B794F6;
+  transform: scale(1.1);
+}
 
 .carousel-arrow.left {
   margin-right: 1rem;
@@ -142,6 +147,10 @@
   transition: transform 0.4s ease;
 }
 
+.mobile-card:hover .mobile-card-inner {
+  transform: translateY(-10px);
+  border-color: #B794F6;
+}
 
 .mobile-card-screen {
   width: 100%;
@@ -163,6 +172,9 @@
   transition: color 0.3s;
 }
 
+.mobile-card:hover .placeholder-text {
+  color: #B794F6;
+}
 
 .mobile-card-notch {
   position: absolute;
@@ -198,4 +210,7 @@
   transition: color 0.3s ease;
 }
 
+.back-to-home-btn:hover {
+  color: #fff;
+}
 

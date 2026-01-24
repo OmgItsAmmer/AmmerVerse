@@ -11,6 +11,7 @@ import ProjectPopup from './components/ProjectPopup';
 import MessagePopup from './components/MessagePopup';
 import NavigationButtons from './components/NavigationButtons';
 import WelcomeText from './components/WelcomeText';
+import EarthModel from './components/EarthModel';
 // import MobileCardsCarousel from './components/MobileCardsCarousel';
 
 // Main landing page component
@@ -21,6 +22,8 @@ export default function LandingPage() {
   const [isMessagePopupOpen, setIsMessagePopupOpen] = useState(false);
   // Initialize mobile avatar to 1 (avatar #2) by default
   const [currentMobileAvatar, setCurrentMobileAvatar] = useState(1);
+  // Earth zoom state
+  const [isEarthZoomed, setIsEarthZoomed] = useState(false);
 
   //This is the function which uses two reactive variables to determine the state of the application
   const handleAvatarClick = (index) => {
@@ -71,68 +74,88 @@ export default function LandingPage() {
     setSelectedProject(project);
   };
 
+  const handleEarthClick = () => {
+    setIsEarthZoomed(true);
+  };
+
+  const handleEarthClose = () => {
+    setIsEarthZoomed(false);
+  };
+
   return (
     <div className="landing-container">
-      {/* Navbar */}
-      <Navbar />
-
-      {/* Starfield background */}
-      <Starfield />
-
-      {/* Welcome Text */}
-      <WelcomeText viewMode={viewMode} />
-
-      {/* Avatar Images Row */}
-      <AvatarRow
-        selectedAvatar={selectedAvatar}
-        viewMode={viewMode}
-        onAvatarClick={handleAvatarClick}
-        onGoBack={handleGoBack}
-        onShowProjects={handleShowProjects}
-        onMessageClick={() => setIsMessagePopupOpen(true)}
-        currentMobileAvatar={currentMobileAvatar}
-        onMobileAvatarChange={setCurrentMobileAvatar}
+      {/* Earth Model - Always visible */}
+      <EarthModel 
+        isZoomed={isEarthZoomed} 
+        onEarthClick={handleEarthClick}
+        onClose={handleEarthClose}
       />
 
-      {/* Info Cards Overlay (Only in Selected Mode) */}
-      <InfoCardsOverlay viewMode={viewMode} selectedAvatar={selectedAvatar} />
+      {/* Only show content when Earth is not zoomed */}
+      {!isEarthZoomed && (
+        <>
+          {/* Navbar */}
+          <Navbar />
 
-      {/* Project Cards Overlay (Only in Projects Mode) */}
-      <ProjectCardsOverlay
-        viewMode={viewMode}
-        selectedAvatar={selectedAvatar}
-        onProjectClick={handleProjectClick}
-      />
+          {/* Starfield background */}
+          <Starfield />
 
-      {/* Mobile Cards Carousel (Only in Projects Mode) */}
-      {/* <MobileCardsCarousel
-        viewMode={viewMode}
-        selectedAvatar={selectedAvatar}
-        onProjectClick={handleProjectClick}
-        onGoBack={handleGoBack}
-      /> */}
+          {/* Welcome Text */}
+          <WelcomeText viewMode={viewMode} />
+
+          {/* Avatar Images Row */}
+          <AvatarRow
+            selectedAvatar={selectedAvatar}
+            viewMode={viewMode}
+            onAvatarClick={handleAvatarClick}
+            onGoBack={handleGoBack}
+            onShowProjects={handleShowProjects}
+            onMessageClick={() => setIsMessagePopupOpen(true)}
+            currentMobileAvatar={currentMobileAvatar}
+            onMobileAvatarChange={setCurrentMobileAvatar}
+          />
+
+          {/* Info Cards Overlay (Only in Selected Mode) */}
+          <InfoCardsOverlay viewMode={viewMode} selectedAvatar={selectedAvatar} />
+
+          {/* Project Cards Overlay (Only in Projects Mode) */}
+          <ProjectCardsOverlay
+            viewMode={viewMode}
+            selectedAvatar={selectedAvatar}
+            onProjectClick={handleProjectClick}
+          />
+
+          {/* Mobile Cards Carousel (Only in Projects Mode) */}
+          {/* <MobileCardsCarousel
+            viewMode={viewMode}
+            selectedAvatar={selectedAvatar}
+            onProjectClick={handleProjectClick}
+            onGoBack={handleGoBack}
+          /> */}
 
 
-      {/* Navigation Buttons (Bottom Left) */}
-      <NavigationButtons
-        viewMode={viewMode}
-        onNext={handleNext}
-        onPrev={handlePrev}
-      />
+          {/* Navigation Buttons (Bottom Left) */}
+          <NavigationButtons
+            viewMode={viewMode}
+            onNext={handleNext}
+            onPrev={handlePrev}
+          />
 
-      {/* Project Popup */}
-      {selectedProject && (
-        <ProjectPopup
-          project={selectedProject}
-          onClose={() => setSelectedProject(null)}
-        />
-      )}
+          {/* Project Popup */}
+          {selectedProject && (
+            <ProjectPopup
+              project={selectedProject}
+              onClose={() => setSelectedProject(null)}
+            />
+          )}
 
-      {/* Message Popup */}
-      {isMessagePopupOpen && (
-        <MessagePopup
-          onClose={() => setIsMessagePopupOpen(false)}
-        />
+          {/* Message Popup */}
+          {isMessagePopupOpen && (
+            <MessagePopup
+              onClose={() => setIsMessagePopupOpen(false)}
+            />
+          )}
+        </>
       )}
     </div>
   );

@@ -75,7 +75,7 @@
 
 @media (max-width: 768px) {
   .welcome-text {
-    font-size: 2.75rem;
+    font-size: 2.5rem;
   }
   
   .ammerverse-highlight {
@@ -83,13 +83,13 @@
   }
   
   .welcome-text-container {
-    top: 8%;
+    top: 10%;
   }
 }
 
 @media (max-width: 480px) {
   .welcome-text {
-    font-size: 2.25rem;
+    font-size: 2rem;
   }
   
   .ammerverse-highlight {
@@ -97,6 +97,52 @@
   }
   
   .welcome-text-container {
+    top: 8%;
+  }
+}
+
+@media (max-width: 360px) {
+  .welcome-text {
+    font-size: 1.75rem;
+  }
+  
+  .ammerverse-highlight {
+    font-size: 1.05em;
+  }
+  
+  .welcome-text-container {
+    top: 7%;
+  }
+}
+
+/* Height-based adjustments */
+@media (max-height: 700px) {
+  .welcome-text-container {
+    top: 8%;
+  }
+}
+
+@media (max-height: 600px) {
+  .welcome-text-container {
     top: 6%;
+  }
+
+  .welcome-text {
+    font-size: 1.75rem;
+  }
+}
+
+/* Landscape orientation */
+@media (max-width: 768px) and (orientation: landscape) {
+  .welcome-text-container {
+    top: 5%;
+  }
+
+  .welcome-text {
+    font-size: 1.5rem;
+  }
+
+  .ammerverse-highlight {
+    font-size: 1.1em;
   }
 }

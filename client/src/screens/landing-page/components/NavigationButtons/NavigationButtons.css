@@ -37,28 +37,134 @@
   gap: 0.5rem;
 }
 
+.nav-btn:hover {
+  background: rgba(183, 148, 246, 0.2);
+  border-color: #B794F6;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(183, 148, 246, 0.2);
+}
+
 .nav-arrow {
   font-size: 1.2rem;
   line-height: 1;
   transition: transform 0.3s ease;
 }
 
+.prev-btn:hover .nav-arrow {
+  transform: translateX(-3px);
+}
+
+.next-btn:hover .nav-arrow {
+  transform: translateX(3px);
+}
+
+/* Navigation Icon for Mobile */
+.nav-icon-text {
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+.nav-icon-img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  display: block;
+  filter: brightness(1.2);
+  transition: all 0.3s ease;
+}
+
+.nav-btn:hover .nav-icon-img {
+  filter: brightness(1.5) drop-shadow(0 0 8px rgba(183, 148, 246, 0.6));
+  transform: scale(1.1);
+}
+
 /* Mobile Navigation Buttons */
 @media (max-width: 768px) {
   .navigation-buttons-container {
-    bottom: 2rem;
+    bottom: 1.5rem;
     left: 50%;
     transform: translateX(-50%);
-    gap: 1rem;
+    gap: 1.25rem;
     justify-content: center;
   }
 
   .nav-btn {
-    padding: 0.7rem 1.2rem;
-    font-size: 0.85rem;
+    padding: 0.875rem;
+    min-width: 52px;
+    min-height: 52px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1.5px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .nav-btn:hover {
+    background: rgba(183, 148, 246, 0.25);
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 6px 16px rgba(183, 148, 246, 0.3);
+  }
+
+  .nav-btn:active {
+    transform: translateY(-1px) scale(1);
   }
 
   .nav-arrow {
-    font-size: 1rem;
+    display: none;
+  }
+}
+
+/* Smaller mobile devices */
+@media (max-width: 480px) {
+  .navigation-buttons-container {
+    bottom: 1.25rem;
+    gap: 1rem;
+  }
+
+  .nav-btn {
+    padding: 0.75rem;
+    min-width: 48px;
+    min-height: 48px;
+  }
+
+  .nav-icon-text {
+    font-size: 1.3rem;
+  }
+
+  .nav-icon-img {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+/* Very small devices */
+@media (max-width: 360px) {
+  .navigation-buttons-container {
+    bottom: 1rem;
+    gap: 0.875rem;
+  }
+
+  .nav-btn {
+    padding: 0.625rem;
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .nav-icon-text {
+    font-size: 1.2rem;
+  }
+
+  .nav-icon-img {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+/* Landscape orientation adjustments */
+@media (max-width: 768px) and (orientation: landscape) {
+  .navigation-buttons-container {
+    bottom: 1rem;
   }
 }

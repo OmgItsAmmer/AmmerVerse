@@ -20,3 +20,8 @@ body {
   color: var(--primary-text-color);
   overflow-x: hidden;
 }
+
+::selection {
+  background-color: var(--primary-text-color);
+  color: var(--background-color);
+}

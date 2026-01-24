@@ -34,6 +34,10 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+.project-card-wrapper:hover .project-card-inner {
+  box-shadow: 0 30px 60px rgba(183, 148, 246, 0.2);
+  border-color: rgba(183, 148, 246, 0.5);
+}
 
 .project-preview {
   width: 100%;
@@ -288,6 +292,10 @@
   width: max-content;
 }
 
+.project-card-wrapper:hover .project-info-tooltip {
+  opacity: 1;
+  bottom: -70px;
+}
 
 .project-info-tooltip h4 {
   margin: 0;
@@ -311,4 +319,11 @@
   transform: rotate(5deg);
 }
 
+.tilt-left:hover .mobile-card-inner {
+  transform: rotate(-5deg) translateY(-10px);
+}
+
+.tilt-right:hover .mobile-card-inner {
+  transform: rotate(5deg) translateY(-10px);
+}
 
