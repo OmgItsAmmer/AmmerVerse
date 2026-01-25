@@ -42,7 +42,7 @@ export default function Navbar() {
             <div className="navbar-brand">AmmerVerse</div>
             <div className="navbar-links">
                 <button 
-                    className="nav-link"
+                    className="navbar-dropdown-toggle"
                     onClick={() => setIsMessagePopupOpen(true)}
                 >
                     Contacts
