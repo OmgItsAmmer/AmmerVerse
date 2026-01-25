@@ -4,9 +4,11 @@ import cvPdf from '../assets/Docs/cv.pdf';
 import mobileDevResumePdf from '../assets/Docs/mobile_dev_resume.pdf';
 import webResumePdf from '../assets/Docs/web_resume.pdf';
 import aiResumePdf from '../assets/Docs/AI_resume.pdf';
+import MessagePopup from '../screens/landing-page/components/MessagePopup';
 
 export default function Navbar() {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [isMessagePopupOpen, setIsMessagePopupOpen] = useState(false);
     const dropdownRef = useRef(null);
 
     useEffect(() => {
@@ -39,6 +41,12 @@ export default function Navbar() {
         <nav className="navbar">
             <div className="navbar-brand">AmmerVerse</div>
             <div className="navbar-links">
+                <button 
+                    className="nav-link"
+                    onClick={() => setIsMessagePopupOpen(true)}
+                >
+                    Contacts
+                </button>
                 <div className="navbar-dropdown" ref={dropdownRef}>
                     <button 
                         className="navbar-dropdown-toggle"
@@ -84,6 +92,9 @@ export default function Navbar() {
                     )}
                 </div>
             </div>
+            {isMessagePopupOpen && (
+                <MessagePopup onClose={() => setIsMessagePopupOpen(false)} />
+            )}
         </nav>
     );
 }
