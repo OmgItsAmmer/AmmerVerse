@@ -4,16 +4,17 @@ import { motion } from 'framer-motion';
 import './ProjectCard.css';
 
 // Sub-components for different card types
-const PhoneCard = ({ project }) => {
-    console.log('PhoneCard:', project.name, 'has thumbnail:', !!project.thumbnail, project.thumbnail);
+const PhoneCard = ({ project, image }) => {
+    const displayImage = image || project.thumbnail;
+    console.log('PhoneCard:', project.name, 'has thumbnail:', !!displayImage, displayImage);
     return (
         <div className="project-card-inner phone-card">
             <div className="phone-notch"></div>
             <div className="phone-screen">
                 <div className="project-preview">
-                    {project.thumbnail ? (
+                    {displayImage ? (
                         <img
-                            src={project.thumbnail}
+                            src={displayImage}
                             alt={project.name}
                             className="project-image-preview"
                             onLoad={() => console.log('PhoneCard image loaded:', project.name)}
@@ -29,36 +30,40 @@ const PhoneCard = ({ project }) => {
     );
 };
 
-const BrowserCard = ({ project }) => (
-    <div className="project-card-inner browser-card">
-        <div className="browser-header">
-            <div className="browser-dots">
-                <span className="dot red"></span>
-                <span className="dot yellow"></span>
-                <span className="dot green"></span>
+const BrowserCard = ({ project, image }) => {
+    const displayImage = image || project.thumbnail;
+    return (
+        <div className="project-card-inner browser-card">
+            <div className="browser-header">
+                <div className="browser-dots">
+                    <span className="dot red"></span>
+                    <span className="dot yellow"></span>
+                    <span className="dot green"></span>
+                </div>
+                <div className="browser-address-bar">
+                    <span>ammerverse.com/{project.name.toLowerCase().replace(/\s/g, '-')}</span>
+                </div>
             </div>
-            <div className="browser-address-bar">
-                <span>ammerverse.com/{project.name.toLowerCase().replace(/\s/g, '-')}</span>
+            <div className="browser-content">
+                <div className="project-preview">
+                    {displayImage ? (
+                        <img
+                            src={displayImage}
+                            alt={project.name}
+                            className="project-image-preview"
+                        />
+                    ) : (
+                        <span className="project-title-preview">{project.name}</span>
+                    )}
+                </div>
             </div>
         </div>
-        <div className="browser-content">
-            <div className="project-preview">
-                {project.thumbnail ? (
-                    <img
-                        src={project.thumbnail}
-                        alt={project.name}
-                        className="project-image-preview"
-                    />
-                ) : (
-                    <span className="project-title-preview">{project.name}</span>
-                )}
-            </div>
-        </div>
-    </div>
-);
+    );
+};
 
-const DesktopCard = ({ project }) => {
-    console.log('DesktopCard:', project.name, 'has thumbnail:', !!project.thumbnail, project.thumbnail);
+const DesktopCard = ({ project, image }) => {
+    const displayImage = image || project.thumbnail;
+    console.log('DesktopCard:', project.name, 'has thumbnail:', !!displayImage, displayImage);
     return (
         <div className="project-card-inner desktop-card">
             <div className="desktop-title-bar">
@@ -72,9 +77,9 @@ const DesktopCard = ({ project }) => {
             <div className="desktop-content">
                 
                 <div className="project-main-area">
-                    {project.thumbnail ? (
+                    {displayImage ? (
                         <img
-                            src={project.thumbnail}
+                            src={displayImage}
                             alt={project.name}
                             className="project-image-preview"
                             onLoad={() => console.log('DesktopCard image loaded:', project.name)}
@@ -98,7 +103,7 @@ const DefaultCard = ({ project }) => (
 );
 
 // Main Project Card Component
-export default function ProjectCard({ project, onClick, top, left, rotate, category }) {
+export default function ProjectCard({ project, onClick, top, left, rotate, category, image }) {
     const [zIndex, setZIndex] = useState(0);
 
     const updateZIndex = () => {
@@ -121,11 +126,11 @@ export default function ProjectCard({ project, onClick, top, left, rotate, categ
     const renderCardContent = () => {
         switch (category) {
             case 'mobile':
-                return <PhoneCard project={project} />;
+                return <PhoneCard project={project} image={image} />;
             case 'web':
-                return <BrowserCard project={project} />;
+                return <BrowserCard project={project} image={image} />;
             case 'desktop':
-                return <DesktopCard project={project} />;
+                return <DesktopCard project={project} image={image} />;
             default:
                 return <DefaultCard project={project} />;
         }

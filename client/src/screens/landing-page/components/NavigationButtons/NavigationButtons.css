@@ -44,17 +44,20 @@
   box-shadow: 0 5px 15px rgba(183, 148, 246, 0.2);
 }
 
-.nav-arrow {
-  font-size: 1.2rem;
-  line-height: 1;
+.nav-arrow-icon {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  display: inline-block;
+  vertical-align: middle;
   transition: transform 0.3s ease;
 }
 
-.prev-btn:hover .nav-arrow {
+.prev-btn:hover .nav-arrow-icon {
   transform: translateX(-3px);
 }
 
-.next-btn:hover .nav-arrow {
+.next-btn:hover .nav-arrow-icon {
   transform: translateX(3px);
 }
 
@@ -111,9 +114,6 @@
     transform: translateY(-1px) scale(1);
   }
 
-  .nav-arrow {
-    display: none;
-  }
 }
 
 /* Smaller mobile devices */

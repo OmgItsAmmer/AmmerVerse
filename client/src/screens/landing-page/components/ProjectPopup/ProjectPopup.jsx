@@ -7,10 +7,12 @@ export default function ProjectPopup({ project, onClose }) {
     
     if (!project) return null;
 
-    // Combine thumbnail and images array, with thumbnail first if it exists
-    const allImages = project.thumbnail 
-        ? [project.thumbnail, ...(project.images || [])]
-        : (project.images || []);
+    // Use images array directly, removing thumbnail to avoid duplicates
+    // If thumbnail is the same as first image, it will be duplicated
+    // So we just use the images array which should contain all unique images
+    const allImages = project.images && project.images.length > 0 
+        ? project.images 
+        : (project.thumbnail ? [project.thumbnail] : []);
 
     const goToPrevious = () => {
         setCurrentImageIndex((prevIndex) => 

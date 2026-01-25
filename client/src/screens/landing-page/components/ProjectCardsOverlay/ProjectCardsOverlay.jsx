@@ -158,6 +158,22 @@ export default function ProjectCardsOverlay({ viewMode, onProjectClick, selected
 
     const positions = getPositions(category);
 
+    // Get two different images from the project's images array
+    const getProjectImages = (project) => {
+        if (!project || !project.images || project.images.length === 0) {
+            // Fallback to thumbnail if no images array
+            return [project?.thumbnail, project?.thumbnail];
+        }
+        
+        // Use first two images, or repeat first image if only one exists
+        const image1 = project.images[0] || project.thumbnail;
+        const image2 = project.images.length > 1 ? project.images[1] : project.images[0] || project.thumbnail;
+        
+        return [image1, image2];
+    };
+
+    const projectImages = currentProject ? getProjectImages(currentProject) : [null, null];
+
     return (
         <div className="project-cards-container" ref={containerRef}>
             {/* Pagination Arrows */}
@@ -185,6 +201,7 @@ export default function ProjectCardsOverlay({ viewMode, onProjectClick, selected
                             top={positions[0].top}
                             left={positions[0].left}
                             rotate={positions[0].rotate}
+                            image={projectImages[0]}
                         />
                         {/* Screen 2 */}
                         <ProjectCard
@@ -196,6 +213,7 @@ export default function ProjectCardsOverlay({ viewMode, onProjectClick, selected
                             top={positions[1].top}
                             left={positions[1].left}
                             rotate={positions[1].rotate}
+                            image={projectImages[1]}
                         />
                     </>
                 )}

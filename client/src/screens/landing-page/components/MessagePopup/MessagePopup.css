@@ -32,6 +32,89 @@
   text-align: center;
 }
 
+/* Success Message */
+.success-message {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  background: rgba(34, 197, 94, 0.15);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  border-radius: 12px;
+  color: #4ade80;
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+  animation: slideInDown 0.3s ease-out;
+  width: 100%;
+  max-width: 600px;
+}
+
+.success-message svg {
+  flex-shrink: 0;
+  color: #4ade80;
+}
+
+/* Error Message */
+.error-message {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 12px;
+  color: #f87171;
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+  animation: slideInDown 0.3s ease-out;
+  width: 100%;
+  max-width: 600px;
+}
+
+.error-message svg {
+  flex-shrink: 0;
+  color: #f87171;
+}
+
+/* Validation Error Message */
+.validation-error-message {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: 8px;
+  color: #f87171;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-top: -1rem;
+  margin-bottom: 0.5rem;
+  animation: slideInDown 0.3s ease-out;
+  width: 100%;
+}
+
+.validation-error-message svg {
+  flex-shrink: 0;
+  color: #f87171;
+}
+
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .message-form {
   width: 100%;
   max-width: 600px;
@@ -148,6 +231,22 @@
   box-shadow: 0 0 20px rgba(183, 148, 246, 0.2);
 }
 
+.contact-input.error {
+  border-color: rgba(239, 68, 68, 0.5);
+  background: rgba(239, 68, 68, 0.05);
+}
+
+.contact-input.error:focus {
+  border-color: rgba(239, 68, 68, 0.7);
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.2);
+}
+
+.contact-input:disabled,
+.message-input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 .contact-input::placeholder {
   color: rgba(255, 255, 255, 0.4);
 }
@@ -169,11 +268,43 @@
   cursor: pointer;
 }
 
-.send-btn:hover {
+.send-btn:hover:not(:disabled) {
   background: #B794F6;
   color: #fff;
   transform: translateY(-2px);
   box-shadow: 0 10px 25px rgba(183, 148, 246, 0.4);
+}
+
+.send-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.send-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+/* Loading Spinner */
+.send-btn .spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.toggle-option:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .social-buttons-container {
@@ -214,6 +345,13 @@
 .social-btn svg {
   width: 24px;
   height: 24px;
+  transition: all 0.3s ease;
+}
+
+.social-icon-img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
   transition: all 0.3s ease;
 }
 
@@ -318,7 +456,8 @@
     height: 45px;
   }
 
-  .social-btn svg {
+  .social-btn svg,
+  .social-icon-img {
     width: 22px;
     height: 22px;
   }
@@ -370,7 +509,8 @@
     height: 42px;
   }
 
-  .social-btn svg {
+  .social-btn svg,
+  .social-icon-img {
     width: 20px;
     height: 20px;
   }
@@ -417,7 +557,8 @@
     height: 40px;
   }
 
-  .social-btn svg {
+  .social-btn svg,
+  .social-icon-img {
     width: 18px;
     height: 18px;
   }
@@ -556,7 +697,8 @@
     height: 45px;
   }
 
-  .social-btn svg {
+  .social-btn svg,
+  .social-icon-img {
     width: 22px;
     height: 22px;
   }
@@ -608,7 +750,8 @@
     height: 42px;
   }
 
-  .social-btn svg {
+  .social-btn svg,
+  .social-icon-img {
     width: 20px;
     height: 20px;
   }
@@ -655,7 +798,8 @@
     height: 40px;
   }
 
-  .social-btn svg {
+  .social-btn svg,
+  .social-icon-img {
     width: 18px;
     height: 18px;
   }

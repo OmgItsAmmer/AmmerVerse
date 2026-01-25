@@ -10,6 +10,16 @@ export default function AvatarRow({ selectedAvatar, viewMode, onAvatarClick, onG
     const isMobile = useIsMobile();
     const [direction, setDirection] = useState(0);
 
+    // Preload all hover images on component mount
+    useEffect(() => {
+        DEVELOPERS.forEach((developer) => {
+            if (developer.avatarImages?.hover) {
+                const img = new Image();
+                img.src = developer.avatarImages.hover;
+            }
+        });
+    }, []);
+
     // Removed useEffect - mobile avatar is now initialized in parent component
 
     const handleMobileNext = (e) => {

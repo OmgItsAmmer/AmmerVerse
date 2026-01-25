@@ -6,6 +6,8 @@ import './NavigationButtons.css';
 import homeIcon from '../../../../assets/images/icons/home.png';
 import projectIcon from '../../../../assets/images/icons/project.png';
 import messageIcon from '../../../../assets/images/icons/message.png';
+import leftArrowIcon from '../../../../assets/images/icons/left-arrow.png';
+import rightArrowIcon from '../../../../assets/images/icons/right-arrow.png';
 
 export default function NavigationButtons({ viewMode, onNext, onPrev }) {
     const isMobile = useIsMobile();
@@ -27,9 +29,9 @@ export default function NavigationButtons({ viewMode, onNext, onPrev }) {
             return { prevIcon: homeIcon, nextIcon: projectIcon };
         }
         if (viewMode === 'projects') {
-            return { prevIcon: '←', nextIcon: messageIcon };
+            return { prevIcon: leftArrowIcon, nextIcon: messageIcon };
         }
-        return { prevIcon: '←', nextIcon: '→' };
+        return { prevIcon: leftArrowIcon, nextIcon: rightArrowIcon };
     };
 
     const { prev, next} = getButtonText();
@@ -39,27 +41,19 @@ export default function NavigationButtons({ viewMode, onNext, onPrev }) {
         <div className="navigation-buttons-container">
             <button className="nav-btn prev-btn" onClick={onPrev} aria-label={prev}>
                 {isMobile ? (
-                    typeof prevIcon === 'string' && prevIcon.length === 1 ? (
-                        <span className="nav-icon-text">{prevIcon}</span>
-                    ) : (
-                        <img src={prevIcon} alt={prev} className="nav-icon-img" />
-                    )
+                    <img src={prevIcon} alt={prev} className="nav-icon-img" />
                 ) : (
                     <>
-                        <span className="nav-arrow">←</span> {prev}
+                        <img src={prevIcon} alt={prev} className="nav-icon-img nav-arrow-icon" /> {prev}
                     </>
                 )}
             </button>
             <button className="nav-btn next-btn" onClick={onNext} aria-label={next}>
                 {isMobile ? (
-                    typeof nextIcon === 'string' && nextIcon.length === 1 ? (
-                        <span className="nav-icon-text">{nextIcon}</span>
-                    ) : (
-                        <img src={nextIcon} alt={next} className="nav-icon-img" />
-                    )
+                    <img src={nextIcon} alt={next} className="nav-icon-img" />
                 ) : (
                     <>
-                        {next} <span className="nav-arrow">→</span>
+                        {next} <img src={nextIcon} alt={next} className="nav-icon-img nav-arrow-icon" />
                     </>
                 )}
             </button>
