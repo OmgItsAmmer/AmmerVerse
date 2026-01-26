@@ -2,6 +2,7 @@ import { useState } from 'react';
 import './AvatarImage.css';
 
 // Avatar image component with hover effect
+// Hover images are preloaded in AvatarRow component for instant switching
 export default function AvatarImage({ normalSrc, hoverSrc, alt, onClick, isSelected, isOtherSelected, isProjectsView, label }) {
     const [isHovered, setIsHovered] = useState(false);
 
