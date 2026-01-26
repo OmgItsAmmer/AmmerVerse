@@ -21,7 +21,7 @@ export default function ProjectCardsOverlay({ viewMode, onProjectClick, selected
     else if (selectedAvatar === 2) category = 'desktop';
 
     const filteredProjects = PROJECTS.filter(p => p.category === category);
-    
+
     // 1 project per page (not 2)
     const totalPages = filteredProjects.length;
 
@@ -164,15 +164,27 @@ export default function ProjectCardsOverlay({ viewMode, onProjectClick, selected
             // Fallback to thumbnail if no images array
             return [project?.thumbnail, project?.thumbnail];
         }
-        
+
         // Use first two images, or repeat first image if only one exists
         const image1 = project.images[0] || project.thumbnail;
         const image2 = project.images.length > 1 ? project.images[1] : project.images[0] || project.thumbnail;
-        
+
         return [image1, image2];
     };
 
     const projectImages = currentProject ? getProjectImages(currentProject) : [null, null];
+
+    // Debug logging for desktop cards
+    if (!isMobile && currentProject) {
+        console.log('[Desktop Cards Debug]', {
+            projectName: currentProject.name,
+            projectId: currentProject.id,
+            category,
+            images: projectImages,
+            totalProjects: filteredProjects.length,
+            currentPage
+        });
+    }
 
     return (
         <div className="project-cards-container" ref={containerRef}>
@@ -188,9 +200,16 @@ export default function ProjectCardsOverlay({ viewMode, onProjectClick, selected
                 </>
             )}
 
-            <AnimatePresence mode='wait'>
+            <AnimatePresence mode='wait' initial={false}>
                 {currentProject && (
-                    <>
+                    <motion.div
+                        key={currentProject.id}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                        style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}
+                    >
                         {/* Screen 1 */}
                         <ProjectCard
                             key={`${currentProject.id}-screen-1`}
@@ -215,7 +234,7 @@ export default function ProjectCardsOverlay({ viewMode, onProjectClick, selected
                             rotate={positions[1].rotate}
                             image={projectImages[1]}
                         />
-                    </>
+                    </motion.div>
                 )}
             </AnimatePresence>
 
