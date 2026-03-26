@@ -56,6 +56,18 @@
     color: #667eea;
 }
 
+.navbar-toggle-label-desktop {
+    display: inline;
+}
+
+.navbar-toggle-icon-mobile {
+    display: none;
+    width: 26px;
+    height: 26px;
+    object-fit: contain;
+    vertical-align: middle;
+}
+
 .navbar-dropdown-menu {
     position: absolute;
     top: 100%;
@@ -91,4 +103,22 @@
 .navbar-dropdown-item:hover {
     background-color: rgba(102, 126, 234, 0.2);
     color: #667eea;
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        padding: 1rem 1rem;
+    }
+
+    .navbar-toggle-label-desktop {
+        display: none;
+    }
+
+    .navbar-toggle-icon-mobile {
+        display: block;
+    }
+
+    .navbar-dropdown-toggle {
+        padding: 0.5rem 0.6rem;
+    }
 }

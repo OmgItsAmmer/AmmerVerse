@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import InfoCard from '../InfoCard';
 import { getDeveloperByIndex } from '../constants';
 import { useIsMobile } from '../../../../hooks/useMediaQuery';
+import colors from '../../../../utils/colors';
 import './InfoCardsOverlay.css';
 
 // Info Cards Overlay Component
@@ -38,7 +39,15 @@ export default function InfoCardsOverlay({ viewMode, selectedAvatar }) {
         const currentCard = cards[currentCardIndex];
         
         return (
-            <div className="info-cards-container mobile-info-cards" ref={containerRef}>
+            <div
+                className="info-cards-container mobile-info-cards"
+                ref={containerRef}
+                style={{
+                    '--indicator-active': colors.ui.glowPurple,
+                    '--indicator-inactive': `${colors.ui.primaryText}55`,
+                    '--indicator-border': `${colors.ui.primaryText}88`,
+                }}
+            >
                 {/* Navigation Arrows */}
                 <button className="mobile-card-arrow left" onClick={handleMobilePrev}>
                     ‹
@@ -107,12 +116,15 @@ export default function InfoCardsOverlay({ viewMode, selectedAvatar }) {
                     ›
                 </button>
 
-                {/* Card Indicator */}
-                <div className="card-indicators">
+                {/* Mobile carousel indicator */}
+                <div className="info-carousel-indicators" aria-label="Info card carousel position">
                     {cards.map((_, index) => (
                         <button
                             key={index}
-                            className={`card-indicator ${index === currentCardIndex ? 'active' : ''}`}
+                            type="button"
+                            className={`info-carousel-indicator ${index === currentCardIndex ? 'active' : ''}`}
+                            aria-label={`Go to card ${index + 1}`}
+                            aria-current={index === currentCardIndex ? 'true' : undefined}
                             onClick={(e) => {
                                 e.stopPropagation();
                                 setDirection(index > currentCardIndex ? 1 : -1);

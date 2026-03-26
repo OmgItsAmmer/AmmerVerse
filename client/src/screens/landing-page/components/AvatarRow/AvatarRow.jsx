@@ -3,13 +3,18 @@ import { AnimatePresence, motion } from 'framer-motion';
 import AvatarImage from '../AvatarImage';
 import { DEVELOPERS } from '../constants';
 import { useIsMobile } from '../../../../hooks/useMediaQuery';
+import colors from '../../../../utils/colors';
 import './AvatarRow.css';
+
+import leftArrowIcon from '../../../../assets/images/icons/left-arrow.png';
+import rightArrowIcon from '../../../../assets/images/icons/right-arrow.png';
 
 // Avatar Row Component
 export default function AvatarRow({ selectedAvatar, viewMode, onAvatarClick, onGoBack, onShowProjects, onMessageClick, currentMobileAvatar, onMobileAvatarChange }) {
     const isMobile = useIsMobile();
     const [direction, setDirection] = useState(0);
     const preloadContainerRef = useRef(null);
+    const didSwipeRef = useRef(false);
 
     // Preload all hover images on component mount and keep them cached
     useEffect(() => {
@@ -105,10 +110,17 @@ export default function AvatarRow({ selectedAvatar, viewMode, onAvatarClick, onG
         const currentDeveloper = DEVELOPERS[currentMobileAvatar];
         
         return renderWithPreload(
-            <div className="avatar-row mobile-avatar-row">
+            <div
+                className="avatar-row mobile-avatar-row"
+                style={{
+                    '--indicator-active': colors.ui.glowPurple,
+                    '--indicator-inactive': `${colors.ui.primaryText}55`,
+                    '--indicator-border': `${colors.ui.primaryText}88`,
+                }}
+            >
                 {/* Left Arrow */}
-                <button className="mobile-avatar-arrow left" onClick={handleMobilePrev}>
-                    ‹
+                <button className="mobile-avatar-arrow left" onClick={handleMobilePrev} type="button" aria-label="Previous avatar">
+                    <img className="mobile-avatar-arrow-img" src={leftArrowIcon} alt="" aria-hidden="true" />
                 </button>
 
                 {/* Single Avatar with Animation */}
@@ -140,24 +152,74 @@ export default function AvatarRow({ selectedAvatar, viewMode, onAvatarClick, onG
                             opacity: { duration: 0.2 },
                         }}
                         className="mobile-avatar-wrapper"
+                        drag="x"
+                        dragConstraints={{ left: 0, right: 0 }}
+                        dragElastic={1}
+                        onDragStart={() => {
+                            didSwipeRef.current = false;
+                        }}
+                        onDragEnd={(e, { offset }) => {
+                            const deltaX = offset.x;
+                            const absX = Math.abs(deltaX);
+
+                            // Treat a meaningful horizontal swipe as "next/prev".
+                            // Negative deltaX = swipe left -> next avatar.
+                            if (absX > 70) {
+                                didSwipeRef.current = true;
+                                if (deltaX < 0) handleMobileNext(e);
+                                else handleMobilePrev(e);
+                                // Clear the swipe flag shortly after navigation so future taps work normally.
+                                setTimeout(() => {
+                                    didSwipeRef.current = false;
+                                }, 250);
+                            } else {
+                                didSwipeRef.current = false;
+                            }
+                        }}
                     >
                         <AvatarImage
                             normalSrc={currentDeveloper.avatarImages.normal}
                             hoverSrc={currentDeveloper.avatarImages.hover}
                             alt={currentDeveloper.name}
-                            onClick={() => onAvatarClick(currentMobileAvatar)}
+                            onClick={() => {
+                                // Prevent a tap from firing after a swipe navigation.
+                                if (didSwipeRef.current) {
+                                    didSwipeRef.current = false;
+                                    return;
+                                }
+                                onAvatarClick(currentMobileAvatar);
+                            }}
                             isSelected={false}
                             isOtherSelected={false}
                             isProjectsView={false}
                             label={currentDeveloper.name}
+                            showHoverImage
                         />
                     </motion.div>
                 </AnimatePresence>
 
                 {/* Right Arrow */}
-                <button className="mobile-avatar-arrow right" onClick={handleMobileNext}>
-                    ›
+                <button className="mobile-avatar-arrow right" onClick={handleMobileNext} type="button" aria-label="Next avatar">
+                    <img className="mobile-avatar-arrow-img" src={rightArrowIcon} alt="" aria-hidden="true" />
                 </button>
+
+                {/* Carousel Indicator */}
+                <div className="avatar-indicators" aria-label="Avatar carousel position">
+                    {DEVELOPERS.map((dev, index) => (
+                        <button
+                            key={dev.id ?? index}
+                            type="button"
+                            className={`avatar-indicator ${index === currentMobileAvatar ? 'active' : ''}`}
+                            aria-label={`Go to avatar ${index + 1}`}
+                            aria-current={index === currentMobileAvatar ? 'true' : undefined}
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                setDirection(index > currentMobileAvatar ? 1 : -1);
+                                onMobileAvatarChange(index);
+                            }}
+                        />
+                    ))}
+                </div>
             </div>
         );
     }
@@ -172,16 +234,23 @@ export default function AvatarRow({ selectedAvatar, viewMode, onAvatarClick, onG
         const currentDeveloper = DEVELOPERS[selectedAvatar];
         return renderWithPreload(
             <div className="avatar-row mobile-avatar-selected">
-                <AvatarImage
-                    normalSrc={currentDeveloper.avatarImages.normal}
-                    hoverSrc={currentDeveloper.avatarImages.hover}
-                    alt={currentDeveloper.name}
-                    onClick={() => onAvatarClick(selectedAvatar)}
-                    isSelected={true}
-                    isOtherSelected={false}
-                    isProjectsView={false}
-                    label={currentDeveloper.name}
-                />
+                <motion.div
+                    initial={{ opacity: 0, y: 18, scale: 0.98 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 10, scale: 0.98 }}
+                    transition={{ duration: 0.35, ease: [0.2, 0.8, 0.2, 1] }}
+                >
+                    <AvatarImage
+                        normalSrc={currentDeveloper.avatarImages.normal}
+                        hoverSrc={currentDeveloper.avatarImages.hover}
+                        alt={currentDeveloper.name}
+                        onClick={() => onAvatarClick(selectedAvatar)}
+                        isSelected={true}
+                        isOtherSelected={false}
+                        isProjectsView={false}
+                        label={currentDeveloper.name}
+                    />
+                </motion.div>
             </div>
         );
     }

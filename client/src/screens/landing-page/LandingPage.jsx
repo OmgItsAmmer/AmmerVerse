@@ -12,6 +12,7 @@ import MessagePopup from './components/MessagePopup';
 import NavigationButtons from './components/NavigationButtons';
 import WelcomeText from './components/WelcomeText';
 import EarthModel from './components/EarthModel';
+import SpaceMaterialsOrbit from './components/SpaceMaterialsOrbit/SpaceMaterialsOrbit';
 // import MobileCardsCarousel from './components/MobileCardsCarousel';
 
 // Main landing page component
@@ -84,6 +85,9 @@ export default function LandingPage() {
 
   return (
     <div className="landing-container">
+      {/* Ambient space materials (starts ~5s after page load) */}
+      <SpaceMaterialsOrbit />
+
       {/* Earth Model - Always visible */}
       <EarthModel 
         isZoomed={isEarthZoomed} 

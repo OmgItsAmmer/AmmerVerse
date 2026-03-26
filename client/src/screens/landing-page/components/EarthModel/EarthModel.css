@@ -101,3 +101,50 @@
   margin: 0;
   font-family: 'Courier New', monospace;
 }
+
+/* Mobile: shrink globe widget */
+@media (max-width: 768px) {
+  .earth-model-container {
+    top: 130px;
+    right: 18px;
+    width: 85px;
+    height: 85px;
+  }
+
+  .earth-close-button {
+    top: 18px;
+    right: 18px;
+    width: 44px;
+    height: 44px;
+    font-size: 20px;
+  }
+
+  .earth-instructions {
+    bottom: 22px;
+    font-size: 13px;
+    padding: 10px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .earth-model-container {
+    top: 120px;
+    right: 12px;
+    width: 72px;
+    height: 72px;
+  }
+
+  .earth-close-button {
+    top: 16px;
+    right: 16px;
+    width: 40px;
+    height: 40px;
+    font-size: 19px;
+  }
+
+  .earth-instructions {
+    bottom: 18px;
+    font-size: 12px;
+    padding: 9px 18px;
+  }
+}

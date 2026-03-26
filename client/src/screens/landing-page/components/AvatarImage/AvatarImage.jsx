@@ -3,7 +3,7 @@ import './AvatarImage.css';
 
 // Avatar image component with hover effect
 // Hover images are preloaded in AvatarRow component for instant switching
-export default function AvatarImage({ normalSrc, hoverSrc, alt, onClick, isSelected, isOtherSelected, isProjectsView, label }) {
+export default function AvatarImage({ normalSrc, hoverSrc, alt, onClick, isSelected, isOtherSelected, isProjectsView, label, showHoverImage = false }) {
     const [isHovered, setIsHovered] = useState(false);
 
     return (
@@ -14,7 +14,7 @@ export default function AvatarImage({ normalSrc, hoverSrc, alt, onClick, isSelec
             onClick={onClick}
         >
             <img
-                src={isHovered || isSelected ? hoverSrc : normalSrc}
+                src={isHovered || isSelected || showHoverImage ? hoverSrc : normalSrc}
                 alt={alt}
                 className="avatar-image"
             />

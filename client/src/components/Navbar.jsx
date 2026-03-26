@@ -4,6 +4,8 @@ import cvPdf from '../assets/Docs/cv.pdf';
 import mobileDevResumePdf from '../assets/Docs/mobile_dev_resume.pdf';
 import webResumePdf from '../assets/Docs/web_resume.pdf';
 import aiResumePdf from '../assets/Docs/AI_resume.pdf';
+import contactIcon from '../assets/images/icons/contact.png';
+import downloadPdfIcon from '../assets/images/icons/download-pdf.png';
 import MessagePopup from '../screens/landing-page/components/MessagePopup';
 
 export default function Navbar() {
@@ -41,18 +43,35 @@ export default function Navbar() {
         <nav className="navbar">
             <div className="navbar-brand">AmmerVerse</div>
             <div className="navbar-links">
-                <button 
+                <button
+                    type="button"
                     className="navbar-dropdown-toggle"
                     onClick={() => setIsMessagePopupOpen(true)}
+                    aria-label="Contacts"
                 >
-                    Contacts
+                    <span className="navbar-toggle-label-desktop">Contacts</span>
+                    <img
+                        className="navbar-toggle-icon-mobile"
+                        src={contactIcon}
+                        alt=""
+                        aria-hidden={true}
+                    />
                 </button>
                 <div className="navbar-dropdown" ref={dropdownRef}>
-                    <button 
+                    <button
+                        type="button"
                         className="navbar-dropdown-toggle"
                         onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                        aria-label="Downloads"
+                        aria-expanded={isDropdownOpen}
                     >
-                        Downloads ▾
+                        <span className="navbar-toggle-label-desktop">Downloads ▾</span>
+                        <img
+                            className="navbar-toggle-icon-mobile"
+                            src={downloadPdfIcon}
+                            alt=""
+                            aria-hidden={true}
+                        />
                     </button>
                     {isDropdownOpen && (
                         <ul className="navbar-dropdown-menu">
