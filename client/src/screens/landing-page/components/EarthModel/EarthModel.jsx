@@ -1,161 +1,57 @@
-import { useRef, useState, useEffect, Suspense } from 'react';
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { OrbitControls } from '@react-three/drei';
-import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
-import { TextureLoader } from 'three';
-import * as THREE from 'three';
-import earthObj from '../../../../assets/images/icons/earth.obj?url';
-import earthJson from '../../../../assets/images/icons/earth.json';
-import earthTexture from '../../../../assets/images/icons/earth.png';
+import { useEffect, useRef, useState } from 'react';
+import mapboxgl from 'mapbox-gl';
+import 'mapbox-gl/dist/mapbox-gl.css';
 import './EarthModel.css';
 
-// Component to set up renderer output encoding
-function RendererSetup() {
-  const { gl } = useThree();
-  
-  useEffect(() => {
-    // Set output encoding for proper color rendering
-    if (gl.outputEncoding !== undefined) {
-      gl.outputEncoding = THREE.sRGBEncoding;
-    } else if (gl.outputColorSpace !== undefined) {
-      gl.outputColorSpace = THREE.SRGBColorSpace;
-    }
-  }, [gl]);
-  
-  return null;
+// Set Mapbox access token (Vite)
+mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN || '';
+
+const ISLAMABAD_COORDS = [73.0479, 33.6844]; // [lng, lat]
+
+/** Full-planet globe (before click): whole Earth visible, “from space” look. */
+const GLOBE_CENTER = [0, 15];
+const GLOBE_ZOOM = 0;
+
+/** Fog: globe-only vs detailed map (Islamabad). */
+function applyGlobeFog(map, mode) {
+  if (mode === 'map') {
+    map.setFog({
+      range: [0.8, 2],
+      color: '#ffffff',
+      'horizon-blend': 0.35,
+      'high-color': '#87b8f0',
+      'space-color': '#0b1020',
+      'star-intensity': 0.25,
+    });
+  } else {
+    // Globe: dark space + stars + subtle horizon (satellite stays readable)
+    map.setFog({
+      range: [0.5, 2.5],
+      color: '#000000',
+      'horizon-blend': 0.12,
+      'high-color': '#4466aa',
+      'space-color': '#000000',
+      'star-intensity': 0.55,
+    });
+  }
 }
 
-// Earth 3D Model Component
-function Earth({ isZoomed, onZoomComplete }) {
-  const earthRef = useRef();
-  const [scene, setScene] = useState(null);
-  const [rotationProgress, setRotationProgress] = useState(0);
-  
-  // Load OBJ, JSON material, and PNG texture
-  useEffect(() => {
-    const objLoader = new OBJLoader();
-    const textureLoader = new TextureLoader();
-    
-    // Load texture
-    const texture = textureLoader.load(earthTexture);
-    if (texture.colorSpace !== undefined) {
-      texture.colorSpace = THREE.SRGBColorSpace;
-    } else if (texture.encoding !== undefined) {
-      texture.encoding = THREE.sRGBEncoding;
-    }
-    
-    // Create material from JSON
-    const materialData = earthJson;
-    const material = new THREE.MeshStandardMaterial();
-    
-    // Apply material properties from JSON
-    if (materialData.color !== undefined) {
-      // Handle both hex number and color object
-      if (typeof materialData.color === 'number') {
-        material.color.setHex(materialData.color);
-      } else if (materialData.color.r !== undefined) {
-        material.color.setRGB(
-          materialData.color.r,
-          materialData.color.g,
-          materialData.color.b
-        );
-      }
-    }
-    if (materialData.roughness !== undefined) {
-      material.roughness = materialData.roughness;
-    }
-    if (materialData.metalness !== undefined) {
-      material.metalness = materialData.metalness;
-    }
-    if (materialData.emissive !== undefined) {
-      if (typeof materialData.emissive === 'number') {
-        material.emissive.setHex(materialData.emissive);
-      } else if (materialData.emissive.r !== undefined) {
-        material.emissive.setRGB(
-          materialData.emissive.r,
-          materialData.emissive.g,
-          materialData.emissive.b
-        );
-      }
-    }
-    if (materialData.emissiveIntensity !== undefined) {
-      material.emissiveIntensity = materialData.emissiveIntensity;
-    }
-    
-    // Apply texture
-    material.map = texture;
-    material.needsUpdate = true;
-    
-    // Load OBJ file
-    objLoader.load(
-      earthObj,
-      (object) => {
-        // Apply material to all meshes
-        object.traverse((child) => {
-          if (child.isMesh) {
-            child.material = material;
-            
-            // Ensure proper texture color space
-            if (child.material.map) {
-              if (child.material.map.colorSpace !== undefined) {
-                child.material.map.colorSpace = THREE.SRGBColorSpace;
-              } else if (child.material.map.encoding !== undefined) {
-                child.material.map.encoding = THREE.sRGBEncoding;
-              }
-              child.material.map.needsUpdate = true;
-            }
-            
-            child.material.needsUpdate = true;
-            child.castShadow = true;
-            child.receiveShadow = true;
-          }
-        });
-        
-        setScene(object);
-      },
-      undefined,
-      (error) => {
-        console.error('Error loading OBJ:', error);
-      }
-    );
-  }, []);
-
-  useFrame((state, delta) => {
-    if (earthRef.current) {
-      if (isZoomed && rotationProgress < 1) {
-        // Animate 180-degree rotation when zooming
-        const newProgress = Math.min(rotationProgress + delta * 0.5, 1);
-        setRotationProgress(newProgress);
-        earthRef.current.rotation.y = Math.PI * newProgress;
-        
-        if (newProgress >= 1 && onZoomComplete) {
-          onZoomComplete();
-        }
-      } else if (!isZoomed) {
-        // Gentle idle rotation when not zoomed
-        earthRef.current.rotation.y += delta * 0.2;
-      }
-    }
-  });
-
-  if (!scene) {
-    return null; // Loading state
-  }
-
-  return (
-    <primitive 
-      ref={earthRef} 
-      object={scene} 
-      scale={isZoomed ? 0.5 : 1.2}
-      position={[0, 0, 0]}
-    />
-  );
+function createIslamabadMarker(map) {
+  const markerEl = document.createElement('div');
+  markerEl.className = 'islamabad-marker';
+  markerEl.innerHTML = '<div class="marker-pin"></div>';
+  return new mapboxgl.Marker({ element: markerEl })
+    .setLngLat(ISLAMABAD_COORDS)
+    .setPopup(new mapboxgl.Popup({ offset: 25 }).setText('Islamabad, Pakistan'))
+    .addTo(map);
 }
 
 // Main EarthModel Component
 export default function EarthModel({ isZoomed, onEarthClick, onClose }) {
   const [isHovered, setIsHovered] = useState(false);
-  const [zoomComplete, setZoomComplete] = useState(false);
+  const mapContainerRef = useRef(null);
+  const mapRef = useRef(null);
+  const markerRef = useRef(null);
 
   const handleClick = () => {
     if (!isZoomed) {
@@ -178,8 +74,119 @@ export default function EarthModel({ isZoomed, onEarthClick, onClose }) {
   // Reset zoom complete state when closing
   useEffect(() => {
     if (!isZoomed) {
-      setZoomComplete(false);
+      // nothing special to reset here for now
     }
+  }, [isZoomed]);
+
+  // Initialize Mapbox map once
+  useEffect(() => {
+    if (!mapContainerRef.current || mapRef.current) return;
+
+    if (!mapboxgl.accessToken) {
+      console.warn('VITE_MAPBOX_ACCESS_TOKEN is not set. Mapbox globe will not load.');
+      return;
+    }
+
+    const map = new mapboxgl.Map({
+      container: mapContainerRef.current,
+      // Satellite + labels: globe shows full Earth when zoomed out; click → regional map
+      style: 'mapbox://styles/mapbox/satellite-streets-v12',
+      center: GLOBE_CENTER,
+      zoom: GLOBE_ZOOM,
+      projection: 'globe',
+      antialias: true,
+      minZoom: 0,
+      maxZoom: 12,
+      attributionControl: false,
+    });
+
+    mapRef.current = map;
+
+    map.on('style.load', () => {
+      applyGlobeFog(map, 'globe');
+
+      map.addControl(
+        new mapboxgl.NavigationControl({
+          visualizePitch: true,
+          showZoom: false,
+          showCompass: false,
+        }),
+        'top-right'
+      );
+    });
+
+    const bumpResize = () => {
+      map.resize();
+      requestAnimationFrame(() => map.resize());
+    };
+
+    map.once('load', bumpResize);
+    map.once('idle', bumpResize);
+
+    const container = mapContainerRef.current;
+    const resizeObserver =
+      container &&
+      new ResizeObserver(() => {
+        bumpResize();
+      });
+    if (container && resizeObserver) {
+      resizeObserver.observe(container);
+    }
+
+    return () => {
+      resizeObserver?.disconnect();
+      markerRef.current?.remove();
+      map.remove();
+      mapRef.current = null;
+    };
+  }, []);
+
+  // Respond to zoomed state: camera, fog, and resize after layout transition
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map) return;
+
+    if (map.isStyleLoaded()) {
+      applyGlobeFog(map, isZoomed ? 'map' : 'globe');
+    }
+
+    // Islamabad marker only in “map” mode after click (not on the full globe)
+    if (isZoomed) {
+      if (!markerRef.current) {
+        markerRef.current = createIslamabadMarker(map);
+      }
+    } else {
+      markerRef.current?.remove();
+      markerRef.current = null;
+    }
+
+    // Ensure Mapbox knows about container size changes (small widget -> fullscreen)
+    // Match the CSS transition duration (~1000ms) before resizing.
+    const resizeTimeout = setTimeout(() => {
+      map.resize();
+      requestAnimationFrame(() => map.resize());
+    }, 1050);
+
+    if (isZoomed) {
+      map.flyTo({
+        center: ISLAMABAD_COORDS,
+        zoom: 5,
+        pitch: 35,
+        bearing: 0,
+        duration: 1800,
+        essential: true,
+      });
+    } else {
+      map.easeTo({
+        center: GLOBE_CENTER,
+        zoom: GLOBE_ZOOM,
+        pitch: 0,
+        bearing: 0,
+        duration: 1200,
+      });
+    }
+
+    return () => clearTimeout(resizeTimeout);
   }, [isZoomed]);
 
   return (
@@ -204,39 +211,8 @@ export default function EarthModel({ isZoomed, onEarthClick, onClose }) {
         </button>
       )}
 
-      <Canvas
-        camera={{ 
-          position: isZoomed ? [0, 0, 3.5] : [0, 0, 3], 
-          fov: 50 
-        }}
-        gl={{ 
-          antialias: true,
-          toneMapping: THREE.ACESFilmicToneMapping,
-          toneMappingExposure: 1.0
-        }}
-      >
-        <RendererSetup />
-        <ambientLight intensity={0.8} />
-        <directionalLight position={[5, 5, 5]} intensity={1.5} />
-        <pointLight position={[-5, -5, -5]} intensity={0.5} />
-        
-        <Suspense fallback={null}>
-          <Earth 
-            isZoomed={isZoomed} 
-            onZoomComplete={() => setZoomComplete(true)}
-          />
-        </Suspense>
-        
-        {/* Enable orbit controls only when zoomed and animation is complete */}
-        {isZoomed && zoomComplete && (
-          <OrbitControls 
-            enableZoom={true}
-            enablePan={false}
-            minDistance={3}
-            maxDistance={10}
-          />
-        )}
-      </Canvas>
+      {/* Mapbox globe container */}
+      <div ref={mapContainerRef} className="earth-mapbox-globe" />
 
       {/* Instructions when zoomed */}
       {isZoomed && (
