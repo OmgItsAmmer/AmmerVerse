@@ -81,7 +81,44 @@ class ProjectModel {
  * All projects created using the ProjectModel class
  */
 export const PROJECTS = [
-    // Mobile Projects
+    // ─── AI / LLM Projects ───────────────────────────────────────────
+    new ProjectModel({
+        id: 8,
+        name: "RAG Research Assistant",
+        category: "ai",
+        thumbnail: "",
+        images: [],
+        description: "Built a Retrieval-Augmented Generation research assistant using LangChain, OpenAI GPT-4, and Pinecone vector store. Implemented document ingestion pipeline, semantic chunking, and hybrid search (BM25 + dense). Deployed on FastAPI with Docker, served behind an nginx reverse proxy. Handles 1,000-page PDFs with sub-second retrieval.",
+        clientReviews: [],
+        techStack: {
+            frontend: "React",
+            backend: "Python, FastAPI, LangChain",
+            database: "Pinecone, Redis",
+            architecture: "RAG with hybrid retrieval, Docker, nginx"
+        },
+        duration: "January – March 2025",
+        github: "https://github.com/OmgItsAmmer"
+    }),
+
+    new ProjectModel({
+        id: 9,
+        name: "LLM Agent Pipeline",
+        category: "ai",
+        thumbnail: "",
+        images: [],
+        description: "Designed and shipped a multi-agent orchestration system using LangGraph for stateful agent loops. Agents autonomously plan tasks, call tools (web search, code execution, file I/O), and reflect on outputs. Integrated Ollama for local model serving and vLLM for high-throughput inference. Includes observability via Prometheus + Grafana.",
+        clientReviews: [],
+        techStack: {
+            frontend: "Next.js",
+            backend: "Python, LangGraph, FastAPI",
+            database: "Supabase, ChromaDB",
+            architecture: "Multi-agent loops with local LLM serving (Ollama / vLLM)"
+        },
+        duration: "March – May 2025",
+        github: "https://github.com/OmgItsAmmer"
+    }),
+
+    // ─── Mobile Projects
     new ProjectModel({
         id: 1,
         name: "KKs Online",
@@ -340,6 +377,40 @@ export const DEVELOPERS = [
             }
         ],
         projectIds: [6]
+    },
+
+    // AI / LLM Developer  (index 3 — default domain in carousel)
+    {
+        id: 3,
+        name: "AI / LLM Dev",
+        category: "ai",
+        avatarImages: {
+            normal: null,
+            hover: null
+        },
+        infoCards: [
+            {
+                heading: "Tech Stack",
+                description: "Python\nLangChain · LangGraph\nOpenAI · Ollama · vLLM",
+                position: { align: "left", top: "20%", left: "15%", rotate: "-6deg" }
+            },
+            {
+                heading: "What I Build",
+                description: "RAG pipelines\nMulti-agent systems\nLLM-powered APIs\nLLMOps infrastructure",
+                position: { align: "left", top: "55%", left: "20%", rotate: "4deg" }
+            },
+            {
+                heading: "Engineering Approach",
+                description: "Retrieval-Augmented Generation\nAgent planning & tool use\nModel serving (local + cloud)\nPrompt engineering\nCI/CD for ML\nObservability & eval",
+                position: { align: "right", top: "25%", left: "65%", rotate: "5deg" }
+            },
+            {
+                heading: "Proof of Work",
+                description: "GitHub repositories\nProduction deployments\nRAG & agent demos\nDocumented LLMOps flows",
+                position: { align: "right", top: "60%", left: "60%", rotate: "-3deg" }
+            }
+        ],
+        projectIds: [8, 9]
     }
 ];
 

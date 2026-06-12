@@ -1,0 +1,312 @@
+/* ─── Section wrapper ────────────────────────────────────────────────── */
+.stackurn-section {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 4vw;
+    overflow: hidden;
+}
+
+.stackurn-inner {
+    width: 100%;
+    max-width: 1100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2.5rem;
+}
+
+/* ─── Header ─────────────────────────────────────────────────────────── */
+.stackurn-header {
+    text-align: center;
+}
+
+.stackurn-title {
+    font-size: clamp(2.8rem, 5vw, 4.5rem);
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    color: var(--text-primary);
+    margin: 0.2rem 0 0.5rem;
+    background: linear-gradient(135deg, #F0F0F2 30%, var(--accent-glow));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.stackurn-subtitle {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    margin: 0;
+}
+
+/* ─── Orbit system container ─────────────────────────────────────────── */
+.stackurn-system {
+    position: relative;
+    width: 700px;
+    height: 700px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ─── Center Saturn ──────────────────────────────────────────────────── */
+.stackurn-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 5;
+}
+
+/* Saturn wrapper — handles the tilt */
+.stackurn-saturn-wrap {
+    position: relative;
+    width: 160px;
+    height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Planet body */
+.stackurn-saturn-body {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #f0d090, #c8923c 40%, #8b5e1a 75%, #4a3008);
+    box-shadow:
+        inset -18px -18px 28px rgba(0,0,0,0.5),
+        0 0 40px rgba(200,150,60,0.25),
+        0 0 80px rgba(168,85,247,0.08);
+    position: relative;
+    z-index: 2;
+    animation: saturn-spin 40s linear infinite;
+}
+
+.stackurn-saturn-band {
+    position: absolute;
+    top: 45%;
+    left: 10%;
+    right: 10%;
+    height: 12%;
+    background: rgba(0,0,0,0.15);
+    border-radius: 50%;
+}
+
+.stackurn-saturn-shine {
+    position: absolute;
+    top: 12%;
+    left: 20%;
+    width: 35%;
+    height: 20%;
+    background: radial-gradient(ellipse at 40% 40%, rgba(255,255,255,0.25), transparent);
+    border-radius: 50%;
+}
+
+/* Ring back (behind planet) */
+.stackurn-saturn-rings-back,
+.stackurn-saturn-rings-front {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotateX(72deg);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.stackurn-saturn-rings-back {
+    width: 200px;
+    height: 200px;
+    border: 14px solid rgba(218, 165, 80, 0.30);
+    box-shadow:
+        0 0 0 8px rgba(200, 145, 55, 0.15),
+        0 0 0 18px rgba(190, 130, 45, 0.08);
+    z-index: 1;
+}
+
+.stackurn-saturn-rings-front {
+    width: 200px;
+    height: 200px;
+    border: 14px solid rgba(218, 165, 80, 0.45);
+    z-index: 3;
+    clip-path: ellipse(100px 40px at 50% 100%);
+}
+
+@keyframes saturn-spin {
+    from { filter: hue-rotate(0deg); }
+    to   { filter: hue-rotate(8deg); }
+}
+
+/* ─── Orbit rings ────────────────────────────────────────────────────── */
+.stackurn-orbit-ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    border: 1px dashed var(--border-subtle);
+    animation: stackurn-orbit-spin linear infinite;
+}
+
+.stackurn-orbit-ring.reverse {
+    animation-direction: reverse;
+}
+
+@keyframes stackurn-orbit-spin {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to   { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Each logo placed on the ring circumference */
+.stackurn-logo-orbit-slot {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    /* place at radius distance on the orbit angle */
+    transform:
+        rotate(var(--orbit-angle))
+        translateX(var(--orbit-radius))
+        translateY(-50%);
+    transform-origin: 0 0;
+}
+
+/* Counter-rotate wrapper (applied via inline style for dynamic duration) */
+.stackurn-logo-counter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@keyframes stackurn-counter-spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(-360deg); }
+}
+
+/* ─── Individual logo item ───────────────────────────────────────────── */
+.stackurn-logo-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+    cursor: default;
+    transition: transform 0.25s ease;
+    padding: 0.5rem;
+    border-radius: 12px;
+    background: var(--bg-glass);
+    border: 1px solid var(--border-subtle);
+    backdrop-filter: blur(8px);
+    min-width: 50px;
+}
+
+.stackurn-logo-item:hover {
+    transform: scale(1.15);
+    border-color: var(--border-glow);
+    background: rgba(168, 85, 247, 0.08);
+    z-index: 10;
+}
+
+.stackurn-logo-img {
+    width: 26px;
+    height: 26px;
+    object-fit: contain;
+    display: block;
+    filter: brightness(0.9) saturate(1.1);
+}
+
+.stackurn-logo-fallback {
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+}
+
+.stackurn-logo-name {
+    font-size: 0.6rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+    text-align: center;
+    line-height: 1;
+}
+
+/* ─── Legend ─────────────────────────────────────────────────────────── */
+.stackurn-legend {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
+
+.stackurn-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.legend-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.legend-dot.inner { background: var(--accent-primary); }
+.legend-dot.outer { background: var(--accent-secondary); }
+
+/* ─── Mobile ─────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+    .stackurn-system {
+        width: 420px;
+        height: 420px;
+    }
+
+    .stackurn-saturn-body {
+        width: 80px;
+        height: 80px;
+    }
+
+    .stackurn-saturn-rings-back,
+    .stackurn-saturn-rings-front {
+        width: 140px;
+        height: 140px;
+    }
+
+    /* Collapse outer ring on small screens */
+    .stackurn-orbit-ring:nth-child(1) {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .stackurn-system {
+        width: 340px;
+        height: 340px;
+    }
+
+    .stackurn-logo-item {
+        min-width: 38px;
+        padding: 0.35rem;
+    }
+
+    .stackurn-logo-img {
+        width: 20px;
+        height: 20px;
+    }
+
+    .stackurn-legend {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+}
+
+/* pause orbit when user prefers reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .stackurn-orbit-ring,
+    .stackurn-logo-counter,
+    .stackurn-saturn-body {
+        animation: none !important;
+    }
+}

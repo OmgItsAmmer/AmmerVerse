@@ -47,7 +47,7 @@ function createIslamabadMarker(map) {
 }
 
 // Main EarthModel Component
-export default function EarthModel({ isZoomed, onEarthClick, onClose }) {
+export default function EarthModel({ isZoomed, onEarthClick, onClose, embedded = false }) {
   const [isHovered, setIsHovered] = useState(false);
   const mapContainerRef = useRef(null);
   const mapRef = useRef(null);
@@ -191,7 +191,7 @@ export default function EarthModel({ isZoomed, onEarthClick, onClose }) {
 
   return (
     <div 
-      className={`earth-model-container ${isZoomed ? 'zoomed' : ''} ${isHovered && !isZoomed ? 'hovered' : ''}`}
+      className={`earth-model-container ${embedded ? 'embedded' : ''} ${isZoomed ? 'zoomed' : ''} ${isHovered && !isZoomed ? 'hovered' : ''}`}
       onMouseEnter={() => !isZoomed && setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={handleClick}

@@ -1,23 +1,30 @@
 .landing-container {
   position: relative;
-  width: 100vw;
-  height: 100vh;
-  background: #000000;
-  overflow: hidden;
+  width: 100%;
+  min-height: 100vh;
+  background: var(--bg-base, #050508);
+  overflow-x: hidden;
 }
 
-.landing-container::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 60%;
-  height: 60%;
-  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.3) 0%, transparent 70%);
-  filter: blur(40px);
-  z-index: 1;
-  pointer-events: none;
+/* ─── My Projects section wrapper ────────────────────────────────────── */
+.section-my-projects {
+  position: relative;
+  z-index: 10;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 0;
+}
+
+/* Ensure all sections render above fixed ambient layers */
+#hero,
+#stackurn,
+#achievements,
+#contact {
+  position: relative;
+  z-index: 10;
 }
 
 /* Navbar Styles */
@@ -1392,7 +1399,6 @@
   align-items: center;
   background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
 }
-
 .project-title-preview {
   font-family: 'Bebas Neue', sans-serif;
   font-size: 2rem;

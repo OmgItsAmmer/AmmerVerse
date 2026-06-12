@@ -1,0 +1,293 @@
+/* ─── Section wrapper ────────────────────────────────────────────────── */
+.domain-carousel {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    padding: 0 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.domain-header {
+    text-align: center;
+}
+
+.domain-section-title {
+    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--text-primary);
+    margin: 0.3rem 0 0;
+}
+
+/* ─── Orbit stage ────────────────────────────────────────────────────── */
+.carousel-orbit {
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+    height: 520px;
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border-subtle);
+    overflow: visible;
+}
+
+/* Ambient glow that changes per domain */
+.carousel-glow-ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 260px;
+    height: 260px;
+    border-radius: 50%;
+    background: var(--domain-glow, rgba(168,85,247,0.15));
+    filter: blur(60px);
+    pointer-events: none;
+    z-index: 0;
+    transition: background 0.6s ease;
+}
+
+/* ─── Center avatar ──────────────────────────────────────────────────── */
+.carousel-avatar-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -52%);
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.carousel-avatar-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.carousel-avatar-img {
+    width: 155px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    border: 2px solid var(--border-mid);
+    box-shadow: 0 0 40px var(--domain-glow, rgba(168,85,247,0.2));
+    transition: box-shadow 0.5s ease;
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+.carousel-avatar-label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: color 0.4s ease;
+}
+
+/* ─── AI avatar placeholder ──────────────────────────────────────────── */
+.ai-avatar-placeholder {
+    position: relative;
+    width: 155px;
+    height: 155px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ai-avatar-core {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 40%, rgba(168,85,247,0.22), rgba(99,102,241,0.12) 60%, transparent);
+    border: 1px solid rgba(168,85,247,0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: ai-pulse 3s ease-in-out infinite;
+}
+
+.ai-avatar-icon {
+    width: 80px;
+    height: 80px;
+}
+
+.ai-avatar-ring {
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    border: 1px dashed rgba(168,85,247,0.3);
+    animation: ai-spin 18s linear infinite;
+}
+
+@keyframes ai-pulse {
+    0%, 100% { box-shadow: 0 0 20px rgba(168,85,247,0.25); }
+    50%       { box-shadow: 0 0 40px rgba(168,85,247,0.45); }
+}
+
+@keyframes ai-spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+
+/* ─── Card slot ──────────────────────────────────────────────────────── */
+.carousel-card-slot {
+    z-index: 3;
+}
+
+/* Ensure ProjectCard sits inside the slot (relative flow) */
+.carousel-card-slot .project-card-wrapper {
+    position: relative !important;
+    top: unset !important;
+    left: unset !important;
+}
+
+.carousel-no-projects {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    pointer-events: none;
+}
+
+/* ─── Controls ───────────────────────────────────────────────────────── */
+.carousel-controls {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+.carousel-arrow {
+    background: var(--bg-glass);
+    border: 1px solid var(--border-mid);
+    color: var(--text-primary);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s, transform 0.15s;
+    backdrop-filter: blur(8px);
+    padding: 0;
+    line-height: 1;
+}
+
+.carousel-arrow:hover {
+    border-color: var(--accent-primary);
+    background: rgba(168,85,247,0.12);
+    transform: scale(1.08);
+}
+
+.carousel-tabs {
+    display: flex;
+    gap: 0.4rem;
+}
+
+.carousel-tab {
+    background: none;
+    border: 1px solid var(--border-subtle);
+    color: var(--text-muted);
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 0.4rem 0.9rem;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.22s ease;
+    font-family: inherit;
+    letter-spacing: 0.03em;
+}
+
+.carousel-tab:hover {
+    border-color: var(--border-mid);
+    color: var(--text-secondary);
+}
+
+.carousel-tab.active {
+    border-color: var(--tab-color, var(--accent-primary));
+    color: var(--tab-color, var(--accent-primary));
+    background: rgba(168,85,247,0.08);
+    box-shadow: 0 0 12px rgba(168,85,247,0.12);
+}
+
+/* ─── Dots ───────────────────────────────────────────────────────────── */
+.carousel-dots {
+    display: flex;
+    gap: 0.55rem;
+}
+
+.carousel-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--border-mid);
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    padding: 0;
+}
+
+.carousel-dot.active {
+    transform: scale(1.5);
+}
+
+.carousel-dot:hover {
+    background: var(--text-muted);
+}
+
+/* ─── Mobile ─────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+    .carousel-orbit {
+        height: 400px;
+    }
+
+    .carousel-avatar-img {
+        width: 110px;
+        height: 145px;
+    }
+
+    .ai-avatar-core {
+        width: 100px;
+        height: 100px;
+    }
+
+    .ai-avatar-icon {
+        width: 65px;
+        height: 65px;
+    }
+
+    .carousel-tabs {
+        gap: 0.25rem;
+    }
+
+    .carousel-tab {
+        font-size: 0.75rem;
+        padding: 0.35rem 0.6rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .domain-carousel {
+        padding: 0 1rem;
+    }
+
+    .carousel-orbit {
+        height: 340px;
+    }
+
+    .carousel-controls {
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}

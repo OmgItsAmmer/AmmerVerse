@@ -94,6 +94,20 @@ const DesktopCard = ({ project, image }) => {
     );
 };
 
+const AICard = ({ project }) => (
+    <div className="project-card-inner ai-card">
+        <div className="ai-card-glow" aria-hidden="true" />
+        <div className="ai-card-header">
+            <span className="ai-card-tag">AI / LLM</span>
+        </div>
+        <div className="ai-card-body">
+            <div className="ai-card-icon" aria-hidden="true">◈</div>
+            <span className="ai-card-name">{project.name}</span>
+            <p className="ai-card-desc">{project.techStack?.backend?.split(',')[0] || 'LangChain · Python'}</p>
+        </div>
+    </div>
+);
+
 const DefaultCard = ({ project }) => (
     <div className="project-card-inner default-card">
         <div className="default-content">
@@ -131,6 +145,8 @@ export default function ProjectCard({ project, onClick, top, left, rotate, categ
                 return <BrowserCard project={project} image={image} />;
             case 'desktop':
                 return <DesktopCard project={project} image={image} />;
+            case 'ai':
+                return <AICard project={project} />;
             default:
                 return <DefaultCard project={project} />;
         }
@@ -145,6 +161,8 @@ export default function ProjectCard({ project, onClick, top, left, rotate, categ
             ? 'web-card-wrapper'
             : category === 'desktop'
             ? 'desktop-card-wrapper'
+            : category === 'ai'
+            ? 'ai-card-wrapper'
             : '';
 
     // Check if this is within a mobile wrapper (simplified check)

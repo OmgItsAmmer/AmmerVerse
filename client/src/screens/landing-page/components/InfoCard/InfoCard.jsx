@@ -1,9 +1,12 @@
-import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { forwardRef, useState } from 'react';
+import { motion as Motion } from 'framer-motion';
 import './InfoCard.css';
 
 // Info Card Component
-export default function InfoCard({ title, content, align, containerRef, top, left, rotate, className }) {
+const InfoCard = forwardRef(function InfoCard(
+    { title, content, align, containerRef, top, left, rotate, className, onActivate, indicatorActive },
+    ref
+) {
     const [zIndex, setZIndex] = useState(0);
 
     const updateZIndex = () => {
@@ -26,9 +29,16 @@ export default function InfoCard({ title, content, align, containerRef, top, lef
     // Check if this is a mobile card (className includes 'mobile-info-card')
     const isMobileCard = className && className.includes('mobile-info-card');
 
+    const handleMouseDown = () => {
+        if (isMobileCard) return;
+        updateZIndex();
+        onActivate?.();
+    };
+
     return (
-        <motion.div
-            className={`info-card ${align} ${className || ''}`}
+        <Motion.div
+            ref={ref}
+            className={`info-card ${align} ${className || ''} ${indicatorActive ? 'info-card--indicator-active' : ''}`}
             style={{
                 top: isMobileCard ? undefined : top,
                 left: isMobileCard ? undefined : left,
@@ -39,7 +49,7 @@ export default function InfoCard({ title, content, align, containerRef, top, lef
             drag={!isMobileCard}
             dragConstraints={isMobileCard ? undefined : containerRef}
             dragElastic={isMobileCard ? undefined : 0.65}
-            onMouseDown={isMobileCard ? undefined : updateZIndex}
+            onMouseDown={isMobileCard ? undefined : handleMouseDown}
             whileHover={isMobileCard ? undefined : { scale: 1.05, cursor: 'grab' }}
             whileDrag={isMobileCard ? undefined : { scale: 1.1, cursor: 'grabbing' }}
             initial={{ opacity: 0, scale: 0.8 }}
@@ -48,7 +58,9 @@ export default function InfoCard({ title, content, align, containerRef, top, lef
         >
             <h3 className="info-card-title">{title}</h3>
             <p className="info-card-content">{content}</p>
-        </motion.div>
+        </Motion.div>
     );
-}
+});
+
+export default InfoCard;
 

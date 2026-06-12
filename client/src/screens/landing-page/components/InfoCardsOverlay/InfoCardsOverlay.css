@@ -20,6 +20,18 @@
   z-index: 40;
 }
 
+.mobile-card-stack {
+  position: relative;
+  width: 100%;
+  max-width: 340px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  pointer-events: auto;
+  margin: 0 auto;
+}
+
 .mobile-card-container {
   position: relative;
   width: 100%;
@@ -101,8 +113,26 @@
   pointer-events: auto;
 }
 
+/* Dots placed in flow directly under the mobile card */
+.info-carousel-indicators--under-card {
+  position: relative;
+  bottom: auto;
+  left: auto;
+  transform: none;
+  margin-top: 2px;
+}
+
+/* Desktop: pagination dots at bottom center (selected mode, multiple cards) */
+.info-carousel-indicators--desktop {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+  z-index: 100;
+}
+
 @media (max-width: 768px) {
-  .info-carousel-indicators {
+  .info-carousel-indicators:not(.info-carousel-indicators--under-card) {
     bottom: -30px;
   }
 }

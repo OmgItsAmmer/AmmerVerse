@@ -1,0 +1,197 @@
+/* ─── Hero Section ─────────────────────────────────────────────────── */
+.hero-section {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 100px 4vw 60px;
+    background: var(--gradient-mesh);
+    overflow: hidden;
+}
+
+.hero-gradient-mesh {
+    position: absolute;
+    inset: 0;
+    background: var(--gradient-hero-center);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.hero-inner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5vw;
+    width: 100%;
+    max-width: 1200px;
+}
+
+/* ─── Left: particle face ──────────────────────────────────────────── */
+.hero-face-col {
+    flex: 0 0 42%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.particle-face-canvas {
+    width: 100%;
+    max-width: 420px;
+    aspect-ratio: 1 / 1.15;
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    background: transparent;
+    display: block;
+    filter: drop-shadow(0 0 40px rgba(168, 85, 247, 0.18));
+}
+
+.hero-face-hint {
+    margin-top: 0.75rem;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    font-style: italic;
+    letter-spacing: 0.02em;
+    text-align: center;
+}
+
+/* ─── Right: copy ──────────────────────────────────────────────────── */
+.hero-copy-col {
+    flex: 0 0 52%;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.hero-name {
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    color: var(--text-primary);
+    margin: 0.3rem 0 1rem;
+    font-family: 'Inter', sans-serif;
+}
+
+.hero-tagline {
+    font-size: clamp(1.15rem, 2vw, 1.45rem);
+    font-weight: 600;
+    color: var(--accent-glow);
+    margin: 0 0 0.9rem;
+    letter-spacing: -0.01em;
+}
+
+.hero-sub {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin: 0 0 2rem;
+    max-width: 480px;
+}
+
+/* ─── CTAs ─────────────────────────────────────────────────────────── */
+.hero-ctas {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.cta-primary,
+.cta-secondary {
+    border: none;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 0.75rem 1.6rem;
+    border-radius: 10px;
+    transition: all 0.22s ease;
+    font-family: inherit;
+    letter-spacing: 0.01em;
+}
+
+.cta-primary {
+    background: var(--accent-primary);
+    color: #fff;
+    box-shadow: 0 0 24px rgba(168, 85, 247, 0.35);
+}
+
+.cta-primary:hover {
+    background: var(--accent-glow);
+    transform: translateY(-2px);
+    box-shadow: 0 0 36px rgba(192, 132, 252, 0.5);
+}
+
+.cta-secondary {
+    background: var(--bg-glass);
+    color: var(--text-primary);
+    border: 1px solid var(--border-mid);
+    backdrop-filter: blur(8px);
+}
+
+.cta-secondary:hover {
+    border-color: var(--accent-primary);
+    color: var(--accent-glow);
+    transform: translateY(-2px);
+}
+
+/* ─── Scroll hint ──────────────────────────────────────────────────── */
+.hero-scroll-hint {
+    position: absolute;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+}
+
+.scroll-hint-arrow {
+    display: block;
+    font-size: 1.6rem;
+    color: var(--text-muted);
+    animation: bounce-down 2s ease-in-out infinite;
+}
+
+@keyframes bounce-down {
+    0%, 100% { transform: translateY(0); opacity: 0.5; }
+    50%       { transform: translateY(8px); opacity: 1; }
+}
+
+/* ─── Mobile ───────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+    .hero-inner {
+        flex-direction: column;
+        gap: 2.5rem;
+        text-align: center;
+    }
+
+    .hero-face-col {
+        flex: none;
+        width: 70%;
+        max-width: 320px;
+        align-self: center;
+    }
+
+    .hero-copy-col {
+        flex: none;
+        align-items: center;
+    }
+
+    .hero-sub {
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-section {
+        padding: 90px 5vw 50px;
+    }
+
+    .hero-name {
+        font-size: 2.8rem;
+    }
+
+    .hero-ctas {
+        justify-content: center;
+    }
+}

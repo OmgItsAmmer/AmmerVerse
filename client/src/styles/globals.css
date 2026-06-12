@@ -1,30 +1,92 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
 :root {
-  --background-color: #0A0A0A;
-  --primary-text-color: #EAEAEA;
-  --ml-color: #00FFE0;
-  --flutter-color: #1E90FF;
-  --backend-color: #FFA500;
-  --gamedev-color: #9B59B6;
-  --professional-color: #FFFFFF;
-  --glow-purple: #B794F6;
-  --glow-magenta: #E879F9;
-  --dark-purple: #1a0b2e;
+  /* ─── Space background ─────────────────────────────────────── */
+  --bg-base:           #050508;
+  --bg-elevated:       #0A0A10;
+  --bg-glass:          rgba(255, 255, 255, 0.04);
+  --bg-glass-strong:   rgba(8, 8, 14, 0.82);
+
+  /* ─── Borders ──────────────────────────────────────────────── */
+  --border-subtle:     rgba(255, 255, 255, 0.08);
+  --border-mid:        rgba(255, 255, 255, 0.12);
+  --border-glow:       rgba(168, 85, 247, 0.30);
+
+  /* ─── Accent — violet / indigo ─────────────────────────────── */
+  --accent-primary:    #A855F7;
+  --accent-secondary:  #6366F1;
+  --accent-glow:       #C084FC;
+
+  /* ─── Text ─────────────────────────────────────────────────── */
+  --text-primary:      #F0F0F2;
+  --text-secondary:    #A1A1AA;
+  --text-muted:        #71717A;
+
+  /* ─── Space assets ─────────────────────────────────────────── */
+  --star-opacity:      0.45;
+  --space-asset-opacity: 0.35;
+
+  /* ─── Depth gradients ───────────────────────────────────────── */
+  --gradient-mesh:
+    radial-gradient(circle at 20% 20%, rgba(168, 85, 247, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 0%,  rgba(99, 102, 241, 0.06) 0%, transparent 50%);
+  --gradient-hero-center:
+    radial-gradient(ellipse at 50% 40%, rgba(80, 60, 140, 0.06) 0%, transparent 70%);
+
+  /* ─── Legacy aliases (keep for existing components) ────────── */
+  --background-color:     #050508;
+  --primary-text-color:   #F0F0F2;
+  --ml-color:             #00FFE0;
+  --flutter-color:        #1E90FF;
+  --backend-color:        #FFA500;
+  --gamedev-color:        #9B59B6;
+  --professional-color:   #FFFFFF;
+  --glow-purple:          #B794F6;
+  --glow-magenta:         #E879F9;
+  --dark-purple:          #1a0b2e;
 }
 
-
+html {
+  scroll-behavior: auto; /* Lenis owns smooth scroll */
+}
 
 body {
   margin: 0;
   padding: 0;
   font-family: 'Inter', 'Poppins', sans-serif;
-  background-color: var(--background-color);
-  color: var(--primary-text-color);
+  background-color: var(--bg-base);
+  color: var(--text-primary);
   overflow-x: hidden;
- 
 }
 
 ::selection {
-  background-color: var(--primary-text-color);
-  color: var(--background-color);
+  background-color: var(--accent-primary);
+  color: var(--bg-base);
+}
+
+/* ─── Utility classes ───────────────────────────────────────── */
+.section-eyebrow {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-primary);
+  margin-bottom: 0.75rem;
+}
+
+.glass-card {
+  background: var(--bg-glass);
+  border: 1px solid var(--border-mid);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 12px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

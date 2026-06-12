@@ -1,167 +1,63 @@
 import { useState } from 'react';
 import './LandingPage.css';
 
-// Import modular components
-import Navbar from '../../components/Navbar.jsx';  // shared component stays same
+// Global ambient layers (always present)
+import Navbar from '../../components/Navbar.jsx';
 import Starfield from './components/Starfield';
-import AvatarRow from './components/AvatarRow';
-import InfoCardsOverlay from './components/InfoCardsOverlay';
-import ProjectCardsOverlay from './components/ProjectCardsOverlay';
+import SpaceMaterialsOrbit from './components/SpaceMaterialsOrbit/SpaceMaterialsOrbit';
+
+// Sections
+import HeroSection from './components/HeroSection/HeroSection.jsx';
+import DomainCarousel from './components/DomainCarousel/DomainCarousel.jsx';
+import StackurnSection from './components/StackurnSection/StackurnSection.jsx';
+import AchievementsSection from './components/AchievementsSection/AchievementsSection.jsx';
+import ContactSection from './components/ContactSection/ContactSection.jsx';
+
+// Shared popups
 import ProjectPopup from './components/ProjectPopup';
 import MessagePopup from './components/MessagePopup';
-import NavigationButtons from './components/NavigationButtons';
-import WelcomeText from './components/WelcomeText';
-import EarthModel from './components/EarthModel';
-import SpaceMaterialsOrbit from './components/SpaceMaterialsOrbit/SpaceMaterialsOrbit';
-// import MobileCardsCarousel from './components/MobileCardsCarousel';
 
-// Main landing page component
 export default function LandingPage() {
-  const [selectedAvatar, setSelectedAvatar] = useState(null);
-  const [viewMode, setViewMode] = useState('default'); // 'default', 'selected', 'projects'
-  const [selectedProject, setSelectedProject] = useState(null);
-  const [isMessagePopupOpen, setIsMessagePopupOpen] = useState(false);
-  // Initialize mobile avatar to 1 (avatar #2) by default
-  const [currentMobileAvatar, setCurrentMobileAvatar] = useState(1);
-  // Earth zoom state
-  const [isEarthZoomed, setIsEarthZoomed] = useState(false);
+    const [selectedProject, setSelectedProject] = useState(null);
+    const [isMessagePopupOpen, setIsMessagePopupOpen] = useState(false);
 
-  //This is the function which uses two reactive variables to determine the state of the application
-  const handleAvatarClick = (index) => {
-    if (viewMode === 'projects') return;
+    return (
+        <div className="landing-container">
+            {/* ─── Fixed ambient layers ────────────────────────────────── */}
+            <Starfield />
+            <SpaceMaterialsOrbit />
 
-    if (selectedAvatar === index) {
-      setSelectedAvatar(null);
-      setViewMode('default');
-    } else {
-      setSelectedAvatar(index);
-      setViewMode('selected');
-    }
-  };
+            {/* ─── Sticky nav ──────────────────────────────────────────── */}
+            <Navbar />
 
+            {/* ─── Sections ────────────────────────────────────────────── */}
+            <HeroSection onContactClick={() => setIsMessagePopupOpen(true)} />
 
-  const handleShowProjects = (e) => {
-    if (e) e.stopPropagation();
-    setViewMode('projects');
-  };
+            <section id="my-projects" className="section-my-projects">
+                <DomainCarousel onProjectClick={setSelectedProject} />
+            </section>
 
-  const handleGoBack = (e) => {
-    if (e) e.stopPropagation();
-    setSelectedAvatar(null);
-    setViewMode('default');
-    setSelectedProject(null);
-    setIsMessagePopupOpen(false);
-  };
+            <StackurnSection />
 
-  const handlePrev = (e) => {
-    if (e) e.stopPropagation();
-    if (viewMode === 'projects') {
-      setViewMode('selected');
-    } else if (viewMode === 'selected') {
-      handleGoBack();
-    }
-  };
+            <AchievementsSection />
 
-  const handleNext = (e) => {
-    if (e) e.stopPropagation();
-    if (viewMode === 'selected') {
-      handleShowProjects();
-    } else if (viewMode === 'projects') {
-      setIsMessagePopupOpen(true);
-    }
-  };
-
-  const handleProjectClick = (project) => {
-    setSelectedProject(project);
-  };
-
-  const handleEarthClick = () => {
-    setIsEarthZoomed(true);
-  };
-
-  const handleEarthClose = () => {
-    setIsEarthZoomed(false);
-  };
-
-  return (
-    <div className="landing-container">
-      {/* Ambient space materials (starts ~5s after page load) */}
-      <SpaceMaterialsOrbit />
-
-      {/* Earth Model - Always visible */}
-      <EarthModel 
-        isZoomed={isEarthZoomed} 
-        onEarthClick={handleEarthClick}
-        onClose={handleEarthClose}
-      />
-
-      {/* Only show content when Earth is not zoomed */}
-      {!isEarthZoomed && (
-        <>
-          {/* Navbar */}
-          <Navbar />
-
-          {/* Starfield background */}
-          <Starfield />
-
-          {/* Welcome Text */}
-          <WelcomeText viewMode={viewMode} />
-
-          {/* Avatar Images Row */}
-          <AvatarRow
-            selectedAvatar={selectedAvatar}
-            viewMode={viewMode}
-            onAvatarClick={handleAvatarClick}
-            onGoBack={handleGoBack}
-            onShowProjects={handleShowProjects}
-            onMessageClick={() => setIsMessagePopupOpen(true)}
-            currentMobileAvatar={currentMobileAvatar}
-            onMobileAvatarChange={setCurrentMobileAvatar}
-          />
-
-          {/* Info Cards Overlay (Only in Selected Mode) */}
-          <InfoCardsOverlay viewMode={viewMode} selectedAvatar={selectedAvatar} />
-
-          {/* Project Cards Overlay (Only in Projects Mode) */}
-          <ProjectCardsOverlay
-            viewMode={viewMode}
-            selectedAvatar={selectedAvatar}
-            onProjectClick={handleProjectClick}
-          />
-
-          {/* Mobile Cards Carousel (Only in Projects Mode) */}
-          {/* <MobileCardsCarousel
-            viewMode={viewMode}
-            selectedAvatar={selectedAvatar}
-            onProjectClick={handleProjectClick}
-            onGoBack={handleGoBack}
-          /> */}
-
-
-          {/* Navigation Buttons (Bottom Left) */}
-          <NavigationButtons
-            viewMode={viewMode}
-            onNext={handleNext}
-            onPrev={handlePrev}
-          />
-
-          {/* Project Popup */}
-          {selectedProject && (
-            <ProjectPopup
-              project={selectedProject}
-              onClose={() => setSelectedProject(null)}
+            <ContactSection
+                onContactClick={() => setIsMessagePopupOpen(true)}
             />
-          )}
 
-          {/* Message Popup */}
-          {isMessagePopupOpen && (
-            <MessagePopup
-              onClose={() => setIsMessagePopupOpen(false)}
-            />
-          )}
-        </>
-      )}
-    </div>
-  );
+            {/* ─── Global overlays ─────────────────────────────────────── */}
+            {selectedProject && (
+                <ProjectPopup
+                    project={selectedProject}
+                    onClose={() => setSelectedProject(null)}
+                />
+            )}
+
+            {isMessagePopupOpen && (
+                <MessagePopup
+                    onClose={() => setIsMessagePopupOpen(false)}
+                />
+            )}
+        </div>
+    );
 }
-

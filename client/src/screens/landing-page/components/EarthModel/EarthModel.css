@@ -102,6 +102,31 @@
   font-family: 'Courier New', monospace;
 }
 
+/* ─── Embedded mode: inline in a section (not fixed corner widget) ─── */
+.earth-model-container.embedded {
+  position: relative !important;
+  top: auto !important;
+  right: auto !important;
+  width: 100% !important;
+  height: 440px !important;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--border-mid, rgba(255,255,255,0.12));
+  box-shadow: 0 0 60px rgba(0, 0, 0, 0.6);
+}
+
+.earth-model-container.embedded.zoomed {
+  position: fixed !important;
+  top: 0 !important;
+  right: 0 !important;
+  left: 0 !important;
+  bottom: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  border-radius: 0 !important;
+  z-index: 9999;
+}
+
 /* Mobile: shrink globe widget */
 @media (max-width: 768px) {
   .earth-model-container {
