@@ -31,7 +31,7 @@ export default function LandingPage() {
             <Navbar />
 
             {/* ─── Sections ────────────────────────────────────────────── */}
-            <HeroSection onContactClick={() => setIsMessagePopupOpen(true)} />
+            <HeroSection />
 
             <section id="my-projects" className="section-my-projects">
                 <DomainCarousel onProjectClick={setSelectedProject} />

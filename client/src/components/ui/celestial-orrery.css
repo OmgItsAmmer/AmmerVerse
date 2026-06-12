@@ -1,0 +1,126 @@
+/* ─── Celestial Orrery: Sun + 8 planets ────────────────────────────── */
+@keyframes orbit-spin {
+    from { transform: translate(-50%, -50%) rotate(var(--start-angle, 0deg)); }
+    to   { transform: translate(-50%, -50%) rotate(calc(var(--start-angle, 0deg) + 360deg)); }
+}
+
+@keyframes sun-glow {
+    0%, 100% {
+        box-shadow:
+            0 0 12px rgba(255, 200, 50, 0.95),
+            0 0 28px rgba(255, 160, 30, 0.6);
+    }
+    50% {
+        box-shadow:
+            0 0 18px rgba(255, 220, 80, 1),
+            0 0 38px rgba(255, 170, 40, 0.75);
+    }
+}
+
+.celestial-orrery {
+    --orrery-size: 5rem;
+    position: relative;
+    width: var(--orrery-size);
+    height: var(--orrery-size);
+    flex-shrink: 0;
+    overflow: visible;
+}
+
+.celestial-orrery .orrery-field {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+
+/* ─── Sun ──────────────────────────────────────────────────────────── */
+.celestial-orrery .orrery-sun {
+    position: absolute;
+    z-index: 5;
+    top: 50%;
+    left: 50%;
+    width: 20%;
+    height: 20%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: radial-gradient(circle at 38% 32%, #fffef0 0%, #ffd54f 35%, #ff9800 70%, #e65100 100%);
+    animation: sun-glow 3.5s ease-in-out infinite;
+}
+
+/* ─── Orbits ───────────────────────────────────────────────────────── */
+.celestial-orrery .orbit {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: var(--orbit-size);
+    height: var(--orbit-size);
+    transform: translate(-50%, -50%);
+    animation: orbit-spin var(--orbit-duration) linear infinite;
+    pointer-events: none;
+}
+
+.celestial-orrery .orbit--reverse {
+    animation-direction: reverse;
+}
+
+/* Planets sized from orrery diameter — not tiny orbit-relative dots */
+.celestial-orrery .planet {
+    --planet-scale: 0.1;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: calc(var(--orrery-size) * var(--planet-scale));
+    height: calc(var(--orrery-size) * var(--planet-scale));
+    min-width: 6px;
+    min-height: 6px;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    z-index: 3;
+}
+
+.celestial-orrery .planet--opposite {
+    left: 100%;
+}
+
+.celestial-orrery .planet--earth {
+    background:
+        radial-gradient(circle at 65% 55%, #2ecc71 0%, #2ecc71 20%, transparent 21%),
+        radial-gradient(circle at 35% 35%, #5dade2, #1a5276 80%, #0b3050);
+}
+
+.celestial-orrery .planet--mars {
+    background: radial-gradient(circle at 35% 30%, #e57373, #c0392b 70%, #7b241c);
+}
+
+.celestial-orrery .planet--jupiter {
+    z-index: 4;
+    background:
+        linear-gradient(180deg,
+            #c4956a 0%, #a0724a 22%, #d4a574 38%,
+            #8b6340 55%, #c4956a 72%, #7a5230 100%);
+}
+
+.celestial-orrery .planet--saturn {
+    z-index: 4;
+    background: radial-gradient(circle at 38% 32%, #f0d9a0, #c9a050 75%, #8b6914);
+}
+
+.celestial-orrery .planet--saturn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 185%;
+    height: 48%;
+    transform: translate(-50%, -50%) rotate(-18deg);
+    border: 2px solid rgba(210, 180, 120, 0.85);
+    border-radius: 50%;
+    box-shadow: 0 0 3px rgba(210, 180, 120, 0.5);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .celestial-orrery .orbit,
+    .celestial-orrery .orrery-sun {
+        animation: none;
+    }
+}
