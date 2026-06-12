@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { getOutwardDrive, useScrollOutward } from '../../../../hooks/useScrollOutward.js';
 import './SpaceMaterialsOrbit.css';
 
 import asteroidSrc from '../../../../assets/images/icons/space_material/asteroid.png';
@@ -233,11 +234,23 @@ export default function SpaceMaterialsOrbit() {
   const [renderItems, setRenderItems] = useState([]);
   const itemsRef = useRef([]);
   const elRefs = useRef({});
+  const outwardRef = useRef({ drive: 0, slideProgress: 0, direction: 1, inProjects: false });
   /** Latest pointer (client coords) per UFO — physics runs in rAF, not on every mousemove */
   const ufoPointerRef = useRef({});
   const rafRef = useRef(null);
   const lastTsRef = useRef(null);
   const nextSpawnRef = useRef(null);
+
+  const { push, velocity, prismPush, prism } = useScrollOutward();
+
+  useEffect(() => {
+    outwardRef.current = {
+      drive: getOutwardDrive(push, velocity, prismPush),
+      slideProgress: prism.slideProgress,
+      direction: prism.direction,
+      inProjects: prism.inProjectsSection,
+    };
+  }, [push, velocity, prismPush, prism.slideProgress, prism.direction, prism.inProjectsSection]);
 
   const syncRenderFromRef = useCallback(() => {
     setRenderItems([...itemsRef.current]);
@@ -374,12 +387,34 @@ export default function SpaceMaterialsOrbit() {
           y += item.ufoOffsetY ?? 0;
         }
 
+        const outward = outwardRef.current;
+        const { drive, slideProgress, direction, inProjects } = outward;
+
+        if (inProjects && slideProgress > 0.02) {
+          const exitShift = direction * slideProgress * 62;
+          x -= exitShift;
+          y += (y - 50) * slideProgress * 0.12;
+        } else if (drive > 0.01) {
+          const dx = x - 50;
+          const dy = y - 50;
+          const dist = Math.hypot(dx, dy) || 1;
+          const radial = drive * 22;
+          x += (dx / dist) * radial;
+          y += (dy / dist) * radial;
+        }
+
         el.style.left = `${x}%`;
         el.style.top = `${y}%`;
         if (item.kind !== 'satellite') {
-          el.style.opacity = String(item.opacity);
+          const fade = inProjects && slideProgress > 0.02
+            ? Math.max(0, 1 - slideProgress * 1.1)
+            : Math.max(0, 1 - drive * 0.85);
+          el.style.opacity = String(item.opacity * fade);
         }
-        el.style.setProperty('--material-rot', `${rot}deg`);
+        const matScale = inProjects && slideProgress > 0.02
+          ? 1 + slideProgress * 0.22
+          : 1 + drive * 0.18;
+        el.style.transform = `translate(-50%, -50%) rotate(${rot}deg) scale(${matScale})`;
       }
     };
 

@@ -6,10 +6,12 @@ import "./styles/globals.css";
 export default function App() {
   useEffect(() => {
     const lenis = new Lenis({
-      duration: 1.2,
+      duration: 1.55,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
-      touchMultiplier: 2,
+      wheelMultiplier: 0.75,
+      touchMultiplier: 1,
+      lerp: 0.085,
     });
 
     window.__lenis = lenis;

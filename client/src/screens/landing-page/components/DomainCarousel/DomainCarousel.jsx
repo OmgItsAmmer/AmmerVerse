@@ -1,8 +1,6 @@
 import { useState, useCallback } from 'react';
 import HexagonSlider from '../HexagonSlider/HexagonSlider';
-import ProjectCard from '../ProjectCard';
 import { PROJECTS, DEVELOPERS } from '../../data/developerModels.js';
-import { useIsMobile } from '../../../../hooks/useMediaQuery';
 import './DomainCarousel.css';
 
 /* ─── Domain config ──────────────────────────────────────────────────── */
@@ -15,16 +13,64 @@ const DOMAIN_META = {
     2: { label: 'Desktop', color: '#FBBF24', glow: 'rgba(251,191,36,0.20)' },
 };
 
-/* Project slots on each face — circular orbit around center avatar (Y-axis ring) */
-function getOrbitSlot(index, total, radiusPercent = 36) {
-    if (total === 0) return {};
-    const angleDeg = (index / total) * 360 - 90;
-    const rad = (angleDeg * Math.PI) / 180;
+/* Scattered slots inside the safe zone around the avatar (%, within .domain-face__orbit) */
+const SCATTER_PRESETS = {
+    1: [{ left: 74, top: 40, rotate: 5 }],
+    2: [
+        { left: 24, top: 34, rotate: -9 },
+        { left: 76, top: 58, rotate: 7 },
+    ],
+    3: [
+        { left: 20, top: 30, rotate: -11 },
+        { left: 80, top: 36, rotate: 8 },
+        { left: 72, top: 66, rotate: -4 },
+    ],
+    4: [
+        { left: 18, top: 28, rotate: -10 },
+        { left: 82, top: 32, rotate: 9 },
+        { left: 16, top: 64, rotate: -6 },
+        { left: 84, top: 68, rotate: 11 },
+    ],
+};
+
+function getScatterSlot(index, total, domainId) {
+    const preset = SCATTER_PRESETS[Math.min(total, 4)] ?? SCATTER_PRESETS[4];
+    const slot = preset[index % preset.length];
+    const jitter = ((domainId * 17 + index * 11) % 7) - 3;
+
     return {
-        left: `${50 + radiusPercent * Math.cos(rad)}%`,
-        top: `${50 + radiusPercent * Math.sin(rad)}%`,
-        transform: `translate(-50%, -50%) rotate(${angleDeg + 90}deg)`,
+        left: `${Math.min(86, Math.max(14, slot.left + jitter))}%`,
+        top: `${Math.min(70, Math.max(26, slot.top + jitter * 0.6))}%`,
+        transform: `translate(-50%, -50%) rotate(${slot.rotate + jitter * 0.8}deg)`,
     };
+}
+
+function getProjectThumb(project) {
+    if (project.images?.length) return project.images[0];
+    return project.thumbnail || null;
+}
+
+function MiniProjectCard({ project, category, onClick, style }) {
+    const thumb = getProjectThumb(project);
+
+    return (
+        <button
+            type="button"
+            className={`domain-mini-card domain-mini-card--${category}`}
+            style={style}
+            onClick={() => onClick(project)}
+            aria-label={`Open ${project.name}`}
+        >
+            <div className="domain-mini-card__frame">
+                {thumb ? (
+                    <img src={thumb} alt="" className="domain-mini-card__img" draggable={false} />
+                ) : (
+                    <span className="domain-mini-card__fallback">{project.name.slice(0, 2)}</span>
+                )}
+            </div>
+            <span className="domain-mini-card__name">{project.name}</span>
+        </button>
+    );
 }
 
 function AIAvatarPlaceholder() {
@@ -94,20 +140,13 @@ function DomainFace({ developer, domainMeta, onProjectClick, isActive }) {
 
             <div className="domain-face__orbit">
                 {visibleProjects.map((project, i) => (
-                    <div
+                    <MiniProjectCard
                         key={project.id}
-                        className="domain-face__project-slot"
-                        style={getOrbitSlot(i, visibleProjects.length)}
-                    >
-                        <ProjectCard
-                            project={project}
-                            category={developer?.category === 'ai' ? 'ai' : developer?.category}
-                            onClick={onProjectClick}
-                            top="50%"
-                            left="50%"
-                            rotate="0deg"
-                        />
-                    </div>
+                        project={project}
+                        category={developer?.category === 'ai' ? 'ai' : developer?.category}
+                        onClick={onProjectClick}
+                        style={getScatterSlot(i, visibleProjects.length, developer?.id ?? 0)}
+                    />
                 ))}
                 {visibleProjects.length === 0 && (
                     <div className="domain-face__empty">
@@ -121,12 +160,9 @@ function DomainFace({ developer, domainMeta, onProjectClick, isActive }) {
 
 export default function DomainCarousel({ onProjectClick }) {
     const [activeIdx, setActiveIdx] = useState(0);
-    const isMobile = useIsMobile();
 
     const activeDevId = DOMAIN_ORDER[activeIdx];
     const domainMeta = DOMAIN_META[activeDevId];
-    const faceWidth = isMobile ? 340 : 520;
-    const faceHeight = isMobile ? 360 : 480;
 
     const handlePrev = useCallback(() => {
         setActiveIdx((prev) => (prev - 1 + DOMAIN_ORDER.length) % DOMAIN_ORDER.length);
@@ -145,32 +181,28 @@ export default function DomainCarousel({ onProjectClick }) {
             <div className="domain-header">
                 <span className="section-eyebrow">My Projects</span>
                 <h2 className="domain-section-title">One engineer. Four proof lanes.</h2>
-                <p className="domain-section-hint">Drag the carousel or use arrows to rotate domains</p>
+                <p className="domain-section-hint">Drag to rotate · click a project for details</p>
             </div>
 
-            <div className="carousel-stage">
-                <HexagonSlider
-                    sideCount={DOMAIN_ORDER.length}
-                    activeIndex={activeIdx}
-                    onActiveChange={setActiveIdx}
-                    autoAdvanceMs={8000}
-                    faceWidth={faceWidth}
-                    faceHeight={faceHeight}
-                >
-                    {DOMAIN_ORDER.map((devId, idx) => {
-                        const developer = DEVELOPERS.find((d) => d.id === devId);
-                        return (
-                            <DomainFace
-                                key={devId}
-                                developer={developer}
-                                domainMeta={DOMAIN_META[devId]}
-                                onProjectClick={onProjectClick}
-                                isActive={idx === activeIdx}
-                            />
-                        );
-                    })}
-                </HexagonSlider>
-            </div>
+            <HexagonSlider
+                className="domain-carousel__slider"
+                sideCount={DOMAIN_ORDER.length}
+                activeIndex={activeIdx}
+                onActiveChange={setActiveIdx}
+            >
+                {DOMAIN_ORDER.map((devId, idx) => {
+                    const developer = DEVELOPERS.find((d) => d.id === devId);
+                    return (
+                        <DomainFace
+                            key={devId}
+                            developer={developer}
+                            domainMeta={DOMAIN_META[devId]}
+                            onProjectClick={onProjectClick}
+                            isActive={idx === activeIdx}
+                        />
+                    );
+                })}
+            </HexagonSlider>
 
             <div className="carousel-controls">
                 <button type="button" className="carousel-arrow" onClick={handlePrev} aria-label="Previous domain">

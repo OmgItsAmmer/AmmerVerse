@@ -1,8 +1,28 @@
-import { useState } from 'react';
-import { INNER_RING, OUTER_RING, getIconUrl } from '../../data/stackurnLogos.js';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import Starfield from '../Starfield/Starfield.jsx';
+import { STACKURN_LAYERS, getIconUrl } from '../../data/stackurnLogos.js';
+import { buildStackurnLayouts } from '../../data/stackurnLayout.js';
+import { useIsMobile } from '../../../../hooks/useMediaQuery';
 import './StackurnSection.css';
 
-/* ─── Logo item: tries CDN image, falls back to text pill ─────────────── */
+function getPointerAngleDeg(clientX, clientY, centerX, centerY) {
+    return (Math.atan2(clientY - centerY, clientX - centerX) * 180) / Math.PI;
+}
+
+function normalizeAngleDelta(delta) {
+    let d = delta;
+    while (d > 180) d -= 360;
+    while (d < -180) d += 360;
+    return d;
+}
+
+function getInnerRadiusPx(layerIndex, scale) {
+    if (layerIndex >= STACKURN_LAYERS.length - 1) {
+        return 58 * scale;
+    }
+    return STACKURN_LAYERS[layerIndex + 1].radius * scale + 16;
+}
+
 function LogoItem({ logo }) {
     const [imgOk, setImgOk] = useState(true);
     const src = getIconUrl(logo.slug, logo.color);
@@ -25,42 +45,141 @@ function LogoItem({ logo }) {
     );
 }
 
-/* ─── One orbit ring ──────────────────────────────────────────────────── */
-function OrbitRing({ logos, radius, duration, reverse = false }) {
-    const count = logos.length;
+function OrbitRing({
+    layer,
+    layerIndex,
+    layout,
+    rotation,
+    onRotationChange,
+    scale = 1,
+}) {
+    const { radius: baseRadius, color, label } = layer;
+    const outerR = baseRadius * scale;
+    const innerR = getInnerRadiusPx(layerIndex, scale);
+    const ringVisualRef = useRef(null);
+    const trackRef = useRef(null);
+    const dragRef = useRef(null);
+    const [isDragging, setIsDragging] = useState(false);
+
+    const logos = layout?.logos ?? layer.logos;
+
+    const applyRotation = (deg) => {
+        if (ringVisualRef.current) {
+            ringVisualRef.current.style.transform = `translate(-50%, -50%) rotate(${deg}deg)`;
+        }
+        ringVisualRef.current?.querySelectorAll('.stackurn-logo-counter').forEach((el) => {
+            el.style.transform = `translate(-50%, -50%) rotate(${-deg}deg)`;
+        });
+    };
+
+    useEffect(() => {
+        if (!isDragging) {
+            applyRotation(rotation);
+        }
+    }, [rotation, isDragging]);
+
+    const finishDrag = (event) => {
+        const drag = dragRef.current;
+        if (!drag || drag.pointerId !== event.pointerId) return;
+
+        if (trackRef.current?.hasPointerCapture(event.pointerId)) {
+            trackRef.current.releasePointerCapture(event.pointerId);
+        }
+
+        onRotationChange(drag.liveRotation);
+        dragRef.current = null;
+        setIsDragging(false);
+        window.__lenis?.start();
+    };
+
+    const handlePointerDown = (event) => {
+        if (event.button !== 0) return;
+
+        event.preventDefault();
+        event.stopPropagation();
+        window.__lenis?.stop();
+
+        const rect = trackRef.current.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+
+        dragRef.current = {
+            pointerId: event.pointerId,
+            centerX,
+            centerY,
+            startAngle: getPointerAngleDeg(event.clientX, event.clientY, centerX, centerY),
+            startRotation: rotation,
+            liveRotation: rotation,
+        };
+
+        trackRef.current?.setPointerCapture(event.pointerId);
+        setIsDragging(true);
+    };
+
+    const handlePointerMove = (event) => {
+        const drag = dragRef.current;
+        if (!drag || drag.pointerId !== event.pointerId) return;
+
+        event.preventDefault();
+
+        const angle = getPointerAngleDeg(
+            event.clientX,
+            event.clientY,
+            drag.centerX,
+            drag.centerY
+        );
+        const delta = normalizeAngleDelta(angle - drag.startAngle);
+        drag.liveRotation = drag.startRotation + delta;
+        applyRotation(drag.liveRotation);
+    };
 
     return (
         <div
-            className={`stackurn-orbit-ring ${reverse ? 'reverse' : ''}`}
-            style={{
-                width: `${radius * 2}px`,
-                height: `${radius * 2}px`,
-                animationDuration: `${duration}s`,
-            }}
+            className="stackurn-orbit-ring"
+            style={{ '--ring-color': color, zIndex: layerIndex + 1 }}
+            data-layer={layer.id}
         >
-            {logos.map((logo, i) => {
-                const angle = (360 / count) * i - 90; // start from top
-                return (
+            <div
+                ref={trackRef}
+                className={`stackurn-ring-track${isDragging ? ' stackurn-ring-track--dragging' : ''}`}
+                style={{
+                    '--outer-r': `${outerR}px`,
+                    '--inner-r': `${innerR}px`,
+                }}
+                aria-label={`Rotate ${label} layer`}
+                onPointerDown={handlePointerDown}
+                onPointerMove={handlePointerMove}
+                onPointerUp={finishDrag}
+                onPointerCancel={finishDrag}
+            />
+
+            <div
+                ref={ringVisualRef}
+                className="stackurn-orbit-visual"
+                style={{
+                    width: `${outerR * 2}px`,
+                    height: `${outerR * 2}px`,
+                }}
+            >
+                <span className="stackurn-ring-label">{label}</span>
+                {logos.map((logo) => (
                     <div
                         key={logo.slug}
                         className="stackurn-logo-orbit-slot"
-                        style={{ '--orbit-angle': `${angle}deg`, '--orbit-radius': `${radius}px` }}
+                        style={{
+                            transform: `rotate(${logo.angle}deg) translateX(${outerR}px)`,
+                        }}
                     >
-                        {/* Counter-rotate so icons stay upright */}
-                        <div
-                            className="stackurn-logo-counter"
-                            style={{ animation: `stackurn-counter-spin ${duration}s linear infinite ${reverse ? 'reverse' : 'normal'}` }}
-                        >
+                        <div className="stackurn-logo-counter">
                             <LogoItem logo={logo} />
                         </div>
                     </div>
-                );
-            })}
+                ))}
+            </div>
         </div>
     );
 }
 
-/* ─── CSS Saturn ──────────────────────────────────────────────────────── */
 function SaturnPlanet() {
     return (
         <div className="stackurn-saturn-wrap" aria-hidden="true">
@@ -74,42 +193,56 @@ function SaturnPlanet() {
     );
 }
 
-/* ─── StackurnSection ─────────────────────────────────────────────────── */
 export default function StackurnSection() {
+    const layouts = useMemo(() => buildStackurnLayouts(STACKURN_LAYERS), []);
+    const [rotations, setRotations] = useState(() =>
+        Object.fromEntries(layouts.map((l) => [l.layerId, l.ringOffset]))
+    );
+    const isMobile = useIsMobile();
+    const ringScale = isMobile ? 0.52 : 1;
+
     return (
         <section id="stackurn" className="stackurn-section">
+            <Starfield variant="scoped" />
+
             <div className="stackurn-inner">
-                {/* Header */}
                 <div className="stackurn-header">
                     <span className="section-eyebrow">Technology</span>
                     <h2 className="stackurn-title">Stackurn</h2>
                     <p className="stackurn-subtitle">The stacks I ship with.</p>
+                    <p className="stackurn-hint">Drag a ring track to spin that layer</p>
                 </div>
 
-                {/* Planet + orbit system */}
                 <div className="stackurn-system">
-                    {/* Inner ring — AI / LLMOps */}
-                    <OrbitRing logos={INNER_RING} radius={200} duration={30} />
+                    {STACKURN_LAYERS.map((layer, index) => (
+                        <OrbitRing
+                            key={layer.id}
+                            layer={layer}
+                            layerIndex={index}
+                            layout={layouts.find((l) => l.layerId === layer.id)}
+                            rotation={rotations[layer.id]}
+                            onRotationChange={(value) =>
+                                setRotations((prev) => ({ ...prev, [layer.id]: value }))
+                            }
+                            scale={ringScale}
+                        />
+                    ))}
 
-                    {/* Saturn planet (center) */}
                     <div className="stackurn-center">
                         <SaturnPlanet />
                     </div>
-
-                    {/* Outer ring — full-stack / DevOps */}
-                    <OrbitRing logos={OUTER_RING} radius={320} duration={48} reverse />
                 </div>
 
-                {/* Ring legend */}
                 <div className="stackurn-legend">
-                    <div className="stackurn-legend-item">
-                        <span className="legend-dot inner" />
-                        <span>Inner ring — AI · LLMOps</span>
-                    </div>
-                    <div className="stackurn-legend-item">
-                        <span className="legend-dot outer" />
-                        <span>Outer ring — Full-stack · DevOps</span>
-                    </div>
+                    {STACKURN_LAYERS.map((layer) => (
+                        <div key={layer.id} className="stackurn-legend-item">
+                            <span className="legend-dot" style={{ background: layer.color }} />
+                            <span>
+                                {layer.id === 'frontend' ? 'Outer' : layer.id === 'db' ? 'Inner' : '·'} —{' '}
+                                {layer.label}
+                            </span>
+                        </div>
+                    ))}
                 </div>
             </div>
         </section>

@@ -1,8 +1,20 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import './HexagonSlider.css';
 
-const DRAG_THRESHOLD = 6;
-const DRAG_SENSITIVITY = 0.35;
+const DRAG_THRESHOLD = 8;
+const DRAG_SENSITIVITY = 0.16;
+const FACE_SCALE_MIN = 1;
+const FACE_SCALE_MAX = 1.48;
+
+/** Front face = normal size; side/outgoing faces scale up (outward pop). */
+function getFaceScale(faceIndex, rotationDeg, angleStep) {
+    const worldAngle = rotationDeg + faceIndex * angleStep;
+    let delta = Math.abs(((worldAngle % 360) + 360) % 360);
+    if (delta > 180) delta = 360 - delta;
+
+    const sideFactor = Math.min(delta, 180 - delta) / 90;
+    return FACE_SCALE_MIN + sideFactor * (FACE_SCALE_MAX - FACE_SCALE_MIN);
+}
 
 /**
  * CSS 3D prism carousel — same technique as Leonardo.ai's hexagon slider:
@@ -77,7 +89,7 @@ export default function HexagonSlider({
 
     const handlePointerDown = (event) => {
         if (event.button !== 0) return;
-        if (event.target.closest('.project-card-wrapper, button, a, .carousel-tab, .carousel-dot')) {
+        if (event.target.closest('.project-card-wrapper, .domain-mini-card, button, a, .carousel-tab, .carousel-dot, .carousel-arrow')) {
             return;
         }
 
@@ -96,11 +108,17 @@ export default function HexagonSlider({
         if (drag.pointerId !== event.pointerId) return;
 
         const deltaX = event.clientX - drag.startX;
-        if (!drag.moved && Math.abs(deltaX) < DRAG_THRESHOLD) return;
+        const deltaY = event.clientY - drag.startY;
+
+        if (!drag.moved) {
+            if (Math.abs(deltaX) < DRAG_THRESHOLD) return;
+            if (Math.abs(deltaY) > Math.abs(deltaX)) return;
+        }
 
         if (!drag.moved) {
             drag.moved = true;
             setIsDragging(true);
+            window.__lenis?.stop();
         }
 
         setRotation(drag.startRotation + deltaX * DRAG_SENSITIVITY);
@@ -122,6 +140,7 @@ export default function HexagonSlider({
 
         dragState.current.pointerId = null;
         setIsDragging(false);
+        window.__lenis?.start();
     };
 
     useEffect(() => {
@@ -134,6 +153,14 @@ export default function HexagonSlider({
 
         return () => clearInterval(timer);
     }, [activeIndex, autoAdvanceMs, isDragging, snapToIndex]);
+
+    useEffect(() => {
+        window.dispatchEvent(
+            new CustomEvent('ammerverse:prism-rotate', {
+                detail: { rotation, sideCount, activeIndex, isDragging },
+            })
+        );
+    }, [rotation, sideCount, activeIndex, isDragging]);
 
     const faces = Array.isArray(children) ? children : [children];
 
@@ -160,7 +187,10 @@ export default function HexagonSlider({
                     <div
                         key={index}
                         className="prism-slider__face"
-                        style={{ '--face-index': index }}
+                        style={{
+                            '--face-index': index,
+                            '--face-scale': getFaceScale(index, rotation, angleStep),
+                        }}
                         data-index={index}
                     >
                         <div className="prism-slider__face-inner">{face}</div>

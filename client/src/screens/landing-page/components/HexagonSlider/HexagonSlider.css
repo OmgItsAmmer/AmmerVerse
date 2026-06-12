@@ -38,11 +38,19 @@
     justify-content: center;
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
-    transform: rotateY(calc(var(--face-index) * var(--angle-step))) translateZ(var(--translate-z));
+    transform: rotateY(calc(var(--face-index) * var(--angle-step)))
+        translateZ(var(--translate-z))
+        scale(var(--face-scale, 1));
+    transform-origin: center center;
+    transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
     overflow: visible;
     background: transparent;
     border: none;
     box-shadow: none;
+}
+
+.prism-slider--dragging .prism-slider__face {
+    transition: none;
 }
 
 .prism-slider__face-inner {

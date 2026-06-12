@@ -7,15 +7,18 @@
     justify-content: center;
     padding: 80px 4vw;
     overflow: hidden;
+    z-index: 10;
 }
 
 .stackurn-inner {
+    position: relative;
+    z-index: 2;
     width: 100%;
     max-width: 1100px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 2.5rem;
+    gap: 2rem;
 }
 
 /* ─── Header ─────────────────────────────────────────────────────────── */
@@ -41,14 +44,21 @@
     margin: 0;
 }
 
-/* ─── Orbit system container ─────────────────────────────────────────── */
+.stackurn-hint {
+    margin: 0.55rem 0 0;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+}
+
+/* ─── Orbit system ───────────────────────────────────────────────────── */
 .stackurn-system {
     position: relative;
-    width: 700px;
-    height: 700px;
+    width: min(880px, 96vw);
+    height: min(880px, 96vw);
     display: flex;
     align-items: center;
     justify-content: center;
+    touch-action: none;
 }
 
 /* ─── Center Saturn ──────────────────────────────────────────────────── */
@@ -57,10 +67,10 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 5;
+    z-index: 6;
+    pointer-events: none;
 }
 
-/* Saturn wrapper — handles the tilt */
 .stackurn-saturn-wrap {
     position: relative;
     width: 160px;
@@ -70,19 +80,17 @@
     justify-content: center;
 }
 
-/* Planet body */
 .stackurn-saturn-body {
     width: 110px;
     height: 110px;
     border-radius: 50%;
     background: radial-gradient(circle at 35% 30%, #f0d090, #c8923c 40%, #8b5e1a 75%, #4a3008);
     box-shadow:
-        inset -18px -18px 28px rgba(0,0,0,0.5),
-        0 0 40px rgba(200,150,60,0.25),
-        0 0 80px rgba(168,85,247,0.08);
+        inset -18px -18px 28px rgba(0, 0, 0, 0.5),
+        0 0 40px rgba(200, 150, 60, 0.25),
+        0 0 80px rgba(168, 85, 247, 0.08);
     position: relative;
     z-index: 2;
-    animation: saturn-spin 40s linear infinite;
 }
 
 .stackurn-saturn-band {
@@ -91,7 +99,7 @@
     left: 10%;
     right: 10%;
     height: 12%;
-    background: rgba(0,0,0,0.15);
+    background: rgba(0, 0, 0, 0.15);
     border-radius: 50%;
 }
 
@@ -101,11 +109,10 @@
     left: 20%;
     width: 35%;
     height: 20%;
-    background: radial-gradient(ellipse at 40% 40%, rgba(255,255,255,0.25), transparent);
+    background: radial-gradient(ellipse at 40% 40%, rgba(255, 255, 255, 0.25), transparent);
     border-radius: 50%;
 }
 
-/* Ring back (behind planet) */
 .stackurn-saturn-rings-back,
 .stackurn-saturn-rings-front {
     position: absolute;
@@ -119,7 +126,7 @@
 .stackurn-saturn-rings-back {
     width: 200px;
     height: 200px;
-    border: 14px solid rgba(218, 165, 80, 0.30);
+    border: 14px solid rgba(218, 165, 80, 0.3);
     box-shadow:
         0 0 0 8px rgba(200, 145, 55, 0.15),
         0 0 0 18px rgba(190, 130, 45, 0.08);
@@ -134,89 +141,124 @@
     clip-path: ellipse(100px 40px at 50% 100%);
 }
 
-@keyframes saturn-spin {
-    from { filter: hue-rotate(0deg); }
-    to   { filter: hue-rotate(8deg); }
-}
-
-/* ─── Orbit rings ────────────────────────────────────────────────────── */
+/* ─── Orbit rings (4 layers) ─────────────────────────────────────────── */
 .stackurn-orbit-ring {
     position: absolute;
     top: 50%;
     left: 50%;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+}
+
+.stackurn-orbit-visual {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 50%;
+    border: 1px dashed color-mix(in srgb, var(--ring-color) 45%, transparent);
+    box-shadow: inset 0 0 30px color-mix(in srgb, var(--ring-color) 8%, transparent);
+    pointer-events: none;
+    will-change: transform;
+    z-index: 1;
+    transform: translate(-50%, -50%);
+}
+
+/* Donut hit zone — only the ring band captures drag, not the whole disc */
+.stackurn-ring-track {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: calc(var(--outer-r) * 2);
+    height: calc(var(--outer-r) * 2);
     transform: translate(-50%, -50%);
     border-radius: 50%;
-    border: 1px dashed var(--border-subtle);
-    animation: stackurn-orbit-spin linear infinite;
+    pointer-events: auto;
+    cursor: grab;
+    touch-action: none;
+    z-index: 2;
+    -webkit-mask: radial-gradient(
+        circle,
+        transparent calc(var(--inner-r) - 1px),
+        #000 var(--inner-r),
+        #000 calc(var(--outer-r) - 12px),
+        transparent var(--outer-r)
+    );
+    mask: radial-gradient(
+        circle,
+        transparent calc(var(--inner-r) - 1px),
+        #000 var(--inner-r),
+        #000 calc(var(--outer-r) - 12px),
+        transparent var(--outer-r)
+    );
 }
 
-.stackurn-orbit-ring.reverse {
-    animation-direction: reverse;
+.stackurn-ring-track--dragging {
+    cursor: grabbing;
 }
 
-@keyframes stackurn-orbit-spin {
-    from { transform: translate(-50%, -50%) rotate(0deg); }
-    to   { transform: translate(-50%, -50%) rotate(360deg); }
+.stackurn-orbit-ring[data-layer='frontend'] { z-index: 1; }
+.stackurn-orbit-ring[data-layer='backend'] { z-index: 2; }
+.stackurn-orbit-ring[data-layer='ai'] { z-index: 3; }
+.stackurn-orbit-ring[data-layer='db'] { z-index: 4; }
+
+.stackurn-ring-label {
+    position: absolute;
+    top: -1.4rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ring-color);
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0.85;
 }
 
-/* Each logo placed on the ring circumference */
 .stackurn-logo-orbit-slot {
     position: absolute;
     top: 50%;
     left: 50%;
-    /* place at radius distance on the orbit angle */
-    transform:
-        rotate(var(--orbit-angle))
-        translateX(var(--orbit-radius))
-        translateY(-50%);
     transform-origin: 0 0;
 }
 
-/* Counter-rotate wrapper (applied via inline style for dynamic duration) */
 .stackurn-logo-counter {
     display: flex;
     align-items: center;
     justify-content: center;
+    transform-origin: center center;
+    will-change: transform;
+    transform: translate(-50%, -50%);
 }
 
-@keyframes stackurn-counter-spin {
-    from { transform: rotate(0deg); }
-    to   { transform: rotate(-360deg); }
-}
-
-/* ─── Individual logo item ───────────────────────────────────────────── */
+/* ─── Logo cards ─────────────────────────────────────────────────────── */
 .stackurn-logo-item {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.3rem;
+    gap: 0.28rem;
     cursor: default;
-    transition: transform 0.25s ease;
-    padding: 0.5rem;
+    padding: 0.45rem 0.5rem;
     border-radius: 12px;
-    background: var(--bg-glass);
+    background: rgba(5, 5, 8, 0.72);
     border: 1px solid var(--border-subtle);
     backdrop-filter: blur(8px);
-    min-width: 50px;
-}
-
-.stackurn-logo-item:hover {
-    transform: scale(1.15);
-    border-color: var(--border-glow);
-    background: rgba(168, 85, 247, 0.08);
-    z-index: 10;
+    min-width: 48px;
+    pointer-events: none;
 }
 
 .stackurn-logo-img {
-    width: 26px;
-    height: 26px;
+    width: 24px;
+    height: 24px;
     object-fit: contain;
     display: block;
-    filter: brightness(0.9) saturate(1.1);
+    filter: brightness(0.92) saturate(1.1);
 }
 
 .stackurn-logo-fallback {
-    font-size: 0.65rem;
+    font-size: 0.62rem;
     font-weight: 700;
     color: var(--text-secondary);
     letter-spacing: 0.04em;
@@ -224,7 +266,7 @@
 }
 
 .stackurn-logo-name {
-    font-size: 0.6rem;
+    font-size: 0.56rem;
     color: var(--text-muted);
     white-space: nowrap;
     text-align: center;
@@ -234,15 +276,17 @@
 /* ─── Legend ─────────────────────────────────────────────────────────── */
 .stackurn-legend {
     display: flex;
-    gap: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem 1.75rem;
     align-items: center;
+    justify-content: center;
 }
 
 .stackurn-legend-item {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    font-size: 0.8rem;
+    gap: 0.45rem;
+    font-size: 0.78rem;
     color: var(--text-secondary);
 }
 
@@ -251,62 +295,62 @@
     height: 8px;
     border-radius: 50%;
     display: inline-block;
+    flex-shrink: 0;
 }
-
-.legend-dot.inner { background: var(--accent-primary); }
-.legend-dot.outer { background: var(--accent-secondary); }
 
 /* ─── Mobile ─────────────────────────────────────────────────────────── */
 @media (max-width: 768px) {
     .stackurn-system {
-        width: 420px;
-        height: 420px;
+        width: min(440px, 94vw);
+        height: min(440px, 94vw);
     }
 
     .stackurn-saturn-body {
-        width: 80px;
-        height: 80px;
+        width: 72px;
+        height: 72px;
     }
 
     .stackurn-saturn-rings-back,
     .stackurn-saturn-rings-front {
-        width: 140px;
-        height: 140px;
+        width: 120px;
+        height: 120px;
     }
 
-    /* Collapse outer ring on small screens */
-    .stackurn-orbit-ring:nth-child(1) {
-        display: none;
+    .stackurn-saturn-wrap {
+        width: 120px;
+        height: 120px;
     }
-}
 
-@media (max-width: 480px) {
-    .stackurn-system {
-        width: 340px;
-        height: 340px;
+    .stackurn-ring-label {
+        font-size: 0.55rem;
+        top: -1.1rem;
     }
 
     .stackurn-logo-item {
-        min-width: 38px;
-        padding: 0.35rem;
+        min-width: 40px;
+        padding: 0.3rem;
     }
 
     .stackurn-logo-img {
-        width: 20px;
-        height: 20px;
+        width: 18px;
+        height: 18px;
     }
 
     .stackurn-legend {
         flex-direction: column;
-        gap: 0.5rem;
+        gap: 0.45rem;
     }
 }
 
-/* pause orbit when user prefers reduced motion */
+@media (max-width: 480px) {
+    .stackurn-hint {
+        font-size: 0.75rem;
+    }
+}
+
 @media (prefers-reduced-motion: reduce) {
-    .stackurn-orbit-ring,
-    .stackurn-logo-counter,
-    .stackurn-saturn-body {
-        animation: none !important;
+    .stackurn-orbit-visual,
+    .stackurn-logo-counter {
+        transition: none !important;
     }
 }
