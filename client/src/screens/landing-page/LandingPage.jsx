@@ -37,7 +37,7 @@ export default function LandingPage() {
                 <DomainCarousel onProjectClick={setSelectedProject} />
             </section>
 
-            <StackurnSection />
+            <StackurnSection onProjectClick={setSelectedProject} />
 
             <AchievementsSection />
 

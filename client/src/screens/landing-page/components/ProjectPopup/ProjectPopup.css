@@ -12,6 +12,7 @@
   justify-content: center;
   align-items: center;
   animation: fadeIn 0.3s ease-out;
+  overscroll-behavior: contain;
 }
 
 @keyframes fadeIn {
@@ -28,10 +29,15 @@
   width: 1200px;
   max-width: 95vw;
   height: 80vh;
+  max-height: 80vh;
   background: rgba(15, 15, 20, 0.85);
   border: 1px solid rgba(183, 148, 246, 0.3);
   border-radius: 20px;
   overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
   position: relative;
   display: flex;
   flex-direction: column;

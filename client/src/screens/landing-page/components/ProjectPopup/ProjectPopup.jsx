@@ -1,10 +1,12 @@
-    import { useState } from 'react';
+import { useState } from 'react';
+import { useScrollLock } from '../../../../hooks/useScrollLock.js';
 import './ProjectPopup.css';
 
-// Project Popup Component
 export default function ProjectPopup({ project, onClose }) {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
-    
+
+    useScrollLock(Boolean(project));
+
     if (!project) return null;
 
     // Use images array directly, removing thumbnail to avoid duplicates
@@ -28,7 +30,13 @@ export default function ProjectPopup({ project, onClose }) {
 
     return (
         <div className="project-popup-overlay" onClick={onClose}>
-            <div className="project-popup-content" onClick={(e) => e.stopPropagation()}>
+            <div
+                className="project-popup-content"
+                data-lenis-prevent
+                onWheel={(e) => e.stopPropagation()}
+                onTouchMove={(e) => e.stopPropagation()}
+                onClick={(e) => e.stopPropagation()}
+            >
                 <button className="popup-close-btn" onClick={onClose}>×</button>
 
                 <div className="popup-details">

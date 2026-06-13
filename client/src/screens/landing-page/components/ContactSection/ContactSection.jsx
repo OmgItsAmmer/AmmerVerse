@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import Starfield from '../Starfield/Starfield.jsx';
 import './ContactSection.css';
 
 const fadeUp = {
@@ -14,6 +15,7 @@ const stagger = {
 export default function ContactSection({ onContactClick, onResumeDownload }) {
     return (
         <section id="contact" className="contact-section">
+            <Starfield variant="scoped" />
             <div className="contact-glow" aria-hidden="true" />
 
             <motion.div

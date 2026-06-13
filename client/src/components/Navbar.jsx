@@ -11,9 +11,16 @@ function smoothScrollTo(id) {
     const el = document.getElementById(id);
     if (!el) return;
     if (window.__lenis) {
-        window.__lenis.scrollTo(el, { offset: -72, duration: 1.2 });
+        const offset =
+            id === 'achievements'
+                ? -(window.innerHeight - el.offsetHeight) / 2
+                : -72;
+        window.__lenis.scrollTo(el, { offset, duration: 1.2 });
     } else {
-        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        el.scrollIntoView({
+            behavior: 'smooth',
+            block: id === 'achievements' ? 'center' : 'start',
+        });
     }
 }
 

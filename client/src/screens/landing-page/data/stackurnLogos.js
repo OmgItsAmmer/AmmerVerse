@@ -37,12 +37,23 @@ export const DB_RING = [
     { name: 'Neo4j', slug: 'neo4j', color: '008CC1', fallback: 'Neo4j' },
 ];
 
-/** Outer → inner — wide gaps between rings */
+/**
+ * Ring radii (base px, before viewport scale) — built inside→out with wide gaps.
+ */
+export const STACKURN_SATURN_INNER_RADIUS = 155;
+export const STACKURN_RING_TRACK_PAD = 40;
+
+const R_DB = 250;
+const R_AI = R_DB + 210;
+const R_BACKEND = R_AI + 240;
+const R_FRONTEND = R_BACKEND + 240;
+
+/** Outer → inner */
 export const STACKURN_LAYERS = [
-    { id: 'frontend', label: 'Frontend', color: '#22D3EE', radius: 360, logos: FRONTEND_RING },
-    { id: 'backend', label: 'Backend', color: '#34D399', radius: 268, logos: BACKEND_RING },
-    { id: 'ai', label: 'AI', color: '#A855F7', radius: 172, logos: AI_RING },
-    { id: 'db', label: 'Database', color: '#FBBF24', radius: 92, logos: DB_RING },
+    { id: 'frontend', label: 'Frontend', color: '#22D3EE', radius: R_FRONTEND, logos: FRONTEND_RING },
+    { id: 'backend', label: 'Backend', color: '#34D399', radius: R_BACKEND, logos: BACKEND_RING },
+    { id: 'ai', label: 'AI', color: '#A855F7', radius: R_AI, logos: AI_RING },
+    { id: 'db', label: 'Database', color: '#FBBF24', radius: R_DB, logos: DB_RING },
 ];
 
 /** @deprecated use STACKURN_LAYERS */

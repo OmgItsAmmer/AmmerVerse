@@ -1,8 +1,8 @@
-import { useState, useCallback } from 'react';
-import HexagonSlider from '../HexagonSlider/HexagonSlider';
+import { useState, useCallback, useMemo } from 'react';
+import CosmosDomainSlider from './CosmosDomainSlider.jsx';
+import { collectDomainRingImages } from './cosmosGalleryImages.js';
 import { PROJECTS, DEVELOPERS } from '../../data/developerModels.js';
 import './DomainCarousel.css';
-
 /* ─── Domain config ──────────────────────────────────────────────────── */
 const DOMAIN_ORDER = [3, 0, 1, 2];
 
@@ -13,35 +13,35 @@ const DOMAIN_META = {
     2: { label: 'Desktop', color: '#FBBF24', glow: 'rgba(251,191,36,0.20)' },
 };
 
-/* Scattered slots inside the safe zone around the avatar (%, within .domain-face__orbit) */
+/* Scattered slots around the avatar (%, within .domain-face__orbit) */
 const SCATTER_PRESETS = {
-    1: [{ left: 74, top: 40, rotate: 5 }],
+    1: [{ left: 62, top: 44, rotate: 5 }],
     2: [
-        { left: 24, top: 34, rotate: -9 },
-        { left: 76, top: 58, rotate: 7 },
+        { left: 34, top: 42, rotate: -9 },
+        { left: 66, top: 56, rotate: 7 },
     ],
     3: [
-        { left: 20, top: 30, rotate: -11 },
-        { left: 80, top: 36, rotate: 8 },
-        { left: 72, top: 66, rotate: -4 },
+        { left: 32, top: 40, rotate: -11 },
+        { left: 68, top: 42, rotate: 8 },
+        { left: 66, top: 58, rotate: -4 },
     ],
     4: [
-        { left: 18, top: 28, rotate: -10 },
-        { left: 82, top: 32, rotate: 9 },
-        { left: 16, top: 64, rotate: -6 },
-        { left: 84, top: 68, rotate: 11 },
+        { left: 30, top: 38, rotate: -10 },
+        { left: 70, top: 40, rotate: 9 },
+        { left: 32, top: 58, rotate: -6 },
+        { left: 68, top: 60, rotate: 11 },
     ],
 };
 
 function getScatterSlot(index, total, domainId) {
     const preset = SCATTER_PRESETS[Math.min(total, 4)] ?? SCATTER_PRESETS[4];
     const slot = preset[index % preset.length];
-    const jitter = ((domainId * 17 + index * 11) % 7) - 3;
+    const jitter = ((domainId * 17 + index * 11) % 5) - 2;
 
     return {
-        left: `${Math.min(86, Math.max(14, slot.left + jitter))}%`,
-        top: `${Math.min(70, Math.max(26, slot.top + jitter * 0.6))}%`,
-        transform: `translate(-50%, -50%) rotate(${slot.rotate + jitter * 0.8}deg)`,
+        left: `${Math.min(72, Math.max(28, slot.left + jitter))}%`,
+        top: `${Math.min(62, Math.max(38, slot.top + jitter * 0.5))}%`,
+        transform: `translate(-50%, -50%) rotate(${slot.rotate + jitter * 0.6}deg)`,
     };
 }
 
@@ -163,6 +163,11 @@ export default function DomainCarousel({ onProjectClick }) {
 
     const activeDevId = DOMAIN_ORDER[activeIdx];
     const domainMeta = DOMAIN_META[activeDevId];
+    const activeDeveloper = DEVELOPERS.find((d) => d.id === activeDevId);
+    const domainRingImages = useMemo(
+        () => collectDomainRingImages(DOMAIN_ORDER, DEVELOPERS, PROJECTS),
+        []
+    );
 
     const handlePrev = useCallback(() => {
         setActiveIdx((prev) => (prev - 1 + DOMAIN_ORDER.length) % DOMAIN_ORDER.length);
@@ -181,28 +186,23 @@ export default function DomainCarousel({ onProjectClick }) {
             <div className="domain-header">
                 <span className="section-eyebrow">My Projects</span>
                 <h2 className="domain-section-title">One engineer. Four proof lanes.</h2>
-                <p className="domain-section-hint">Drag to rotate · click a project for details</p>
+                <p className="domain-section-hint">Drag to browse · click a project for details</p>
             </div>
 
-            <HexagonSlider
+            <CosmosDomainSlider
                 className="domain-carousel__slider"
-                sideCount={DOMAIN_ORDER.length}
                 activeIndex={activeIdx}
                 onActiveChange={setActiveIdx}
+                domainCount={DOMAIN_ORDER.length}
+                images={domainRingImages}
             >
-                {DOMAIN_ORDER.map((devId, idx) => {
-                    const developer = DEVELOPERS.find((d) => d.id === devId);
-                    return (
-                        <DomainFace
-                            key={devId}
-                            developer={developer}
-                            domainMeta={DOMAIN_META[devId]}
-                            onProjectClick={onProjectClick}
-                            isActive={idx === activeIdx}
-                        />
-                    );
-                })}
-            </HexagonSlider>
+                <DomainFace
+                    developer={activeDeveloper}
+                    domainMeta={domainMeta}
+                    onProjectClick={onProjectClick}
+                    isActive
+                />
+            </CosmosDomainSlider>
 
             <div className="carousel-controls">
                 <button type="button" className="carousel-arrow" onClick={handlePrev} aria-label="Previous domain">

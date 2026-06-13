@@ -52,7 +52,7 @@ export default function HeroSection() {
                     transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
                 >
                     <div className="hero-brand-stack">
-                        <span className="hero-welcome">Welcome to</span>
+                        <span className="hero-welcome"> </span>
 
                         <div className="hero-brand-z" aria-label="AmmerVerse">
                             <span className="hero-brand-track">

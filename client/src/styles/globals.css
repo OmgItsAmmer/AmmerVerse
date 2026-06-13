@@ -90,3 +90,7 @@ body {
     transition-duration: 0.01ms !important;
   }
 }
+
+body.scroll-locked {
+  overflow: hidden;
+}
