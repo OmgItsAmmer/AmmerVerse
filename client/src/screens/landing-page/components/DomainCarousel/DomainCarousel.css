@@ -77,8 +77,8 @@
 }
 
 .domain-face__avatar-img {
-    width: clamp(150px, 16vw, 240px);
-    height: clamp(195px, 21vw, 310px);
+    width: clamp(120px, 13vw, 190px);
+    height: clamp(155px, 17vw, 245px);
     object-fit: cover;
     object-position: center top;
     border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
@@ -98,7 +98,7 @@
 /* ─── Scattered mini project tiles ───────────────────────────────────── */
 .domain-face__orbit {
     position: absolute;
-    inset: 22% 14% 26% 14%;
+    inset: 10% 4% 16% 4%;
     z-index: 1;
     pointer-events: none;
 }
@@ -108,7 +108,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.4rem;
+    gap: 0.65rem;
     padding: 0;
     border: none;
     background: none;
@@ -128,9 +128,9 @@
 }
 
 .domain-mini-card__frame {
-    width: 96px;
-    height: 64px;
-    border-radius: 9px;
+    width: clamp(180px, 24vmin, 280px);
+    height: clamp(115px, 15vmin, 180px);
+    border-radius: 12px;
     overflow: hidden;
     background: #141418;
     border: 1px solid rgba(255, 255, 255, 0.14);
@@ -142,27 +142,27 @@
 }
 
 .domain-mini-card--mobile .domain-mini-card__frame {
-    width: 54px;
-    height: 92px;
-    border-radius: 12px;
+    width: clamp(100px, 13vmin, 145px);
+    height: clamp(175px, 23vmin, 265px);
+    border-radius: 16px;
     border-width: 2px;
 }
 
 .domain-mini-card--web .domain-mini-card__frame {
-    width: 118px;
-    height: 70px;
-    border-radius: 7px 7px 5px 5px;
-    border-top: 3px solid rgba(255, 255, 255, 0.12);
+    width: clamp(210px, 28vmin, 320px);
+    height: clamp(125px, 17vmin, 190px);
+    border-radius: 10px 10px 8px 8px;
+    border-top: 4px solid rgba(255, 255, 255, 0.12);
 }
 
 .domain-mini-card--desktop .domain-mini-card__frame {
-    width: 104px;
-    height: 68px;
+    width: clamp(195px, 26vmin, 300px);
+    height: clamp(120px, 16vmin, 185px);
 }
 
 .domain-mini-card--ai .domain-mini-card__frame {
-    width: 92px;
-    height: 60px;
+    width: clamp(200px, 27vmin, 310px);
+    height: clamp(130px, 17vmin, 195px);
     background: linear-gradient(135deg, rgba(168, 85, 247, 0.25), rgba(99, 102, 241, 0.15));
     border-color: rgba(168, 85, 247, 0.35);
 }
@@ -175,7 +175,7 @@
 }
 
 .domain-mini-card__fallback {
-    font-size: 0.78rem;
+    font-size: clamp(1rem, 2.2vmin, 1.35rem);
     font-weight: 800;
     letter-spacing: 0.06em;
     color: rgba(255, 255, 255, 0.35);
@@ -183,8 +183,8 @@
 }
 
 .domain-mini-card__name {
-    max-width: 124px;
-    font-size: 0.72rem;
+    max-width: clamp(160px, 22vmin, 240px);
+    font-size: clamp(0.82rem, 1.6vmin, 1rem);
     font-weight: 600;
     line-height: 1.2;
     text-align: center;
@@ -210,8 +210,8 @@
 /* ─── AI avatar placeholder ──────────────────────────────────────────── */
 .ai-avatar-placeholder {
     position: relative;
-    width: clamp(170px, 18vw, 260px);
-    height: clamp(170px, 18vw, 260px);
+    width: clamp(140px, 15vw, 220px);
+    height: clamp(140px, 15vw, 220px);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -358,27 +358,32 @@
     }
 
     .domain-face__orbit {
-        inset: 24% 10% 28% 10%;
+        inset: 14% 2% 20% 2%;
     }
 
     .domain-mini-card__frame {
-        width: 78px;
-        height: 54px;
+        width: clamp(150px, 38vw, 220px);
+        height: clamp(95px, 24vw, 140px);
     }
 
     .domain-mini-card--mobile .domain-mini-card__frame {
-        width: 46px;
-        height: 76px;
+        width: clamp(88px, 22vw, 120px);
+        height: clamp(150px, 38vw, 210px);
     }
 
     .domain-mini-card--web .domain-mini-card__frame {
-        width: 96px;
-        height: 58px;
+        width: clamp(170px, 44vw, 250px);
+        height: clamp(100px, 26vw, 150px);
+    }
+
+    .domain-mini-card--ai .domain-mini-card__frame {
+        width: clamp(165px, 42vw, 240px);
+        height: clamp(105px, 27vw, 155px);
     }
 
     .domain-mini-card__name {
-        max-width: 100px;
-        font-size: 0.64rem;
+        max-width: clamp(130px, 34vw, 200px);
+        font-size: 0.78rem;
     }
 
     .carousel-controls {

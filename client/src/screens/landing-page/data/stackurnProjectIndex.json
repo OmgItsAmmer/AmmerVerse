@@ -1,11 +1,15 @@
 [
   {
-    "projectId": 8,
-    "stackSlugs": ["react", "python", "fastapi", "langchain", "openai", "pinecone", "redis", "docker"]
+    "projectId": 10,
+    "stackSlugs": ["react", "python", "fastapi", "langchain", "openai", "postgresql", "redis", "docker"]
   },
   {
-    "projectId": 9,
-    "stackSlugs": ["nextdotjs", "python", "fastapi", "langchain", "supabase", "ollama"]
+    "projectId": 11,
+    "stackSlugs": ["react", "rust", "supabase", "openai"]
+  },
+  {
+    "projectId": 12,
+    "stackSlugs": ["python", "fastapi", "ollama", "openai"]
   },
   {
     "projectId": 1,

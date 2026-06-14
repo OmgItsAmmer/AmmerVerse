@@ -15,33 +15,33 @@ const DOMAIN_META = {
 
 /* Scattered slots around the avatar (%, within .domain-face__orbit) */
 const SCATTER_PRESETS = {
-    1: [{ left: 62, top: 44, rotate: 5 }],
+    1: [{ left: 78, top: 20, rotate: 5 }],
     2: [
-        { left: 34, top: 42, rotate: -9 },
-        { left: 66, top: 56, rotate: 7 },
+        { left: 16, top: 16, rotate: -8 },
+        { left: 84, top: 84, rotate: 8 },
     ],
     3: [
-        { left: 32, top: 40, rotate: -11 },
-        { left: 68, top: 42, rotate: 8 },
-        { left: 66, top: 58, rotate: -4 },
+        { left: 14, top: 10, rotate: -10 },
+        { left: 86, top: 10, rotate: 10 },
+        { left: 50, top: 90, rotate: 0 },
     ],
     4: [
-        { left: 30, top: 38, rotate: -10 },
-        { left: 70, top: 40, rotate: 9 },
-        { left: 32, top: 58, rotate: -6 },
-        { left: 68, top: 60, rotate: 11 },
+        { left: 12, top: 8, rotate: -10 },
+        { left: 88, top: 8, rotate: 10 },
+        { left: 12, top: 92, rotate: -6 },
+        { left: 88, top: 92, rotate: 6 },
     ],
 };
 
 function getScatterSlot(index, total, domainId) {
     const preset = SCATTER_PRESETS[Math.min(total, 4)] ?? SCATTER_PRESETS[4];
     const slot = preset[index % preset.length];
-    const jitter = ((domainId * 17 + index * 11) % 5) - 2;
+    const jitter = ((domainId * 17 + index * 11) % 3) - 1;
 
     return {
-        left: `${Math.min(72, Math.max(28, slot.left + jitter))}%`,
-        top: `${Math.min(62, Math.max(38, slot.top + jitter * 0.5))}%`,
-        transform: `translate(-50%, -50%) rotate(${slot.rotate + jitter * 0.6}deg)`,
+        left: `${Math.min(92, Math.max(8, slot.left + jitter * 0.4))}%`,
+        top: `${Math.min(94, Math.max(6, slot.top + jitter * 0.25))}%`,
+        transform: `translate(-50%, -50%) rotate(${slot.rotate + jitter * 0.3}deg)`,
     };
 }
 

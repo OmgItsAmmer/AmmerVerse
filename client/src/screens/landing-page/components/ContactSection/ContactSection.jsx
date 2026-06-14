@@ -56,7 +56,7 @@ export default function ContactSection({ onContactClick, onResumeDownload }) {
                     </a>
                     <span className="contact-link-sep" aria-hidden="true">·</span>
                     <a
-                        href="https://linkedin.com/in/ammersaeed"
+                        href="https://linkedin.com/in/ammersaeed21"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="contact-link"

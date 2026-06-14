@@ -83,39 +83,59 @@ class ProjectModel {
 export const PROJECTS = [
     // ─── AI / LLM Projects ───────────────────────────────────────────
     new ProjectModel({
-        id: 8,
-        name: "RAG Research Assistant",
+        id: 10,
+        name: "Sehat",
         category: "ai",
         thumbnail: "",
         images: [],
-        description: "Built a Retrieval-Augmented Generation research assistant using LangChain, OpenAI GPT-4, and Pinecone vector store. Implemented document ingestion pipeline, semantic chunking, and hybrid search (BM25 + dense). Deployed on FastAPI with Docker, served behind an nginx reverse proxy. Handles 1,000-page PDFs with sub-second retrieval.",
+        description: "Engineered a multi-node LangGraph state machine for clinical intake triage with confidence-thresholded human-in-the-loop interrupts and P1 keyword overrides for cardiac and respiratory emergencies. Built a RAG pipeline using pgvector and text-embedding-3-small over a structured clinic knowledge base with specialist sub-agent routing and real-time appointment slot management. Delivered a production FastAPI backend with PostgreSQL, Redis session persistence, and a React receptionist dashboard with real-time override audit logging.",
         clientReviews: [],
         techStack: {
             frontend: "React",
-            backend: "Python, FastAPI, LangChain",
-            database: "Pinecone, Redis",
-            architecture: "RAG with hybrid retrieval, Docker, nginx"
+            backend: "Python, FastAPI, LangGraph",
+            database: "PostgreSQL, Redis, pgvector",
+            architecture: "RAG with specialist routing, bilingual Urdu/English WhatsApp and web channels"
         },
-        duration: "January – March 2025",
-        github: "https://github.com/OmgItsAmmer"
+        duration: "2024 – 2025",
+        link: "https://sehat-six.vercel.app",
+        github: "https://github.com/OmgItsAmmer/Sehat"
     }),
 
     new ProjectModel({
-        id: 9,
-        name: "LLM Agent Pipeline",
+        id: 12,
+        name: "NUST Admissions Assistant",
         category: "ai",
         thumbnail: "",
         images: [],
-        description: "Designed and shipped a multi-agent orchestration system using LangGraph for stateful agent loops. Agents autonomously plan tasks, call tools (web search, code execution, file I/O), and reflect on outputs. Integrated Ollama for local model serving and vLLM for high-throughput inference. Includes observability via Prometheus + Grafana.",
+        description: "Engineered a hybrid RAG pipeline combining Ollama Llama 3.2 3B on-device inference with Gemini Cloud API fallback, using Ollama nomic-embed-text for local embeddings and ChromaDB for vector search. Delivered multilingual admissions support across English, Urdu, and code-switched queries via an OpenClaw plugin architecture routing through FastAPI with graceful degradation at every layer.",
         clientReviews: [],
         techStack: {
-            frontend: "Next.js",
-            backend: "Python, LangGraph, FastAPI",
-            database: "Supabase, ChromaDB",
-            architecture: "Multi-agent loops with local LLM serving (Ollama / vLLM)"
+            frontend: "OpenClaw plugin UI",
+            backend: "Python, FastAPI, Ollama",
+            database: "ChromaDB",
+            architecture: "Hybrid offline-first RAG with cloud fallback"
         },
-        duration: "March – May 2025",
-        github: "https://github.com/OmgItsAmmer"
+        duration: "2024 – 2025",
+        github: "https://github.com/OmgItsAmmer/nust_faq_bot"
+    }),
+
+    new ProjectModel({
+        id: 11,
+        name: "okiosk",
+        category: "ai",
+        thumbnail: "",
+        images: [],
+        description: "Built an agentic AI kiosk web app with a React frontend and Rust backend on Supabase. Natural-language cart and search actions run through the OpenAI cloud LLM API in production; Mistral 7B was integrated and tested locally but is not active on the live deployment.",
+        clientReviews: [],
+        techStack: {
+            frontend: "React",
+            backend: "Rust",
+            database: "Supabase",
+            architecture: "Agentic AI kiosk with OpenAI cloud LLM (Mistral 7B tested, not live)"
+        },
+        duration: "September – December 2025",
+        link: "https://okiosk.vercel.app",
+        github: "https://github.com/OmgItsAmmer/okiosk"
     }),
 
     // ─── Mobile Projects
@@ -410,7 +430,7 @@ export const DEVELOPERS = [
                 position: { align: "right", top: "60%", left: "60%", rotate: "-3deg" }
             }
         ],
-        projectIds: [8, 9]
+        projectIds: [10, 11, 12]
     }
 ];
 
