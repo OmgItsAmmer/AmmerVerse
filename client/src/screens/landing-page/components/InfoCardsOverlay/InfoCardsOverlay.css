@@ -74,10 +74,10 @@
 }
 
 .mobile-card-arrow:hover {
-  background: rgba(183, 148, 246, 0.25);
-  border-color: #B794F6;
+  background: rgba(255, 248, 231, 0.15);
+  border-color: var(--accent-primary);
   transform: translateY(-50%) scale(1.08);
-  box-shadow: 0 6px 16px rgba(183, 148, 246, 0.3);
+  box-shadow: 0 6px 16px rgba(255, 248, 231, 0.25);
 }
 
 .mobile-card-arrow:active {
@@ -149,8 +149,8 @@
 }
 
 .info-carousel-indicator.active {
-  background: var(--indicator-active, #B794F6);
-  border-color: var(--indicator-active, #B794F6);
+  background: var(--indicator-active, #FFF8E7);
+  border-color: var(--indicator-active, #FFF8E7);
   transform: scale(1.3);
 }
 

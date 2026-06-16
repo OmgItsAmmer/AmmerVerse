@@ -1,4 +1,4 @@
-.landing-container {
+.landing-page {
   position: relative;
   width: 100%;
   min-height: 100vh;
@@ -6,24 +6,35 @@
   overflow-x: hidden;
 }
 
+.landing-container {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.space-travel-root {
+  perspective: 1800px;
+  perspective-origin: 50% 42%;
+}
+
 /* ─── My Projects section wrapper ────────────────────────────────────── */
 .section-my-projects {
-  position: relative;
-  z-index: 10;
-  width: 100%;
   height: 100vh;
   min-height: 100vh;
   padding: 0;
   overflow: hidden;
 }
 
+.section-my-projects .space-travel-section__inner {
+  height: 100%;
+}
+
 /* Ensure all sections render above fixed ambient layers */
-#hero,
-#stackurn,
-#achievements,
-#contact {
+.space-travel-section#hero .hero-section,
+.space-travel-section#stackurn .stackurn-section,
+.space-travel-section#achievements .achievements-section,
+.space-travel-section#contact .contact-section {
   position: relative;
-  z-index: 10;
 }
 
 /* Navbar Styles */
@@ -352,12 +363,10 @@
 
 /* Additional Mobile Responsiveness */
 @media (max-width: 768px) {
-  /* Ensure proper stacking context on mobile */
+  /* Allow native/Lenis page scroll — fixed + overflow:hidden collapses document height */
   .landing-container {
     touch-action: pan-y;
     -webkit-overflow-scrolling: touch;
-    overflow: hidden;
-    position: fixed;
   }
 
   /* Adjust navbar for mobile */
@@ -414,10 +423,6 @@
 
 /* Landscape orientation adjustments */
 @media (max-width: 768px) and (orientation: landscape) {
-  .landing-container {
-    overflow: auto;
-  }
-
   .navbar {
     padding: 0.75rem 1.5rem;
   }

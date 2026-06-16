@@ -11,7 +11,7 @@
     box-sizing: border-box;
 }
 
-/* Purplish glow — top & bottom (mirrors contact section) */
+/* Cosmic latte glow — top & bottom (mirrors contact section) */
 .hero-glow {
     position: absolute;
     left: 50%;
@@ -24,12 +24,12 @@
 
 .hero-glow--top {
     top: 0;
-    background: radial-gradient(ellipse at 50% 0%, rgba(168, 85, 247, 0.12) 0%, transparent 70%);
+    background: radial-gradient(ellipse at 50% 0%, rgba(255, 248, 231, 0.12) 0%, transparent 70%);
 }
 
 .hero-glow--bottom {
     bottom: 0;
-    background: radial-gradient(ellipse at 50% 100%, rgba(168, 85, 247, 0.12) 0%, transparent 70%);
+    background: radial-gradient(ellipse at 50% 100%, rgba(255, 248, 231, 0.12) 0%, transparent 70%);
 }
 
 /* Full-width centering shell — dead center of viewport */
@@ -100,8 +100,8 @@
     justify-content: center;
     transform-style: preserve-3d;
     filter:
-        drop-shadow(0 0 10px rgba(168, 85, 247, 0.22))
-        drop-shadow(0 0 20px rgba(168, 85, 247, 0.1));
+        drop-shadow(0 0 10px rgba(255, 248, 231, 0.22))
+        drop-shadow(0 0 20px rgba(255, 248, 231, 0.1));
 }
 
 .hero-brand-half {

@@ -40,7 +40,7 @@ function BrandLetters({ word, side }) {
 
 export default function HeroSection() {
     return (
-        <section id="hero" className="hero-section">
+        <section className="hero-section">
             <div className="hero-glow hero-glow--top" aria-hidden="true" />
             <div className="hero-glow hero-glow--bottom" aria-hidden="true" />
 

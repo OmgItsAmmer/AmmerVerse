@@ -7,17 +7,18 @@
     justify-content: space-between;
     align-items: center;
     padding: 1.1rem 2.5rem;
-    z-index: 100;
-    background: transparent;
+    z-index: 10000;
+    background: rgba(5, 5, 8, 0.72);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border-subtle);
     transition: background 0.4s ease, backdrop-filter 0.4s ease, border-color 0.4s ease;
-    border-bottom: 1px solid transparent;
+    pointer-events: auto;
 }
 
 .navbar--scrolled {
-    background: rgba(5, 5, 8, 0.88);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border-bottom-color: var(--border-subtle);
+    background: rgba(5, 5, 8, 0.92);
+    border-bottom-color: color-mix(in srgb, var(--accent-primary) 22%, transparent);
 }
 
 /* Brand */
@@ -38,11 +39,52 @@
     color: var(--accent-glow);
 }
 
-/* Links row */
-.navbar-links {
+.navbar-actions {
     display: flex;
-    gap: 0.25rem;
     align-items: center;
+}
+
+/* ─── Bottom-left section tabs dock ─────────────────────────────────── */
+.navbar-tabs-dock {
+    position: fixed;
+    bottom: 1.75rem;
+    left: 1.75rem;
+    z-index: 10000;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    padding-left: env(safe-area-inset-left, 0px);
+    pointer-events: none;
+}
+
+.navbar-tabs-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.15rem;
+    padding: 0.55rem;
+    border-radius: 18px;
+    pointer-events: auto;
+    background: rgba(5, 5, 8, 0.78);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1px solid color-mix(in srgb, var(--accent-primary) 38%, transparent);
+    box-shadow:
+        0 0 28px rgba(255, 248, 231, 0.14),
+        0 8px 32px rgba(0, 0, 0, 0.45),
+        inset 0 1px 0 rgba(255, 248, 231, 0.1);
+}
+
+.navbar-tabs-container::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(
+        135deg,
+        rgba(255, 248, 231, 0.1) 0%,
+        transparent 55%
+    );
+    pointer-events: none;
 }
 
 /* Section anchor buttons */
@@ -51,35 +93,41 @@
     border: none;
     cursor: pointer;
     color: var(--text-secondary);
-    font-size: 0.9rem;
+    font-size: 0.88rem;
     font-weight: 500;
-    padding: 0.4rem 0.75rem;
-    border-radius: 6px;
-    transition: color 0.2s, background 0.2s;
+    padding: 0.45rem 0.9rem;
+    border-radius: 12px;
+    transition: color 0.2s, background 0.2s, box-shadow 0.2s;
     position: relative;
     font-family: inherit;
+    text-align: left;
+    white-space: nowrap;
 }
 
 .nav-link::after {
     content: '';
     position: absolute;
-    bottom: 2px;
-    left: 50%;
-    transform: translateX(-50%) scaleX(0);
-    width: 60%;
+    left: 0.55rem;
+    bottom: 0.3rem;
+    width: 0;
     height: 2px;
     background: var(--accent-primary);
     border-radius: 2px;
-    transition: transform 0.25s ease;
+    transition: width 0.25s ease;
 }
 
 .nav-link:hover {
-    color: var(--text-primary);
-    background: var(--bg-glass);
+    color: var(--accent-primary);
+    background: rgba(255, 248, 231, 0.08);
+    box-shadow: 0 0 14px rgba(255, 248, 231, 0.08);
 }
 
 .nav-link:hover::after {
-    transform: translateX(-50%) scaleX(1);
+    width: calc(100% - 1.1rem);
+}
+
+.nav-link:active {
+    background: rgba(255, 248, 231, 0.14);
 }
 
 /* Dropdown */
@@ -161,8 +209,20 @@
         padding: 0.9rem 1.1rem;
     }
 
+    .navbar-tabs-dock {
+        bottom: 1.25rem;
+        left: 1.25rem;
+    }
+
+    .navbar-tabs-container {
+        padding: 0.45rem;
+        border-radius: 16px;
+        gap: 0.1rem;
+    }
+
     .nav-link {
-        display: none;
+        font-size: 0.82rem;
+        padding: 0.4rem 0.75rem;
     }
 
     .navbar-toggle-label-desktop { display: none; }
@@ -171,5 +231,25 @@
     .navbar-dropdown-toggle {
         border: none;
         padding: 0.5rem 0.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar-tabs-dock {
+        bottom: 1rem;
+        left: 1rem;
+        max-width: calc(100vw - 2rem);
+    }
+
+    .nav-link {
+        font-size: 0.78rem;
+        padding: 0.38rem 0.65rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .nav-link,
+    .nav-link::after {
+        transition: none;
     }
 }

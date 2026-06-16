@@ -1,0 +1,31 @@
+.space-travel-section {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+}
+
+.space-travel-section__inner {
+    transform-style: preserve-3d;
+    transform:
+        translateY(var(--space-parallax-y, 0))
+        translateZ(var(--space-translate-z, 0))
+        scale(var(--space-scale, 1));
+    filter: blur(var(--space-blur, 0));
+    opacity: var(--space-opacity, 1);
+    transform-origin: 50% 45%;
+    will-change: transform, filter, opacity;
+    backface-visibility: hidden;
+}
+
+.space-travel-section[data-space-mode='opacity'] .space-travel-section__inner {
+    transform: none;
+    filter: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .space-travel-section__inner {
+        transform: none !important;
+        filter: none !important;
+        opacity: 1 !important;
+    }
+}

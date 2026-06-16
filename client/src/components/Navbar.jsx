@@ -7,6 +7,8 @@ import aiResumePdf from '../assets/Docs/AI_resume.pdf';
 import downloadPdfIcon from '../assets/images/icons/download-pdf.png';
 import MessagePopup from '../screens/landing-page/components/MessagePopup';
 
+import { computeScrollDuration } from '../utils/spaceTravel';
+
 function smoothScrollTo(id) {
     const el = document.getElementById(id);
     if (!el) return;
@@ -15,7 +17,10 @@ function smoothScrollTo(id) {
             id === 'achievements'
                 ? -(window.innerHeight - el.offsetHeight) / 2
                 : -72;
-        window.__lenis.scrollTo(el, { offset, duration: 1.2 });
+        const current = window.__lenis.scroll;
+        const target = el.offsetTop + offset;
+        const duration = computeScrollDuration(current, target, window.innerHeight);
+        window.__lenis.scrollTo(el, { offset, duration });
     } else {
         el.scrollIntoView({
             behavior: 'smooth',
@@ -31,9 +36,28 @@ export default function Navbar() {
     const dropdownRef = useRef(null);
 
     useEffect(() => {
-        const handleScroll = () => setScrolled(window.scrollY > 40);
-        window.addEventListener('scroll', handleScroll, { passive: true });
-        return () => window.removeEventListener('scroll', handleScroll);
+        const updateScrolled = (y = window.scrollY) => setScrolled(y > 40);
+
+        const onScroll = () => updateScrolled();
+        const onLenisScroll = ({ scroll }) => updateScrolled(scroll);
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.__lenis?.on('scroll', onLenisScroll);
+        updateScrolled(window.__lenis?.scroll ?? window.scrollY);
+
+        const bindLenis = () => {
+            if (window.__lenis) {
+                window.__lenis.on('scroll', onLenisScroll);
+                updateScrolled(window.__lenis.scroll);
+            }
+        };
+        const lenisTimer = window.setTimeout(bindLenis, 0);
+
+        return () => {
+            window.clearTimeout(lenisTimer);
+            window.removeEventListener('scroll', onScroll);
+            window.__lenis?.off('scroll', onLenisScroll);
+        };
     }, []);
 
     useEffect(() => {
@@ -76,20 +100,7 @@ export default function Navbar() {
                     AmmerVerse
                 </button>
 
-                <div className="navbar-links">
-                    {/* Section anchors */}
-                    {navLinks.map(({ label, id }) => (
-                        <button
-                            key={id}
-                            type="button"
-                            className="nav-link"
-                            onClick={() => smoothScrollTo(id)}
-                        >
-                            {label}
-                        </button>
-                    ))}
-
-                    {/* Resume dropdown */}
+                <div className="navbar-actions">
                     <div className="navbar-dropdown" ref={dropdownRef}>
                         <button
                             type="button"
@@ -135,6 +146,21 @@ export default function Navbar() {
                             </ul>
                         )}
                     </div>
+                </div>
+            </nav>
+
+            <nav className="navbar-tabs-dock" aria-label="Section navigation">
+                <div className="navbar-tabs-container">
+                    {navLinks.map(({ label, id }) => (
+                        <button
+                            key={id}
+                            type="button"
+                            className="nav-link"
+                            onClick={() => smoothScrollTo(id)}
+                        >
+                            {label}
+                        </button>
+                    ))}
                 </div>
             </nav>
 
