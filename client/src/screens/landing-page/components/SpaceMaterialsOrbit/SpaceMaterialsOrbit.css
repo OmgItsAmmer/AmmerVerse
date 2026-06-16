@@ -15,7 +15,7 @@
   height: var(--drift-size, 48px);
   transform: translate(-50%, -50%) rotate(var(--material-rot, 0deg));
   transform-origin: center center;
-  filter: drop-shadow(0 0 18px rgba(183, 148, 246, 0.18));
+  filter: drop-shadow(0 0 18px rgba(255, 248, 231, 0.2));
   will-change: transform, left, top, opacity;
   pointer-events: auto;
   cursor: pointer;
@@ -35,7 +35,7 @@
 }
 
 .space-material-drift.is-hovered {
-  filter: drop-shadow(0 0 26px rgba(183, 148, 246, 0.35));
+  filter: drop-shadow(0 0 26px rgba(255, 248, 231, 0.35));
 }
 
 .space-material-drift.is-hovered:not(.space-material-drift--ufo) .space-material-asset {

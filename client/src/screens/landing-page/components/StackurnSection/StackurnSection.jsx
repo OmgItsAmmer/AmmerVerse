@@ -338,7 +338,7 @@ export default function StackurnSection({ onProjectClick }) {
     };
 
     return (
-        <section id="stackurn" className={`stackurn-section${isPlayMode ? ' stackurn-section--play-mode' : ''}`}>
+        <section className={`stackurn-section${isPlayMode ? ' stackurn-section--play-mode' : ''}`}>
             <Starfield variant="scoped" />
 
             <div className={`stackurn-inner${isPlayMode ? ' stackurn-inner--play-mode' : ''}`}>

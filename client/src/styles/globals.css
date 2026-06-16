@@ -10,12 +10,12 @@
   /* ─── Borders ──────────────────────────────────────────────── */
   --border-subtle:     rgba(255, 255, 255, 0.08);
   --border-mid:        rgba(255, 255, 255, 0.12);
-  --border-glow:       rgba(168, 85, 247, 0.30);
+  --border-glow:       rgba(255, 248, 231, 0.30);
 
-  /* ─── Accent — violet / indigo ─────────────────────────────── */
-  --accent-primary:    #A855F7;
-  --accent-secondary:  #6366F1;
-  --accent-glow:       #C084FC;
+  /* ─── Accent — cosmic latte ────────────────────────────────── */
+  --accent-primary:    #FFF8E7;
+  --accent-secondary:  #E8D5B0;
+  --accent-glow:       #FFFCF2;
 
   /* ─── Text ─────────────────────────────────────────────────── */
   --text-primary:      #F0F0F2;
@@ -28,10 +28,10 @@
 
   /* ─── Depth gradients ───────────────────────────────────────── */
   --gradient-mesh:
-    radial-gradient(circle at 20% 20%, rgba(168, 85, 247, 0.08) 0%, transparent 50%),
-    radial-gradient(circle at 80% 0%,  rgba(99, 102, 241, 0.06) 0%, transparent 50%);
+    radial-gradient(circle at 20% 20%, rgba(255, 248, 231, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 0%,  rgba(232, 213, 176, 0.06) 0%, transparent 50%);
   --gradient-hero-center:
-    radial-gradient(ellipse at 50% 40%, rgba(80, 60, 140, 0.06) 0%, transparent 70%);
+    radial-gradient(ellipse at 50% 40%, rgba(200, 180, 140, 0.06) 0%, transparent 70%);
 
   /* ─── Legacy aliases (keep for existing components) ────────── */
   --background-color:     #050508;
@@ -41,9 +41,9 @@
   --backend-color:        #FFA500;
   --gamedev-color:        #9B59B6;
   --professional-color:   #FFFFFF;
-  --glow-purple:          #B794F6;
-  --glow-magenta:         #E879F9;
-  --dark-purple:          #1a0b2e;
+  --glow-purple:          #FFF8E7;
+  --glow-magenta:         #FFFCF2;
+  --dark-purple:          #1a1812;
 }
 
 html {

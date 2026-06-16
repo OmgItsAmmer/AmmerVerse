@@ -50,7 +50,7 @@ export default function InfoCardsOverlay({ viewMode, selectedAvatar }) {
                 className="info-cards-container mobile-info-cards"
                 ref={containerRef}
                 style={{
-                    '--indicator-active': colors.ui.glowPurple,
+                    '--indicator-active': colors.ui.cosmicLatte,
                     '--indicator-inactive': `${colors.ui.primaryText}55`,
                     '--indicator-border': `${colors.ui.primaryText}88`,
                 }}
@@ -157,7 +157,7 @@ export default function InfoCardsOverlay({ viewMode, selectedAvatar }) {
             className="info-cards-container info-cards-container--desktop"
             ref={containerRef}
             style={{
-                '--indicator-active': colors.ui.glowPurple,
+                '--indicator-active': colors.ui.cosmicLatte,
                 '--indicator-inactive': `${colors.ui.primaryText}55`,
                 '--indicator-border': `${colors.ui.primaryText}88`,
             }}

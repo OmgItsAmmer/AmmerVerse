@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import './LandingPage.css';
+import SpaceTravelSection from '../../components/SpaceTravelSection/SpaceTravelSection.jsx';
+import { useSpaceTravelScroll } from '../../hooks/useSpaceTravelScroll.js';
 
 // Global ambient layers (always present)
 import Navbar from '../../components/Navbar.jsx';
@@ -21,29 +23,39 @@ export default function LandingPage() {
     const [selectedProject, setSelectedProject] = useState(null);
     const [isMessagePopupOpen, setIsMessagePopupOpen] = useState(false);
 
+    useSpaceTravelScroll();
+
     return (
-        <div className="landing-container">
-            {/* ─── Fixed ambient layers ────────────────────────────────── */}
+        <div className="landing-page">
+            {/* Fixed layers — outside perspective so position:fixed stays viewport-locked */}
             <Starfield />
             <SpaceMaterialsOrbit />
-
-            {/* ─── Sticky nav ──────────────────────────────────────────── */}
             <Navbar />
 
-            {/* ─── Sections ────────────────────────────────────────────── */}
-            <HeroSection />
+            <div className="landing-container space-travel-root">
+                {/* ─── Sections ────────────────────────────────────────────── */}
+                <SpaceTravelSection id="hero">
+                    <HeroSection />
+                </SpaceTravelSection>
 
-            <section id="my-projects" className="section-my-projects">
-                <DomainCarousel onProjectClick={setSelectedProject} />
-            </section>
+                <SpaceTravelSection id="my-projects" className="section-my-projects">
+                    <DomainCarousel onProjectClick={setSelectedProject} />
+                </SpaceTravelSection>
 
-            <StackurnSection onProjectClick={setSelectedProject} />
+                <SpaceTravelSection id="stackurn">
+                    <StackurnSection onProjectClick={setSelectedProject} />
+                </SpaceTravelSection>
 
-            <AchievementsSection />
+                <SpaceTravelSection id="achievements" blur={false} mode="opacity">
+                    <AchievementsSection />
+                </SpaceTravelSection>
 
-            <ContactSection
-                onContactClick={() => setIsMessagePopupOpen(true)}
-            />
+                <SpaceTravelSection id="contact">
+                    <ContactSection
+                        onContactClick={() => setIsMessagePopupOpen(true)}
+                    />
+                </SpaceTravelSection>
+            </div>
 
             {/* ─── Global overlays ─────────────────────────────────────── */}
             {selectedProject && (

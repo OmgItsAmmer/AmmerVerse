@@ -257,7 +257,7 @@ export default function SpaceMaterialsOrbit() {
   }, []);
 
   useEffect(() => {
-    const launchDelay = window.setTimeout(() => setHasStarted(true), 5000);
+    const launchDelay = window.setTimeout(() => setHasStarted(true), 1200);
     return () => window.clearTimeout(launchDelay);
   }, []);
 
@@ -407,13 +407,13 @@ export default function SpaceMaterialsOrbit() {
         el.style.top = `${y}%`;
         if (item.kind !== 'satellite') {
           const fade = inProjects && slideProgress > 0.02
-            ? Math.max(0, 1 - slideProgress * 1.1)
-            : Math.max(0, 1 - drive * 0.85);
+            ? Math.max(0.15, 1 - slideProgress * 0.85)
+            : 1;
           el.style.opacity = String(item.opacity * fade);
         }
         const matScale = inProjects && slideProgress > 0.02
           ? 1 + slideProgress * 0.22
-          : 1 + drive * 0.18;
+          : 1 + drive * 0.08;
         el.style.transform = `translate(-50%, -50%) rotate(${rot}deg) scale(${matScale})`;
       }
     };

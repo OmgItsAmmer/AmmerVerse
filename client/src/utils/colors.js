@@ -27,9 +27,11 @@ const colors = {
     ui: {
       background: "#0A0A0A",
       primaryText: "#EAEAEA",
-      glowPurple: "#B794F6",
-      glowMagenta: "#E879F9",
-      darkPurple: "#1a0b2e",
+      cosmicLatte: "#FFF8E7",
+      cosmicLatteGlow: "#FFFCF2",
+      glowPurple: "#FFF8E7",
+      glowMagenta: "#FFFCF2",
+      darkPurple: "#1a1812",
       hoverText: {
         machineLearning: "#00FFE0",
         flutter: "#1E90FF",

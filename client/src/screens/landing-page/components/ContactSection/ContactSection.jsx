@@ -14,7 +14,7 @@ const stagger = {
 
 export default function ContactSection({ onContactClick, onResumeDownload }) {
     return (
-        <section id="contact" className="contact-section">
+        <section className="contact-section">
             <Starfield variant="scoped" />
             <div className="contact-glow" aria-hidden="true" />
 
@@ -34,10 +34,7 @@ export default function ContactSection({ onContactClick, onResumeDownload }) {
                     <span className="contact-headline-accent">that thinks.</span>
                 </motion.h2>
 
-                <motion.p className="contact-status" variants={fadeUp}>
-                    <span className="status-dot" aria-hidden="true" />
-                    Open to LLM Engineer &amp; LLMOps roles &mdash; remote-friendly
-                </motion.p>
+              
 
                 <motion.div className="contact-ctas" variants={fadeUp}>
                     <button className="cta-primary" onClick={onContactClick}>

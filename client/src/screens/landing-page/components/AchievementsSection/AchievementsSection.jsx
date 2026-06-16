@@ -139,7 +139,7 @@ export default function AchievementsSection() {
     }, []);
 
     return (
-        <section id="achievements" ref={sectionRef} className="achievements-section">
+        <section ref={sectionRef} className="achievements-section">
             <Starfield variant="scoped" />
 
             <div className="achievements-inner">
